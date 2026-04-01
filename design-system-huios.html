@@ -1,0 +1,3110 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Atomic Flow — design system interno: IA, automação, sistemas personalizados e marketing orientado a vendas. Paleta preto e vermelho." />
+  <title>Design System — Atomic Flow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      /* Atomic Flow — base escura (#040404 no chat / neutros) */
+      --background: 0 0% 2.5%;
+      --foreground: 0 0% 100%;
+      --primary: 0 84% 55%;
+      --primary-foreground: 0 0% 100%;
+      --muted: 0 0% 11%;
+      --muted-foreground: 0 0% 55%;
+      --border: 0 0% 16%;
+      --ring: 0 84% 55%;
+      --radius: 0.5rem;
+      /* Acento único: vermelho (opacidades para UI / chat) */
+      --accent-soft: rgba(220, 38, 38, 0.12);
+      --accent-mid: rgba(220, 38, 38, 0.22);
+      --accent-border: rgba(220, 38, 38, 0.12);
+      /* Gradiente texto: só tons de vermelho (sem ouro / âmbar) */
+      --fusion-from: #fecaca;
+      --fusion-mid: #f87171;
+      --fusion-to: #dc2626;
+      /* Escala marca = vermelho (ação / CTAs Atomic Flow) */
+      --brand-600: #b91c1c;
+      --brand-500: #dc2626;
+      --brand-400: #ef4444;
+      --brand-300: #f87171;
+      --brand-200: #fecaca;
+      --brand-glow: #f43f5e;
+      --dark-900: #0a0a0a;
+      --dark-950: #060606;
+      --dark-975: #040404;
+      --canvas: #030303;
+      /* Chat agente: fundo #040404, acentos vermelhos (paleta fixa preto + vermelho) */
+      --chat-bg: #040404;
+      --chat-border-subtle: rgba(255, 255, 255, 0.15);
+      --chat-placeholder: #8b8b8b;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-500: #6b7280;
+      --gray-600: #4b5563;
+      --gray-900: #111827;
+      --font-sans: "Geist", "Inter", system-ui, sans-serif;
+      --font-display: "Oswald", var(--font-sans);
+      /* Larguras de container (Tailwind-aligned) */
+      --container-2xl: 42rem;
+      --container-3xl: 48rem;
+      --container-4xl: 56rem;
+      --container-5xl: 64rem;
+      --container-6xl: 72rem;
+      --container-7xl: 80rem;
+      /* Elevação */
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.25);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.35), 0 2px 4px -2px rgba(0, 0, 0, 0.25);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.45), 0 8px 10px -6px rgba(0, 0, 0, 0.35);
+      /* Motion */
+      --duration-fast: 150ms;
+      --duration-normal: 200ms;
+      --duration-slow: 300ms;
+      --ease-out: cubic-bezier(0.33, 1, 0.68, 1);
+      /* Z-index escala */
+      --z-base: 0;
+      --z-sticky: 40;
+      --z-dropdown: 1000;
+      --z-modal: 2000;
+      --z-toast: 3000;
+      /* Superfícies = mesmo sistema do canvas (sem branco isolado) */
+      --surface-doc: hsl(var(--background));
+      --input-border: hsl(var(--border));
+      --destructive: 0 72% 51%;
+      --success: 142 76% 36%;
+      --warning: 38 92% 50%;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      background: hsl(var(--background));
+      color: hsl(var(--foreground));
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Scrollbar (Brabaflow inline no HTML salvo) */
+    ::-webkit-scrollbar { width: 12px; height: 12px; }
+    ::-webkit-scrollbar-track { background: #2d2d2d; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb { background: #555; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #6b6b6b; }
+
+    .page-nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+      background: rgba(0, 0, 0, 0.8);
+      border-bottom: 1px solid rgb(31 41 55);
+    }
+    .page-nav-inner {
+      max-width: 72rem;
+      margin: 0 auto;
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .page-nav a {
+      color: rgb(209 213 219);
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .page-nav a:hover { color: hsl(var(--primary)); }
+    .page-nav-brand {
+      font-weight: 700;
+      font-size: 0.875rem;
+      letter-spacing: -0.02em;
+      color: hsl(var(--foreground));
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .page-nav-brand:hover { color: hsl(var(--primary)); }
+    #start { scroll-margin-top: 5rem; }
+
+    main { max-width: 72rem; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+    h1.page-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0 0 0.5rem;
+    }
+    .page-sub {
+      color: hsl(var(--muted-foreground));
+      font-size: 1rem;
+      max-width: 46rem;
+      margin-bottom: 2rem;
+    }
+
+    /* Gradiente de destaque (só vermelhos) */
+    .text-gradient-fusion {
+      background-image: linear-gradient(105deg, var(--fusion-from) 0%, var(--fusion-mid) 45%, var(--fusion-to) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+    .ds-fusion-tag {
+      display: inline-block;
+      font-family: var(--font-sans);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: hsl(var(--muted-foreground));
+      margin-bottom: 0.75rem;
+      padding: 0.35rem 0.65rem;
+      border-radius: 5px;
+      border: 1px solid rgba(220, 38, 38, 0.22);
+      background: linear-gradient(135deg, rgba(220, 38, 38, 0.08), rgba(220, 38, 38, 0.04));
+    }
+    .ds-fusion-hero {
+      margin-bottom: 2.5rem;
+      padding: 1.75rem 0 2rem;
+      border-bottom: 1px solid hsl(var(--border));
+      position: relative;
+    }
+    .ds-fusion-hero::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -1px;
+      width: 8rem;
+      height: 2px;
+      background: linear-gradient(90deg, var(--brand-300), hsl(var(--primary)));
+      border-radius: 2px;
+    }
+    /* Hero marketing (padrão Brabaflow: eyebrow → título com itálico → lead → link+seta → microcopy → logos) */
+    .af-hero-bf {
+      padding-top: 2.25rem;
+      padding-bottom: 2.75rem;
+    }
+    .af-hero-kicker {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: hsl(var(--muted-foreground));
+      margin: 0 0 1.1rem;
+    }
+    .af-hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.1rem, 5.8vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.06;
+      letter-spacing: -0.03em;
+      margin: 0 0 1.2rem;
+      max-width: 17ch;
+    }
+    @media (min-width: 640px) {
+      .af-hero-title { max-width: 22ch; }
+    }
+    .af-hero-em {
+      font-style: italic;
+      font-weight: 600;
+      font-synthesis: none;
+      background-image: linear-gradient(105deg, var(--fusion-from) 0%, var(--fusion-mid) 50%, var(--fusion-to) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+    .af-hero-lead {
+      font-size: clamp(1rem, 1.35vw, 1.125rem);
+      color: hsl(var(--muted-foreground));
+      max-width: 36rem;
+      line-height: 1.65;
+      margin: 0 0 1.65rem;
+    }
+    .af-hero-lead strong {
+      color: hsl(var(--foreground));
+      font-weight: 600;
+    }
+    .af-hero-actions {
+      margin: 0 0 0.85rem;
+    }
+    .af-hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: hsl(var(--foreground));
+      text-decoration: none;
+      border-bottom: 1px solid rgba(220, 38, 38, 0.55);
+      padding-bottom: 0.12rem;
+      transition: color var(--duration-normal) var(--ease-out), border-color var(--duration-normal) var(--ease-out);
+    }
+    .af-hero-cta:hover {
+      color: hsl(var(--primary));
+      border-bottom-color: hsl(var(--primary));
+    }
+    .af-hero-cta-arrow {
+      display: inline-block;
+      font-size: 1.05em;
+      line-height: 1;
+      color: hsl(var(--primary));
+      transition: transform 0.28s var(--ease-out);
+    }
+    .af-hero-cta:hover .af-hero-cta-arrow {
+      transform: translateX(5px);
+    }
+    .af-hero-micro {
+      font-size: 0.875rem;
+      color: hsl(var(--muted-foreground));
+      margin: 0 0 2.25rem;
+      max-width: 28rem;
+      line-height: 1.55;
+    }
+    .af-hero-micro strong {
+      color: hsl(var(--foreground));
+      font-weight: 600;
+    }
+    .af-hero-link-subtle {
+      color: hsl(var(--primary));
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .af-hero-link-subtle:hover {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .af-hero-social-label {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: hsl(var(--muted-foreground));
+      margin: 0 0 0.9rem;
+    }
+    .af-hero-logo-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem 1rem;
+      align-items: center;
+    }
+    .af-hero-logo-pill {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      padding: 0.5rem 0.9rem;
+      border-radius: 6px;
+      border: 1px solid hsl(var(--border));
+      background: hsl(var(--muted));
+      color: hsl(var(--muted-foreground));
+    }
+    .tag-accent-light {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+      background: rgba(254, 202, 202, 0.12);
+      color: #fca5a5;
+      border: 1px solid rgba(248, 113, 113, 0.35);
+    }
+    .tag-huios {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+      background: rgba(220, 38, 38, 0.12);
+      color: #f87171;
+      border: 1px solid rgba(220, 38, 38, 0.25);
+    }
+
+    section {
+      margin-bottom: 3.5rem;
+      scroll-margin-top: 4rem;
+    }
+    section h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0 0 1.25rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid hsl(var(--border));
+    }
+    section h3 {
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: hsl(var(--muted-foreground));
+      margin: 1.5rem 0 0.75rem;
+    }
+
+    .grid-colors {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 1rem;
+    }
+    .swatch {
+      border-radius: 0.75rem;
+      overflow: hidden;
+      border: 1px solid hsl(var(--border));
+      background: hsl(var(--muted));
+    }
+    .swatch-top { height: 72px; }
+    .swatch-meta {
+      padding: 0.65rem 0.75rem;
+      font-size: 0.7rem;
+      color: hsl(var(--muted-foreground));
+      line-height: 1.4;
+    }
+    .swatch-meta strong {
+      display: block;
+      color: hsl(var(--foreground));
+      font-size: 0.75rem;
+      margin-bottom: 0.15rem;
+    }
+
+    .type-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 1rem 2rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid hsl(var(--border));
+    }
+    .type-label {
+      width: 10rem;
+      flex-shrink: 0;
+      font-size: 0.75rem;
+      color: hsl(var(--muted-foreground));
+      font-family: ui-monospace, monospace;
+    }
+
+    .space-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .space-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      color: hsl(var(--muted-foreground));
+    }
+    .space-box {
+      background: hsl(var(--primary) / 0.25);
+      border: 1px solid hsl(var(--primary) / 0.4);
+      border-radius: 0.25rem;
+    }
+
+    /* Painel marketing no tema escuro (Atomic Flow): sem branco — elevado sobre o canvas */
+    .demo-elevated {
+      background: hsl(var(--muted));
+      color: hsl(var(--foreground));
+      border-radius: 1rem;
+      padding: 1.5rem;
+      border: 1px solid hsl(var(--border));
+      box-shadow: var(--shadow-md);
+    }
+    .demo-elevated .pill-tag {
+      border-color: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.06);
+      color: hsl(var(--muted-foreground));
+      box-shadow: none;
+    }
+    .demo-elevated .card-light {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+    .demo-elevated .card-light:hover {
+      border-color: rgba(220, 38, 38, 0.4);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.35), 0 4px 6px -4px rgba(220, 38, 38, 0.15);
+    }
+    .demo-elevated .portfolio-frame {
+      background: linear-gradient(to bottom right, rgba(185, 28, 28, 0.5), rgba(255, 255, 255, 0.06), rgba(248, 113, 113, 0.35));
+      box-shadow: 0 24px 80px -24px rgba(0, 0, 0, 0.45);
+    }
+    .demo-elevated .portfolio-inner {
+      border-color: rgba(255, 255, 255, 0.1);
+      background: hsl(var(--background));
+      color: hsl(var(--foreground));
+    }
+    .demo-elevated .city-chip {
+      border-color: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.04);
+      color: hsl(var(--muted-foreground));
+    }
+    .demo-elevated .city-chip:hover {
+      border-color: rgba(220, 38, 38, 0.55);
+      color: #f87171;
+    }
+
+    /* Formulários, tabela, tabs… dentro do painel escuro (.demo-elevated) */
+    .demo-elevated .ds-label { color: hsl(var(--foreground)); }
+    .demo-elevated .ds-hint { color: hsl(var(--muted-foreground)); }
+    .demo-elevated .ds-input,
+    .demo-elevated .ds-textarea,
+    .demo-elevated .ds-select {
+      border-color: hsl(var(--border));
+      background: hsl(var(--background));
+      color: hsl(var(--foreground));
+    }
+    .demo-elevated .ds-input::placeholder,
+    .demo-elevated .ds-textarea::placeholder { color: hsl(var(--muted-foreground)); opacity: 0.85; }
+    .demo-elevated .ds-select option {
+      background: hsl(var(--muted));
+      color: hsl(var(--foreground));
+    }
+    .demo-elevated .ds-input:focus,
+    .demo-elevated .ds-textarea:focus,
+    .demo-elevated .ds-select:focus {
+      box-shadow: 0 0 0 2px hsl(var(--muted)), 0 0 0 4px hsl(var(--ring) / 0.45);
+    }
+    .demo-elevated .ds-input:disabled,
+    .demo-elevated .ds-textarea:disabled {
+      background: hsl(var(--muted));
+      opacity: 0.65;
+    }
+    .demo-elevated .ds-input.is-error:focus {
+      box-shadow: 0 0 0 2px hsl(var(--muted)), 0 0 0 4px hsl(var(--destructive) / 0.35);
+    }
+    .demo-elevated .ds-check-row { color: hsl(var(--foreground)); }
+    .demo-elevated .ds-switch-row { color: hsl(var(--foreground)); }
+    .demo-elevated .ds-switch { background: hsl(var(--muted)); }
+
+    .demo-elevated .ds-table-wrap {
+      border-color: hsl(var(--border));
+      background: hsl(var(--background));
+    }
+    .demo-elevated .ds-table th {
+      color: hsl(var(--muted-foreground));
+      background: hsl(var(--muted));
+      border-bottom-color: hsl(var(--border));
+    }
+    .demo-elevated .ds-table td {
+      border-bottom-color: hsl(var(--border));
+      color: hsl(var(--foreground));
+    }
+    .demo-elevated .ds-table tbody tr:nth-child(even) { background: rgba(255, 255, 255, 0.03); }
+
+    .demo-elevated .ds-page-btn {
+      border-color: hsl(var(--border));
+      background: hsl(var(--background));
+      color: hsl(var(--muted-foreground));
+    }
+    .demo-elevated .ds-page-btn:hover:not(:disabled) {
+      border-color: hsl(var(--primary) / 0.55);
+      color: #f87171;
+    }
+    .demo-elevated .ds-page-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .demo-elevated .ds-tabs-list { border-bottom-color: hsl(var(--border)); }
+    .demo-elevated .ds-tab { color: hsl(var(--muted-foreground)); }
+    .demo-elevated .ds-tab:hover { color: hsl(var(--foreground)); }
+    .demo-elevated .ds-tab-panel { color: hsl(var(--muted-foreground)); }
+    .demo-elevated .ds-tab-panel strong { color: hsl(var(--foreground)); }
+
+    .demo-elevated .ds-step { color: hsl(var(--muted-foreground)); }
+    .demo-elevated .ds-step-num {
+      background: hsl(var(--background));
+      border-color: hsl(var(--border));
+      color: hsl(var(--muted-foreground));
+    }
+    .demo-elevated .ds-step.current { color: hsl(var(--foreground)); }
+    .demo-elevated .ds-step-sep { color: hsl(var(--muted-foreground)); opacity: 0.5; }
+
+    .demo-elevated .ds-dd-trigger {
+      border-color: hsl(var(--border));
+      background: hsl(var(--background));
+      color: hsl(var(--foreground));
+    }
+    .demo-elevated .ds-dd-panel {
+      border-color: hsl(var(--border));
+      background: hsl(var(--muted));
+      box-shadow: var(--shadow-xl);
+    }
+    .demo-elevated .ds-dd-item { color: hsl(var(--foreground)); }
+    .demo-elevated .ds-dd-item:hover {
+      background: rgba(220, 38, 38, 0.12);
+      color: #f87171;
+    }
+    .demo-elevated .ds-dd-item--danger { color: hsl(var(--destructive)) !important; }
+    .demo-elevated .ds-dd-item--danger:hover {
+      background: rgba(220, 38, 38, 0.2);
+      color: #fecaca !important;
+    }
+
+    .demo-dark {
+      background: linear-gradient(158deg, var(--dark-900) 0%, var(--dark-950) 42%, var(--dark-975) 100%);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+    .demo-dark::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom right, rgba(220, 38, 38, 0.12), transparent 45%, rgba(248, 113, 113, 0.08));
+      pointer-events: none;
+    }
+    .demo-dark > * { position: relative; z-index: 1; }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 2.25rem;
+      padding: 0 0.75rem;
+      border-radius: calc(var(--radius));
+      background: hsl(var(--primary));
+      color: hsl(var(--primary-foreground));
+      font-size: 0.875rem;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover { background: hsl(var(--primary) / 0.9); }
+    .btn-primary:focus-visible {
+      outline: 2px solid hsl(var(--ring));
+      outline-offset: 2px;
+    }
+
+    .btn-pill {
+      height: 3rem;
+      padding: 0 2rem;
+      border-radius: 100px;
+      background: linear-gradient(135deg, var(--brand-500), var(--brand-400));
+      color: hsl(var(--primary-foreground));
+      font-weight: 600;
+      font-size: 0.875rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+    .btn-pill:active { transform: translateY(1px); }
+
+    .btn-outline-light {
+      height: 3rem;
+      padding: 0 2rem;
+      border-radius: 100px;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      color: hsl(var(--primary-foreground));
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+    }
+    .btn-outline-light:hover { background: rgba(255, 255, 255, 0.1); }
+
+    .pill-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      border-radius: 9999px;
+      border: 1px solid hsl(var(--border));
+      background: hsl(var(--background));
+      padding: 0.35rem 1rem;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: hsl(var(--muted-foreground));
+      box-shadow: none;
+    }
+
+    .card-light {
+      border-radius: 1rem;
+      border: 1px solid hsl(var(--border));
+      background: hsl(var(--background));
+      padding: 1.5rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .card-light:hover {
+      border-color: rgba(220, 38, 38, 0.28);
+      box-shadow: 0 10px 15px -3px rgba(220, 38, 38, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+    }
+
+    .card-dark {
+      position: relative;
+      border-radius: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.03);
+      padding: 1.25rem;
+      transition: border-color 0.2s;
+    }
+    .card-dark:hover { border-color: rgba(248, 113, 113, 0.45); }
+
+    .icon-tile {
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: 0.75rem;
+      background: rgba(220, 38, 38, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--brand-500);
+      margin-bottom: 1rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      border-radius: 9999px;
+      border: 1px solid rgba(220, 38, 38, 0.35);
+      background: rgba(220, 38, 38, 0.1);
+      padding: 0.25rem 0.75rem;
+      font-size: 0.6875rem;
+      font-weight: 500;
+      color: var(--brand-600);
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.4);
+      margin-bottom: 1rem;
+    }
+    .breadcrumb a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .breadcrumb a:hover { color: hsl(var(--foreground)); }
+    .breadcrumb span.current {
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 500;
+    }
+
+    .accordion {
+      border-radius: 1rem;
+      border: 1px solid hsl(var(--border));
+      background: hsl(var(--muted));
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+    .accordion-item { border-bottom: 1px solid hsl(var(--border)); }
+    .accordion-item:last-child { border-bottom: none; }
+    .accordion-trigger {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.25rem 1.5rem;
+      text-align: left;
+      font-size: 1rem;
+      font-weight: 600;
+      color: hsl(var(--foreground));
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: background var(--duration-normal);
+    }
+    .accordion-trigger:hover,
+    .accordion-trigger[aria-expanded="true"] {
+      background: rgba(220, 38, 38, 0.12);
+    }
+    .accordion-trigger:focus-visible {
+      outline: 2px solid hsl(var(--ring));
+      outline-offset: -2px;
+    }
+    .accordion-trigger .chev {
+      color: hsl(var(--muted-foreground));
+      flex-shrink: 0;
+    }
+    .accordion-panel {
+      display: none;
+      padding: 0 1.5rem 1.25rem 4.5rem;
+      font-size: 0.875rem;
+      color: hsl(var(--muted-foreground));
+      line-height: 1.6;
+    }
+    .accordion-panel.open { display: block; }
+
+    .city-chip {
+      display: inline-flex;
+      border-radius: 9999px;
+      border: 1px solid hsl(var(--border));
+      background: hsl(var(--background));
+      padding: 0.35rem 0.75rem;
+      font-size: 0.875rem;
+      color: hsl(var(--muted-foreground));
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .city-chip:hover {
+      border-color: rgba(220, 38, 38, 0.5);
+      color: var(--brand-500);
+    }
+
+    .cta-band {
+      border-radius: 1rem;
+      padding: 2rem;
+      text-align: center;
+      background: linear-gradient(125deg, var(--brand-600) 0%, var(--brand-500) 40%, var(--brand-glow) 70%, var(--brand-300) 100%);
+      color: hsl(var(--primary-foreground));
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-band::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0.3;
+      background-image: linear-gradient(rgba(255, 255, 255, 0.2) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.2) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+    .cta-band h3 {
+      color: hsl(var(--primary-foreground) / 0.9);
+      border: none;
+      margin-top: 0;
+    }
+    .cta-band .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 1.25rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .portfolio-frame {
+      border-radius: 28px;
+      padding: 1px;
+      background: linear-gradient(to bottom right, rgba(185, 28, 28, 0.45), rgba(255, 255, 255, 0.08), rgba(248, 113, 113, 0.35));
+      box-shadow: 0 24px 80px -24px rgba(0, 0, 0, 0.45);
+    }
+    .portfolio-inner {
+      border-radius: 27px;
+      border: 1px solid hsl(var(--border));
+      background: hsl(var(--background));
+      padding: 1.5rem;
+      color: hsl(var(--foreground));
+    }
+
+    footer.ds-footer {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid hsl(var(--border));
+      font-size: 0.75rem;
+      color: hsl(var(--muted-foreground));
+    }
+
+    /* —— Containers & layout shells —— */
+    .container-ruler {
+      width: 100%;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+    }
+    .container-bar {
+      margin: 0 auto;
+      height: 3rem;
+      border-radius: 0.5rem;
+      border: 1px dashed hsl(var(--primary) / 0.5);
+      background: hsl(var(--primary) / 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-family: ui-monospace, monospace;
+      color: hsl(var(--muted-foreground));
+      margin-bottom: 0.75rem;
+    }
+    .container-bar strong { color: hsl(var(--foreground)); margin-right: 0.35rem; }
+
+    .shell-section {
+      border: 1px solid hsl(var(--border));
+      border-radius: 0.75rem;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+    .shell-section-h {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.35rem 0.75rem;
+      background: hsl(var(--muted));
+      color: hsl(var(--muted-foreground));
+      border-bottom: 1px solid hsl(var(--border));
+    }
+    .shell-section-b {
+      padding: 1rem 1rem 1.25rem;
+      background: hsl(var(--background));
+    }
+    .shell-inner {
+      max-width: var(--container-5xl);
+      margin: 0 auto;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      outline: 1px solid hsl(var(--primary) / 0.25);
+      outline-offset: -1px;
+      min-height: 2.5rem;
+      display: flex;
+      align-items: center;
+      font-size: 0.75rem;
+      color: hsl(var(--muted-foreground));
+      border-radius: 0.25rem;
+    }
+
+    .layout-demo {
+      display: grid;
+      gap: 1rem;
+      margin-top: 0.75rem;
+    }
+    @media (min-width: 768px) {
+      .layout-demo.split-2 { grid-template-columns: 1fr 1fr; }
+      .layout-demo.asymmetric { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); }
+    }
+
+    .layout-cell {
+      border-radius: 0.5rem;
+      border: 1px solid hsl(var(--border));
+      background: hsl(var(--muted));
+      padding: 1rem;
+      font-size: 0.75rem;
+      color: hsl(var(--muted-foreground));
+    }
+    .layout-cell strong { color: hsl(var(--foreground)); display: block; margin-bottom: 0.25rem; }
+
+    .divider-demo {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, hsl(var(--border)), transparent);
+      margin: 1rem 0;
+    }
+
+    .empty-state-demo {
+      border: 1px dashed hsl(var(--border));
+      border-radius: 0.75rem;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      color: hsl(var(--muted-foreground));
+      font-size: 0.875rem;
+    }
+    .empty-state-demo svg {
+      margin: 0 auto 0.75rem;
+      color: hsl(var(--primary));
+      opacity: 0.85;
+    }
+
+    /* —— Ícones SVG (padrão Lucide-like) —— */
+    .icon-doc {
+      background: hsl(var(--muted));
+      border: 1px solid hsl(var(--border));
+      border-radius: 0.5rem;
+      padding: 1rem 1.25rem;
+      font-size: 0.75rem;
+      font-family: ui-monospace, monospace;
+      color: hsl(var(--muted-foreground));
+      line-height: 1.6;
+      overflow-x: auto;
+      margin: 0.75rem 0 1rem;
+    }
+
+    .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
+      gap: 0.75rem;
+    }
+    .icon-cell {
+      cursor: pointer;
+      font: inherit;
+      color: inherit;
+      border: 1px solid hsl(var(--border));
+      border-radius: 0.75rem;
+      padding: 1rem 0.5rem;
+      text-align: center;
+      background: hsl(var(--muted) / 0.5);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .icon-cell:hover {
+      border-color: hsl(var(--primary) / 0.4);
+      background: hsl(var(--primary) / 0.06);
+    }
+    .icon-cell .svg-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.5rem;
+      color: hsl(var(--foreground));
+    }
+    .icon-cell code {
+      font-size: 0.6rem;
+      color: hsl(var(--muted-foreground));
+      word-break: break-all;
+      display: block;
+    }
+
+    svg.ds-icon {
+      flex-shrink: 0;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .size-3 { width: 12px; height: 12px; }
+    .size-3-5 { width: 14px; height: 14px; }
+    .size-4 { width: 16px; height: 16px; }
+    .size-5 { width: 20px; height: 20px; }
+    .size-6 { width: 24px; height: 24px; }
+
+    .icon-inline-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid hsl(var(--border));
+    }
+    .icon-inline-row:last-child { border-bottom: none; }
+    .icon-inline-label {
+      width: 6rem;
+      flex-shrink: 0;
+      font-size: 0.7rem;
+      font-family: ui-monospace, monospace;
+      color: hsl(var(--muted-foreground));
+    }
+    .icon-inline-samples {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: hsl(var(--primary));
+    }
+
+    .logo-slot {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px dashed hsl(var(--border));
+      border-radius: 0.5rem;
+      background: hsl(var(--muted));
+      color: hsl(var(--muted-foreground));
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .logo-slot.header { width: 8rem; height: 2.5rem; }
+    .logo-slot.footer { width: 10rem; height: 2rem; }
+
+    /* —— Tokens: sombras, motion, breakpoints (referência) —— */
+    .token-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.75rem;
+      margin: 0.5rem 0 1rem;
+    }
+    .token-table th,
+    .token-table td {
+      border: 1px solid hsl(var(--border));
+      padding: 0.5rem 0.65rem;
+      text-align: left;
+    }
+    .token-table th { background: hsl(var(--muted)); color: hsl(var(--muted-foreground)); font-weight: 600; }
+    .token-table code { color: hsl(var(--primary)); font-size: 0.7rem; }
+
+    .shadow-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 0.75rem 0;
+    }
+    .shadow-card {
+      width: 6rem;
+      height: 4rem;
+      border-radius: 0.5rem;
+      background: hsl(var(--muted));
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 0.35rem;
+      font-size: 0.6rem;
+      color: hsl(var(--muted-foreground));
+    }
+    .shadow-card.sm { box-shadow: var(--shadow-sm); }
+    .shadow-card.md { box-shadow: var(--shadow-md); }
+    .shadow-card.lg { box-shadow: var(--shadow-lg); }
+    .shadow-card.xl { box-shadow: var(--shadow-xl); }
+
+    .principles-grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    }
+    .principle-card {
+      border: 1px solid hsl(var(--border));
+      border-radius: 0.75rem;
+      padding: 1rem;
+      background: hsl(var(--muted) / 0.4);
+      font-size: 0.8rem;
+      color: hsl(var(--muted-foreground));
+      line-height: 1.55;
+    }
+    .principle-card strong { color: hsl(var(--foreground)); display: block; margin-bottom: 0.35rem; }
+    .do-dont {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 0.75rem;
+    }
+    @media (max-width: 640px) { .do-dont { grid-template-columns: 1fr; } }
+    .do-box {
+      border-radius: 0.5rem;
+      padding: 0.75rem 1rem;
+      font-size: 0.75rem;
+      border: 1px solid rgba(34, 197, 94, 0.35);
+      background: rgba(34, 197, 94, 0.08);
+    }
+    .dont-box {
+      border-radius: 0.5rem;
+      padding: 0.75rem 1rem;
+      font-size: 0.75rem;
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      background: rgba(239, 68, 68, 0.08);
+    }
+
+    /* —— Formulários (base; tema escuro em .demo-elevated) —— */
+    .ds-field { margin-bottom: 1.1rem; }
+    .ds-label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: hsl(var(--foreground));
+      margin-bottom: 0.35rem;
+    }
+    .ds-label .req { color: hsl(var(--destructive)); }
+    .ds-hint { font-size: 0.7rem; color: hsl(var(--muted-foreground)); margin-top: 0.25rem; }
+    .ds-error { font-size: 0.7rem; color: hsl(var(--destructive)); margin-top: 0.25rem; display: flex; align-items: center; gap: 0.25rem; }
+    .ds-input,
+    .ds-textarea,
+    .ds-select {
+      width: 100%;
+      max-width: 28rem;
+      border: 1px solid hsl(var(--border));
+      border-radius: calc(var(--radius));
+      padding: 0.5rem 0.75rem;
+      font-size: 0.875rem;
+      font-family: inherit;
+      background: hsl(var(--background));
+      color: hsl(var(--foreground));
+      transition: border-color var(--duration-normal) var(--ease-out), box-shadow var(--duration-normal);
+    }
+    .ds-textarea { min-height: 5rem; resize: vertical; }
+    .ds-select option {
+      background: hsl(var(--muted));
+      color: hsl(var(--foreground));
+    }
+    .ds-input:focus,
+    .ds-textarea:focus,
+    .ds-select:focus {
+      outline: none;
+      border-color: hsl(var(--primary));
+      box-shadow: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--ring) / 0.45);
+    }
+    .ds-input:disabled,
+    .ds-textarea:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      background: hsl(var(--muted));
+    }
+    .ds-input.is-error { border-color: hsl(var(--destructive)); }
+    .ds-input.is-error:focus { box-shadow: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--destructive) / 0.35); }
+
+    .ds-check-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      color: hsl(var(--foreground));
+      max-width: 28rem;
+    }
+    .ds-check-row input { margin-top: 0.2rem; accent-color: hsl(var(--primary)); width: 1rem; height: 1rem; }
+
+    .ds-switch-row {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 0.875rem;
+      color: hsl(var(--foreground));
+    }
+    .ds-switch {
+      position: relative;
+      width: 2.75rem;
+      height: 1.5rem;
+      border-radius: 9999px;
+      background: hsl(var(--muted));
+      border: none;
+      cursor: pointer;
+      transition: background var(--duration-normal);
+    }
+    .ds-switch[aria-checked="true"] { background: hsl(var(--primary)); }
+    .ds-switch::after {
+      content: "";
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 1.15rem;
+      height: 1.15rem;
+      border-radius: 50%;
+      background: hsl(var(--foreground));
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--duration-normal) var(--ease-out);
+    }
+    .ds-switch[aria-checked="true"]::after { transform: translateX(1.2rem); }
+
+    /* —— Alertas & toast —— */
+    .ds-alert {
+      display: flex;
+      gap: 0.65rem;
+      align-items: flex-start;
+      padding: 0.75rem 1rem;
+      border-radius: calc(var(--radius));
+      font-size: 0.8125rem;
+      line-height: 1.5;
+      max-width: 36rem;
+      margin-bottom: 0.65rem;
+      border: 1px solid transparent;
+    }
+    .ds-alert svg { flex-shrink: 0; margin-top: 0.1rem; }
+    .ds-alert.info {
+      background: hsl(0 35% 12%);
+      border-color: hsl(var(--primary) / 0.35);
+      color: hsl(var(--foreground));
+    }
+    .ds-alert.success {
+      background: hsl(142 30% 12%);
+      border-color: hsl(var(--success) / 0.4);
+      color: #ecfdf5;
+    }
+    .ds-alert.warning {
+      background: hsl(38 40% 12%);
+      border-color: hsl(var(--warning) / 0.45);
+      color: #fffbeb;
+    }
+    .ds-alert.destructive {
+      background: hsl(0 35% 14%);
+      border-color: hsl(var(--destructive) / 0.45);
+      color: #fef2f2;
+    }
+
+    .ds-toast-wrap {
+      position: fixed;
+      bottom: 1.25rem;
+      right: 1.25rem;
+      z-index: var(--z-toast);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      pointer-events: none;
+    }
+    .ds-toast {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1rem;
+      border-radius: 0.5rem;
+      background: hsl(var(--muted));
+      border: 1px solid hsl(var(--border));
+      box-shadow: var(--shadow-lg);
+      font-size: 0.8125rem;
+      color: hsl(var(--foreground));
+      opacity: 0;
+      transform: translateY(0.5rem);
+      transition: opacity var(--duration-slow) var(--ease-out), transform var(--duration-slow) var(--ease-out);
+    }
+    .ds-toast.show { opacity: 1; transform: translateY(0); }
+
+    .ds-skeleton {
+      border-radius: 0.35rem;
+      background: linear-gradient(90deg, hsl(var(--muted)) 25%, hsl(var(--border)) 50%, hsl(var(--muted)) 75%);
+      background-size: 200% 100%;
+      animation: sk 1.2s ease-in-out infinite;
+    }
+    @keyframes sk { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    .sk-line { height: 0.65rem; margin-bottom: 0.5rem; }
+    .sk-line.short { width: 40%; }
+    .sk-line.medium { width: 70%; }
+    .sk-avatar { width: 2.5rem; height: 2.5rem; border-radius: 50%; }
+
+    .ds-progress {
+      height: 0.5rem;
+      border-radius: 9999px;
+      background: hsl(var(--muted));
+      overflow: hidden;
+      max-width: 20rem;
+    }
+    .ds-progress-bar {
+      height: 100%;
+      width: 62%;
+      border-radius: 9999px;
+      background: linear-gradient(90deg, var(--brand-600), var(--brand-400));
+      transition: width var(--duration-slow) var(--ease-out);
+    }
+
+    /* —— Tabela & paginação —— */
+    .ds-table-wrap {
+      overflow-x: auto;
+      border: 1px solid hsl(var(--border));
+      border-radius: 0.75rem;
+      background: hsl(var(--background));
+      max-width: 100%;
+    }
+    .ds-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8125rem;
+    }
+    .ds-table th {
+      text-align: left;
+      padding: 0.65rem 1rem;
+      font-weight: 600;
+      color: hsl(var(--muted-foreground));
+      background: hsl(var(--muted));
+      border-bottom: 1px solid hsl(var(--border));
+    }
+    .ds-table td {
+      padding: 0.65rem 1rem;
+      border-bottom: 1px solid hsl(var(--border));
+      color: hsl(var(--foreground));
+    }
+    .ds-table tr:last-child td { border-bottom: none; }
+    .ds-table tbody tr:nth-child(even) { background: rgba(255, 255, 255, 0.03); }
+    .ds-table .cell-actions { text-align: right; white-space: nowrap; }
+
+    .ds-pagination {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.35rem;
+      margin-top: 1rem;
+    }
+    .ds-page-btn {
+      min-width: 2.25rem;
+      height: 2.25rem;
+      padding: 0 0.5rem;
+      border-radius: calc(var(--radius));
+      border: 1px solid hsl(var(--border));
+      background: hsl(var(--background));
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: hsl(var(--muted-foreground));
+      cursor: pointer;
+      transition: border-color var(--duration-fast), background var(--duration-fast), color var(--duration-fast);
+    }
+    .ds-page-btn:hover { border-color: hsl(var(--primary) / 0.5); color: hsl(var(--primary)); }
+    .ds-page-btn[aria-current="page"] {
+      background: hsl(var(--primary));
+      border-color: hsl(var(--primary));
+      color: hsl(var(--primary-foreground));
+    }
+
+    /* —— Tabs & stepper & dropdown —— */
+    .ds-tabs-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+      border-bottom: 1px solid hsl(var(--border));
+      margin-bottom: 1rem;
+    }
+    .ds-tab {
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: hsl(var(--muted-foreground));
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: color var(--duration-fast), border-color var(--duration-fast);
+    }
+    .ds-tab:hover { color: hsl(var(--foreground)); }
+    .ds-tab[aria-selected="true"] {
+      color: hsl(var(--primary));
+      border-bottom-color: hsl(var(--primary));
+    }
+    .ds-tab-panel { display: none; font-size: 0.875rem; color: hsl(var(--muted-foreground)); padding: 0.25rem 0 0.5rem; }
+    .ds-tab-panel.active { display: block; }
+
+    .ds-stepper {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+      margin: 0.75rem 0;
+    }
+    .ds-step {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: hsl(var(--muted-foreground));
+    }
+    .ds-step-num {
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.65rem;
+      background: hsl(var(--background));
+      border: 1px solid hsl(var(--border));
+    }
+    .ds-step.done .ds-step-num { background: rgba(220, 38, 38, 0.15); border-color: hsl(var(--primary) / 0.4); color: hsl(var(--primary)); }
+    .ds-step.current { color: hsl(var(--foreground)); font-weight: 600; }
+    .ds-step.current .ds-step-num { background: hsl(var(--primary)); border-color: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
+    .ds-step-sep { color: hsl(var(--muted-foreground)); opacity: 0.45; user-select: none; }
+
+    .ds-dropdown-demo {
+      position: relative;
+      display: inline-block;
+      z-index: var(--z-dropdown);
+    }
+    .ds-dd-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.45rem 0.75rem;
+      border-radius: calc(var(--radius));
+      border: 1px solid hsl(var(--border));
+      background: hsl(var(--background));
+      color: hsl(var(--foreground));
+      font-size: 0.8125rem;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .ds-dd-panel {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      min-width: 11rem;
+      padding: 0.35rem;
+      border-radius: 0.5rem;
+      border: 1px solid hsl(var(--border));
+      background: hsl(var(--muted));
+      box-shadow: var(--shadow-lg);
+      display: none;
+    }
+    .ds-dropdown-demo.open .ds-dd-panel { display: block; }
+    .ds-dd-item {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 0.45rem 0.65rem;
+      border: none;
+      background: none;
+      font-size: 0.8125rem;
+      border-radius: 0.35rem;
+      cursor: pointer;
+      font-family: inherit;
+      color: hsl(var(--foreground));
+    }
+    .ds-dd-item:hover { background: hsl(var(--background)); color: hsl(var(--primary)); }
+
+    /* —— Modal & tooltip —— */
+    .ds-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      z-index: var(--z-modal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity var(--duration-normal), visibility var(--duration-normal);
+    }
+    .ds-modal-backdrop.open { opacity: 1; visibility: visible; }
+    .ds-modal {
+      width: 100%;
+      max-width: 26rem;
+      border-radius: 0.75rem;
+      background: hsl(var(--muted));
+      border: 1px solid hsl(var(--border));
+      box-shadow: var(--shadow-xl);
+      padding: 1.25rem;
+      transform: scale(0.96);
+      transition: transform var(--duration-normal) var(--ease-out);
+    }
+    .ds-modal-backdrop.open .ds-modal { transform: scale(1); }
+    .ds-modal h4 { margin: 0 0 0.5rem; font-size: 1.1rem; }
+    .ds-modal p { margin: 0 0 1rem; font-size: 0.875rem; color: hsl(var(--muted-foreground)); line-height: 1.5; }
+    .ds-modal-actions { display: flex; gap: 0.5rem; justify-content: flex-end; flex-wrap: wrap; }
+
+    .ds-tooltip-host {
+      position: relative;
+      display: inline-block;
+      border-bottom: 1px dotted hsl(var(--muted-foreground));
+      cursor: help;
+      font-size: 0.875rem;
+      color: hsl(var(--foreground));
+    }
+    .ds-tooltip-host::after {
+      content: attr(data-tip);
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%) translateY(4px);
+      padding: 0.35rem 0.5rem;
+      font-size: 0.7rem;
+      white-space: nowrap;
+      background: hsl(var(--foreground));
+      color: hsl(var(--background));
+      border-radius: 0.35rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--duration-fast), transform var(--duration-fast);
+      z-index: var(--z-dropdown);
+    }
+    .ds-tooltip-host:hover::after {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* —— Mídia: avatar & aspect ratio —— */
+    .ds-avatar-row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 1rem; }
+    .ds-avatar {
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--brand-500), var(--brand-300));
+      color: hsl(var(--primary-foreground));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.75rem;
+      border: 2px solid hsl(var(--border));
+    }
+    .ds-avatar.sm { width: 2rem; height: 2rem; font-size: 0.65rem; }
+    .ds-avatar.md { width: 2.5rem; height: 2.5rem; }
+    .ds-avatar.lg { width: 3.5rem; height: 3.5rem; font-size: 0.9rem; }
+
+    .ds-aspect {
+      position: relative;
+      width: 100%;
+      max-width: 20rem;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      background: hsl(var(--muted));
+      border: 1px solid hsl(var(--border));
+    }
+    .ds-aspect::before {
+      content: "";
+      display: block;
+      padding-bottom: 56.25%;
+    }
+    .ds-aspect-inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      color: hsl(var(--muted-foreground));
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* —— Chat agente (layout Ellie, cores só preto + vermelho) —— */
+    .bf-chat-wrap {
+      display: flex;
+      justify-content: center;
+      padding: 0.5rem 0;
+    }
+    .bf-chat-shell {
+      width: 100%;
+      max-width: 48rem;
+      border-radius: 24px;
+      border: 1px solid var(--chat-border-subtle);
+      background: var(--chat-bg);
+      box-shadow:
+        var(--shadow-xl),
+        0 0 0 1px var(--accent-border),
+        0 0 48px -16px rgba(220, 38, 38, 0.35);
+      overflow: hidden;
+    }
+    .bf-chat-header {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--accent-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--chat-bg);
+    }
+    .bf-chat-logo {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: hsl(var(--foreground));
+    }
+    .bf-chat-hero {
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      background: var(--chat-bg);
+    }
+    .bf-chat-hero p {
+      margin: 0;
+      font-size: clamp(1.35rem, 3vw, 1.75rem);
+      font-weight: 500;
+      color: hsl(var(--foreground));
+      line-height: 1.25;
+    }
+    .bf-chat-hero .bf-em {
+      font-weight: 700;
+      background-image: linear-gradient(100deg, #f87171, hsl(var(--foreground)));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .bf-chat-form-area {
+      padding: 1rem 1.5rem 0;
+      background: var(--chat-bg);
+    }
+    .bf-chat-form {
+      position: relative;
+    }
+    .bf-mic-btn {
+      position: absolute;
+      left: 0.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      padding: 0.5rem;
+      border: none;
+      border-radius: 9999px;
+      background: var(--accent-soft);
+      color: #f87171;
+      cursor: pointer;
+      transition: background var(--duration-normal);
+    }
+    .bf-mic-btn:hover { background: var(--accent-mid); }
+    .bf-chat-input {
+      width: 100%;
+      padding: 0.65rem 3.25rem;
+      min-height: 44px;
+      max-height: 100px;
+      border: 1px solid rgba(220, 38, 38, 0.28);
+      border-radius: 1rem;
+      background: var(--chat-bg);
+      color: hsl(var(--foreground));
+      font-size: 1rem;
+      font-family: inherit;
+      resize: none;
+      transition: border-color var(--duration-normal), box-shadow var(--duration-normal);
+    }
+    .bf-chat-input::placeholder { color: var(--chat-placeholder); }
+    .bf-chat-input:focus {
+      outline: none;
+      border-color: rgba(220, 38, 38, 0.55);
+      box-shadow: 0 0 0 1px rgba(220, 38, 38, 0.3), 0 0 28px -6px rgba(220, 38, 38, 0.5);
+    }
+    .bf-send-btn {
+      position: absolute;
+      right: 0.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      padding: 0.5rem;
+      border: 1px solid hsl(var(--border));
+      border-radius: 9999px;
+      background: hsl(var(--muted));
+      color: hsl(var(--foreground));
+      cursor: pointer;
+      transition: background var(--duration-normal), opacity var(--duration-normal), border-color var(--duration-normal);
+    }
+    .bf-send-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+    .bf-send-btn:not(:disabled):hover { background: hsl(var(--border)); }
+    .bf-chat-foot {
+      padding: 0.75rem 1rem;
+      text-align: center;
+      font-size: 0.7rem;
+      line-height: 1.45;
+      color: var(--chat-placeholder);
+      border-top: 1px solid var(--accent-border);
+      background: var(--chat-bg);
+    }
+
+    /* —— Assinatura Atomic Flow (componentes para diferenciar o site) —— */
+    .af-bento {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 0.75rem;
+    }
+    @media (max-width: 700px) {
+      .af-bento { grid-template-columns: 1fr; }
+      .af-bento-cell--hero { grid-row: auto; min-height: auto; }
+    }
+    .af-bento-cell {
+      border-radius: 1rem;
+      border: 1px solid hsl(var(--border));
+      background: hsl(var(--background));
+      padding: 1.2rem 1.25rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color var(--duration-normal), box-shadow var(--duration-normal);
+    }
+    .af-bento-cell:hover {
+      border-color: hsl(var(--primary) / 0.45);
+      box-shadow: 0 0 0 1px hsl(var(--primary) / 0.12), 0 20px 48px -24px rgba(220, 38, 38, 0.35);
+    }
+    .af-bento-cell--hero {
+      grid-row: span 2;
+      min-height: 10.5rem;
+      background: linear-gradient(155deg, hsl(var(--muted)) 0%, hsl(var(--background)) 70%);
+    }
+    .af-bento-cell--hero::before {
+      content: "";
+      position: absolute;
+      top: -35%;
+      right: -25%;
+      width: 70%;
+      height: 90%;
+      background: radial-gradient(ellipse, hsl(var(--primary) / 0.16), transparent 68%);
+      pointer-events: none;
+    }
+    .af-bento-cell--hero > * { position: relative; z-index: 1; }
+    .af-bento-kicker {
+      font-size: 0.625rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: hsl(var(--primary));
+      margin-bottom: 0.45rem;
+    }
+    .af-bento-title {
+      font-family: var(--font-display);
+      font-size: 1.45rem;
+      font-weight: 700;
+      line-height: 1.12;
+      margin: 0 0 0.4rem;
+    }
+    .af-bento-meta { font-size: 0.8125rem; color: hsl(var(--muted-foreground)); margin: 0; line-height: 1.45; }
+
+    .af-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 0.85rem;
+      margin-top: 1.15rem;
+    }
+    .af-stat {
+      border-radius: 0.75rem;
+      border: 1px solid hsl(var(--border));
+      padding: 0.95rem 1rem;
+      background: hsl(var(--background));
+    }
+    .af-stat-val {
+      font-family: var(--font-display);
+      font-size: 1.85rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      background: linear-gradient(115deg, var(--fusion-from), var(--fusion-mid), var(--fusion-to));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .af-stat-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: hsl(var(--muted-foreground));
+      margin-top: 0.4rem;
+    }
+    .af-stat-note { font-size: 0.72rem; color: hsl(var(--muted-foreground)); opacity: 0.85; margin-top: 0.3rem; }
+
+    .af-terminal {
+      border-radius: 0.75rem;
+      border: 1px solid hsl(var(--border));
+      background: hsl(0 0% 3.5%);
+      font-family: ui-monospace, "SF Mono", Consolas, monospace;
+      font-size: 0.76rem;
+      line-height: 1.5;
+      overflow: hidden;
+      text-align: left;
+    }
+    .af-terminal-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.45rem 0.75rem;
+      background: hsl(var(--muted));
+      border-bottom: 1px solid hsl(var(--border));
+    }
+    .af-terminal-dot { width: 0.45rem; height: 0.45rem; border-radius: 50%; background: hsl(var(--primary)); opacity: 0.9; }
+    .af-terminal-dot:nth-child(2) { background: hsl(var(--muted-foreground)); opacity: 0.45; }
+    .af-terminal-dot:nth-child(3) { opacity: 0.28; background: hsl(var(--muted-foreground)); }
+    .af-terminal-title { flex: 1; text-align: center; font-size: 0.62rem; color: hsl(var(--muted-foreground)); letter-spacing: 0.06em; }
+    .af-terminal-body { padding: 1rem 1rem 1.15rem; color: #d4d4d4; }
+    .af-terminal-body .af-prompt { color: hsl(var(--primary)); font-weight: 600; }
+    .af-terminal-body .af-muted { color: hsl(var(--muted-foreground)); }
+
+    .af-timeline {
+      border-left: 2px solid hsl(var(--border));
+      margin-left: 0.55rem;
+      padding: 0.15rem 0 0.15rem 1.2rem;
+    }
+    .af-tl-item { position: relative; padding-bottom: 1.3rem; }
+    .af-tl-item:last-child { padding-bottom: 0; }
+    .af-tl-item::before {
+      content: "";
+      position: absolute;
+      left: calc(-1.2rem - 6px);
+      top: 0.35rem;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: hsl(var(--background));
+      border: 2px solid hsl(var(--primary));
+      box-shadow: 0 0 14px hsl(var(--primary) / 0.4);
+    }
+    .af-tl-date {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: hsl(var(--primary));
+    }
+    .af-tl-title { font-weight: 600; margin: 0.2rem 0 0.15rem; font-size: 0.9375rem; }
+    .af-tl-desc { font-size: 0.8125rem; color: hsl(var(--muted-foreground)); margin: 0; line-height: 1.5; }
+
+    .af-quote {
+      margin: 0;
+      padding: 1.2rem 1.2rem 1.2rem 1.45rem;
+      border-left: 4px solid hsl(var(--primary));
+      background: linear-gradient(90deg, hsl(var(--primary) / 0.09), transparent);
+      border-radius: 0 0.75rem 0.75rem 0;
+      font-size: 1.02rem;
+      font-style: italic;
+      line-height: 1.55;
+      color: hsl(var(--foreground));
+      box-shadow: inset 0 0 40px hsl(var(--primary) / 0.04);
+    }
+    .af-quote cite {
+      display: block;
+      margin-top: 0.7rem;
+      font-size: 0.74rem;
+      font-style: normal;
+      font-weight: 600;
+      color: hsl(var(--muted-foreground));
+    }
+
+    .af-glass-strip {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.65rem;
+      padding: 0.55rem 1rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.035);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+    .af-glass-strip p { margin: 0; font-size: 0.8125rem; color: hsl(var(--foreground)); }
+
+    .af-stack { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+    .af-stack-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.32rem 0.7rem;
+      border-radius: 0.35rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      font-family: ui-monospace, monospace;
+      border: 1px solid hsl(var(--border));
+      background: hsl(var(--background));
+      color: hsl(var(--muted-foreground));
+      transition: border-color var(--duration-fast), color var(--duration-fast), transform var(--duration-fast);
+    }
+    .af-stack-pill:hover {
+      border-color: hsl(var(--primary) / 0.55);
+      color: #f87171;
+      transform: translateY(-2px);
+    }
+
+    .af-tiers {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 1rem;
+      align-items: stretch;
+    }
+    .af-tier {
+      border-radius: 1rem;
+      border: 1px solid hsl(var(--border));
+      background: hsl(var(--background));
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+    }
+    .af-tier--featured {
+      border-color: hsl(var(--primary) / 0.5);
+      background: linear-gradient(175deg, hsl(var(--primary) / 0.14), hsl(var(--background)));
+      box-shadow: 0 0 0 1px hsl(var(--primary) / 0.18), 0 26px 56px -28px rgba(220, 38, 38, 0.45);
+    }
+    @media (min-width: 768px) {
+      .af-tier--featured { transform: scale(1.02); }
+    }
+    .af-tier-badge {
+      align-self: flex-start;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.45rem;
+      border-radius: 0.25rem;
+      background: hsl(var(--primary) / 0.2);
+      color: #f87171;
+      margin-bottom: 0.35rem;
+    }
+    .af-tier-name { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: hsl(var(--muted-foreground)); }
+    .af-tier-price { font-family: var(--font-display); font-size: 1.85rem; font-weight: 700; margin: 0.4rem 0 0.15rem; }
+    .af-tier-price small { font-size: 0.8rem; font-weight: 500; color: hsl(var(--muted-foreground)); }
+    .af-tier ul { margin: 0 0 1rem; padding-left: 1rem; font-size: 0.78rem; color: hsl(var(--muted-foreground)); flex: 1; line-height: 1.55; }
+    .af-tier .btn-primary { width: 100%; justify-content: center; margin-top: auto; }
+
+    .af-ring-wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 1.25rem; }
+    .af-ring {
+      --af-p: 78;
+      width: 5.25rem;
+      height: 5.25rem;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .af-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+    .af-ring-bg { fill: none; stroke: hsl(var(--border)); stroke-width: 5; }
+    .af-ring-fg {
+      fill: none;
+      stroke: hsl(var(--primary));
+      stroke-width: 5;
+      stroke-linecap: round;
+      stroke-dasharray: 251.33;
+      stroke-dashoffset: calc(251.33 * (1 - var(--af-p) / 100));
+      transition: stroke-dashoffset 1.2s var(--ease-out);
+    }
+    .af-ring-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+    .af-ring-text small {
+      font-size: 0.55rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: hsl(var(--muted-foreground));
+      margin-top: 0.15rem;
+    }
+    #af-ring-demo { --af-p: 0; }
+  </style>
+</head>
+<body>
+  <nav class="page-nav" aria-label="Índice">
+    <div class="page-nav-inner">
+      <a href="#start" class="page-nav-brand">Atomic Flow · DS</a>
+      <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+        <a href="#start">Início</a>
+        <a href="#marca-atomic">Marca</a>
+        <a href="#fusao">Fusão</a>
+        <a href="#cores">Cores</a>
+        <a href="#tipo">Tipografia</a>
+        <a href="#espaco">Espaço & radius</a>
+        <a href="#containers">Containers</a>
+        <a href="#layouts">Layouts</a>
+        <a href="#icones">Ícones</a>
+        <a href="#principios">Princípios</a>
+        <a href="#tokens-extra">Elevação</a>
+        <a href="#formularios">Forms</a>
+        <a href="#feedback">Feedback</a>
+        <a href="#dados">Dados</a>
+        <a href="#nav-ui">Nav</a>
+        <a href="#overlays">Modais</a>
+        <a href="#midia">Mídia</a>
+        <a href="#chat-agente">Chat IA</a>
+        <a href="#assinatura-af">Assinatura</a>
+        <a href="#componentes">Mais UI</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <header id="start" class="ds-fusion-hero af-hero-bf">
+      <p class="af-hero-kicker">IA · automação · sistemas sob medida</p>
+      <h1 class="af-hero-title">
+        Fazemos <em class="af-hero-em">agentes e sistemas</em> trabalharem por você
+      </h1>
+      <p class="af-hero-lead">
+        Transformamos operações em empresas <strong>AI-first</strong>: do diagnóstico ao deploy — integrações, fluxos com <strong>n8n</strong>, agentes e backends em <strong>TypeScript</strong> / <strong>Spring</strong> / <strong>PostgreSQL</strong>.
+      </p>
+      <div class="af-hero-actions">
+        <a class="af-hero-cta" href="#marca-atomic">
+          Entender como funciona
+          <span class="af-hero-cta-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+      <p class="af-hero-micro">
+        Agende uma <strong>conversa rápida</strong> para alinhar expectativas.
+        <a class="af-hero-link-subtle" href="https://atomicflow.com.br" target="_blank" rel="noopener noreferrer">atomicflow.com.br</a>
+      </p>
+      <div class="af-hero-social" aria-label="Áreas de atuação">
+        <p class="af-hero-social-label">Onde a Atomic Flow costuma entrar</p>
+        <div class="af-hero-logo-row">
+          <span class="af-hero-logo-pill">Logística</span>
+          <span class="af-hero-logo-pill">E-commerce</span>
+          <span class="af-hero-logo-pill">Operações</span>
+          <span class="af-hero-logo-pill">Vendas &amp; CRM</span>
+        </div>
+      </div>
+    </header>
+
+    <section id="marca-atomic">
+      <h2>Atomic Flow — posicionamento</h2>
+      <h3>Visão geral</h3>
+      <p style="font-size: 0.9375rem; color: hsl(var(--muted-foreground)); max-width: 48rem; margin: 0 0 1.5rem;">
+        O nome evoca <strong>precisão atômica</strong> e <strong>fluxo contínuo</strong> nos processos — ideal para negócios que buscam automatizar sem perder controle. O posicionamento: <strong>inovação com IA</strong> aplicada a processos reais, com entregas em roadmaps claros (MVP → escala).
+      </p>
+      <h3>Áreas principais</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; margin-bottom: 1.75rem;">
+        <div style="border-radius: 0.75rem; border: 1px solid hsl(var(--border)); padding: 1.25rem; background: hsl(var(--muted));">
+          <div style="font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: hsl(var(--primary)); margin-bottom: 0.5rem;">IA &amp; automação</div>
+          <p style="margin: 0; font-size: 0.875rem; color: hsl(var(--muted-foreground)); line-height: 1.55;">
+            Chatbots e agentes, qualificação de leads, fluxos de trabalho que reduzem tarefas manuais e antecipam comportamentos.
+          </p>
+        </div>
+        <div style="border-radius: 0.75rem; border: 1px solid hsl(var(--border)); padding: 1.25rem; background: hsl(var(--muted));">
+          <div style="font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: hsl(var(--primary)); margin-bottom: 0.5rem;">Sistemas personalizados</div>
+          <p style="margin: 0; font-size: 0.875rem; color: hsl(var(--muted-foreground)); line-height: 1.55;">
+            Plataformas sob medida com integrações (CRM, WhatsApp, ERPs). Stack de referência: <strong>TypeScript</strong>, <strong>Spring Boot</strong>, <strong>PostgreSQL</strong> — alinhada a perfil full-stack.
+          </p>
+        </div>
+        <div style="border-radius: 0.75rem; border: 1px solid hsl(var(--border)); padding: 1.25rem; background: hsl(var(--muted));">
+          <div style="font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: hsl(var(--primary)); margin-bottom: 0.5rem;">Marketing para vendas</div>
+          <p style="margin: 0; font-size: 0.875rem; color: hsl(var(--muted-foreground)); line-height: 1.55;">
+            Campanhas com IA para personalização, upsell/cross-sell e melhor <strong>ROI</strong> em anúncios e nutrição de funil.
+          </p>
+        </div>
+      </div>
+      <h3>Próximos passos sugeridos</h3>
+      <ul style="margin: 0 0 0 1.1rem; padding: 0; font-size: 0.875rem; color: hsl(var(--muted-foreground)); max-width: 44rem; line-height: 1.65;">
+        <li style="margin-bottom: 0.35rem;">Registrar <strong>atomicflow.com.br</strong> e publicar site com cases iniciais.</li>
+        <li style="margin-bottom: 0.35rem;">Focar MVPs em nichos fortes — ex.: <strong>logística</strong> (expertise operacional) ou <strong>e-commerce</strong>.</li>
+        <li>Protótipos rápidos com <strong>n8n</strong>, <strong>Ollama</strong> e ecosistema open-source compatível.</li>
+      </ul>
+    </section>
+
+    <section id="fusao">
+      <h2>Fusão estrutural (tokens)</h2>
+      <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); max-width: 44rem; margin: -0.5rem 0 1.25rem;">
+        O <strong>hero principal</strong> segue o padrão de <a href="https://www.brabaflow.ai/" rel="noopener noreferrer" class="af-hero-link-subtle">Brabaflow</a>: linha em caps (eyebrow), título display com trecho em ênfase, parágrafo de apoio, CTA como <strong>link com seta</strong>, microcopy com negrito e faixa de confiança abaixo. A ênfase no título usa gradiente só em <strong>vermelho</strong> (<code>--fusion-from</code> → <code>--fusion-to</code>), não a paleta dourada do site de referência.
+      </p>
+      <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: stretch; margin-bottom: 1.5rem;">
+        <div style="flex: 1 1 220px; border-radius: 0.75rem; border: 1px solid hsl(var(--border)); padding: 1.25rem; background: hsl(var(--muted));">
+          <div style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: hsl(var(--muted-foreground)); margin-bottom: 0.75rem;">Preview hero</div>
+          <div style="font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; line-height: 1.15; margin-bottom: 0.5rem;">
+            Da <em style="font-style: italic; opacity: 0.95;">automação</em> ao <span class="text-gradient-fusion">crescimento com IA</span>
+          </div>
+          <p style="margin: 0; font-size: 0.8125rem; color: hsl(var(--muted-foreground));">Padrão de hero Atomic Flow: itálico + span em gradiente vermelho.</p>
+        </div>
+        <div style="flex: 1 1 200px; border-radius: 0.75rem; border: 1px solid hsl(var(--border)); overflow: hidden;">
+          <div style="height: 72px; background: linear-gradient(120deg, var(--fusion-from) 0%, var(--fusion-mid) 45%, var(--brand-500) 100%);"></div>
+          <div style="padding: 1rem; font-size: 0.75rem; color: hsl(var(--muted-foreground)); background: hsl(var(--muted));">
+            <strong style="color: hsl(var(--foreground)); display: block; margin-bottom: 0.35rem;">--fusion-from → --fusion-to</strong>
+            Uso: headlines, ênfase em hero, detalhes do widget — sempre em escala vermelha.
+          </div>
+        </div>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+        <span class="tag-accent-light">Estratégia</span>
+        <span style="display: inline-flex; padding: 0.25rem 0.65rem; border-radius: 9999px; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.85); border: 1px solid rgba(255,255,255,0.12);">Roadmap</span>
+        <span class="tag-huios">CTA primário</span>
+      </div>
+    </section>
+
+    <section id="cores">
+      <h2>Cores</h2>
+      <h3>Semânticas (HSL — shadcn)</h3>
+      <div class="grid-colors">
+        <div class="swatch">
+          <div class="swatch-top" style="background: hsl(0 0% 2.5%);"></div>
+          <div class="swatch-meta"><strong>background</strong>0 0% 2.5%</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-top" style="background: hsl(0 84% 55%);"></div>
+          <div class="swatch-meta"><strong>primary</strong>0 84% 55%</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-top" style="background: hsl(0 0% 100%); border: 1px solid #333;"></div>
+          <div class="swatch-meta"><strong>primary-foreground</strong>branco</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-top" style="background: hsl(0 0% 55%);"></div>
+          <div class="swatch-meta"><strong>muted-foreground</strong>0 0% 55%</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-top" style="background: hsl(0 0% 11%);"></div>
+          <div class="swatch-meta"><strong>muted</strong>0 0% 11%</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-top" style="background: hsl(0 0% 16%);"></div>
+          <div class="swatch-meta"><strong>border</strong>0 0% 16%</div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-top" style="background: hsl(0 84% 55%); box-shadow: inset 0 0 0 2px hsl(var(--foreground));"></div>
+          <div class="swatch-meta"><strong>ring</strong>= primary</div>
+        </div>
+      </div>
+
+      <h3>Marca (hex)</h3>
+      <div class="grid-colors">
+        <div class="swatch"><div class="swatch-top" style="background: #b91c1c;"></div><div class="swatch-meta"><strong>brand.600</strong>#B91C1C</div></div>
+        <div class="swatch"><div class="swatch-top" style="background: #dc2626;"></div><div class="swatch-meta"><strong>brand.500</strong>#DC2626</div></div>
+        <div class="swatch"><div class="swatch-top" style="background: #ef4444;"></div><div class="swatch-meta"><strong>brand.400</strong>#EF4444</div></div>
+        <div class="swatch"><div class="swatch-top" style="background: #f87171;"></div><div class="swatch-meta"><strong>brand.300</strong>#F87171</div></div>
+        <div class="swatch"><div class="swatch-top" style="background: #fecaca;"></div><div class="swatch-meta"><strong>brand.200</strong>#FECACA</div></div>
+        <div class="swatch"><div class="swatch-top" style="background: linear-gradient(158deg, #0a0a0a, #040404);"></div><div class="swatch-meta"><strong>gradient dark</strong>neutro preto</div></div>
+        <div class="swatch"><div class="swatch-top" style="background: linear-gradient(105deg, #fecaca, #f87171, #dc2626);"></div><div class="swatch-meta"><strong>text-gradient-fusion</strong>vermelho claro → escuro</div></div>
+      </div>
+    </section>
+
+    <section id="tipo">
+      <h2>Tipografia</h2>
+      <div class="type-row">
+        <span class="type-label">ui / body</span>
+        <span style="font-family: var(--font-sans); font-size: 1rem; font-weight: 500;">Geist — UI Atomic Flow (menus, formulários, agentes); fallback Inter.</span>
+      </div>
+      <div class="type-row">
+        <span class="type-label">display / hero</span>
+        <span style="font-family: var(--font-display); font-size: 1.65rem; font-weight: 700; line-height: 1.12;">
+          <span class="text-gradient-fusion">Atomic Flow</span> — software &amp; IA sob medida
+        </span>
+      </div>
+      <div class="type-row">
+        <span class="type-label">heading.section</span>
+        <span style="font-size: 1.875rem; font-weight: 700;">text-3xl md:text-4xl font-bold</span>
+      </div>
+      <div class="type-row">
+        <span class="type-label">body.md</span>
+        <span style="font-size: 1rem; color: hsl(var(--muted-foreground)); max-width: 36rem;">text-base leading-relaxed — parágrafo de apoio em secções escuras ou claras.</span>
+      </div>
+      <div class="type-row">
+        <span class="type-label">body.sm</span>
+        <span style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">text-sm text-gray-500</span>
+      </div>
+      <div class="type-row">
+        <span class="type-label">overline</span>
+        <span style="font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: hsl(var(--muted-foreground));">FAQ · portfólio</span>
+      </div>
+    </section>
+
+    <section id="espaco">
+      <h2>Espaçamento & radius</h2>
+      <div class="space-pills">
+        <div class="space-pill"><span class="space-box" style="width: 16px; height: 16px;"></span> px-4 (16px)</div>
+        <div class="space-pill"><span class="space-box" style="width: 24px; height: 24px;"></span> md:px-6</div>
+        <div class="space-pill"><span class="space-box" style="width: 32px; height: 32px;"></span> lg:px-8</div>
+        <div class="space-pill"><span class="space-box" style="width: 64px; height: 16px;"></span> py-20 secção</div>
+      </div>
+      <h3>Radius</h3>
+      <div class="space-pills" style="align-items: flex-end;">
+        <div class="space-pill" style="flex-direction: column; align-items: flex-start;">
+          <span class="space-box" style="width: 48px; height: 32px; border-radius: 0.375rem;"></span> md
+        </div>
+        <div class="space-pill" style="flex-direction: column; align-items: flex-start;">
+          <span class="space-box" style="width: 48px; height: 32px; border-radius: 0.75rem;"></span> xl
+        </div>
+        <div class="space-pill" style="flex-direction: column; align-items: flex-start;">
+          <span class="space-box" style="width: 48px; height: 32px; border-radius: 1rem;"></span> 2xl
+        </div>
+        <div class="space-pill" style="flex-direction: column; align-items: flex-start;">
+          <span class="space-box" style="width: 80px; height: 32px; border-radius: 100px;"></span> pill
+        </div>
+      </div>
+    </section>
+
+    <section id="principios">
+      <h2>Princípios & acessibilidade</h2>
+      <div class="principles-grid">
+        <div class="principle-card"><strong>Uma ação primária</strong>Por ecrã ou modal: um botão principal (filled). Secundários como outline ou texto.</div>
+        <div class="principle-card"><strong>Hierarquia clara</strong>Título → subtítulo → corpo. Não saltar níveis de heading (h1 → h3 sem h2).</div>
+        <div class="principle-card"><strong>Feedback imediato</strong>Loading, erro e sucesso visíveis. Não depender só de cor — ícone + texto.</div>
+        <div class="principle-card"><strong>Foco visível</strong>Anel <code>2px</code> na cor <code>ring</code> (primária). Nunca <code>outline: none</code> sem substituto.</div>
+        <div class="principle-card"><strong>Contraste</strong>Texto normal: mín. <strong>4.5:1</strong> sobre o fundo. Grande (18px+): <strong>3:1</strong>. Validar <code>#dc2626</code> com branco em botões (ferramentas WCAG).</div>
+        <div class="principle-card"><strong>Modo claro em formulários</strong>Inputs e tabelas sobre fundo branco para legibilidade; tema escuro no resto do app se quiseres.</div>
+      </div>
+      <h3>Do / não fazer</h3>
+      <div class="do-dont">
+        <div class="do-box"><strong>✓</strong> Label visível + <code>htmlFor</code> / <code>id</code> ligado ao campo.</div>
+        <div class="dont-box"><strong>✗</strong> Placeholder como único “label”. Some ao preencher.</div>
+        <div class="do-box"><strong>✓</strong> Mensagem de erro abaixo do campo, associada com <code>aria-describedby</code>.</div>
+        <div class="dont-box"><strong>✗</strong> Vários primários filled da mesma cor no mesmo bloco.</div>
+      </div>
+    </section>
+
+    <section id="tokens-extra">
+      <h2>Elevação, motion, z-index, breakpoints</h2>
+      <h3>Sombras (superfície escura)</h3>
+      <div class="shadow-row">
+        <div class="shadow-card sm">sm</div>
+        <div class="shadow-card md">md</div>
+        <div class="shadow-card lg">lg</div>
+        <div class="shadow-card xl">xl</div>
+      </div>
+      <p style="font-size: 0.75rem; color: hsl(var(--muted-foreground)); margin: 0 0 1rem;">Cards flutuantes: <code>md–lg</code>. Modais: <code>xl</code>. Listas densas: <code>sm</code> ou só borda.</p>
+      <h3>Motion</h3>
+      <table class="token-table">
+        <thead><tr><th>Token</th><th>Valor</th><th>Uso</th></tr></thead>
+        <tbody>
+          <tr><td><code>--duration-fast</code></td><td>150ms</td><td>Hover em chips, ícones</td></tr>
+          <tr><td><code>--duration-normal</code></td><td>200ms</td><td>Bordas, cores, opacidade</td></tr>
+          <tr><td><code>--duration-slow</code></td><td>300ms</td><td>Acordeão, painéis, progresso</td></tr>
+          <tr><td><code>--ease-out</code></td><td>cubic-bezier(0.33,1,0.68,1)</td><td>Entradas de UI</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size: 0.75rem; color: hsl(var(--muted-foreground));">Preferir animar <code>opacity</code> e <code>transform</code> (GPU). Evitar animar <code>height: auto</code> em listas longas sem medida fixa.</p>
+      <h3>Z-index</h3>
+      <table class="token-table">
+        <thead><tr><th>Token</th><th>Nível</th><th>Conteúdo</th></tr></thead>
+        <tbody>
+          <tr><td><code>--z-sticky</code></td><td>40</td><td>Header sticky, colunas fixas</td></tr>
+          <tr><td><code>--z-dropdown</code></td><td>1000</td><td>Menus, popovers, tooltips ricos</td></tr>
+          <tr><td><code>--z-modal</code></td><td>2000</td><td>Diálogos, drawers fullscreen</td></tr>
+          <tr><td><code>--z-toast</code></td><td>3000</td><td>Notificações globais</td></tr>
+        </tbody>
+      </table>
+      <h3>Breakpoints (Tailwind)</h3>
+      <table class="token-table">
+        <thead><tr><th>Nome</th><th>Mínimo</th><th>Notas</th></tr></thead>
+        <tbody>
+          <tr><td><code>sm</code></td><td>640px</td><td>Grids 2 col, mais espaço horizontal</td></tr>
+          <tr><td><code>md</code></td><td>768px</td><td>Nav desktop, formulário em 2 col</td></tr>
+          <tr><td><code>lg</code></td><td>1024px</td><td>Sidebar fixa, tabelas confortáveis</td></tr>
+          <tr><td><code>xl</code></td><td>1280px</td><td>Max width ampla, dashboards</td></tr>
+          <tr><td><code>2xl</code></td><td>1536px</td><td>Ultra-wide — não forçar largura de texto</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="containers">
+      <h2>Containers</h2>
+      <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); max-width: 40rem; margin: -0.5rem 0 1rem;">
+        Padrão: <code style="color: hsl(var(--primary));">width: 100%; margin-inline: auto; padding-inline: 1rem → 1.5rem → 2rem</code> (sm / md / lg). Use um único token de largura máxima por página ou secção.
+      </p>
+      <h3>Larguras máximas (max-width)</h3>
+      <div class="container-ruler">
+        <div class="container-bar" style="max-width: var(--container-2xl);"><strong>2xl</strong>42rem · 672px · texto / formulário estreito</div>
+        <div class="container-bar" style="max-width: var(--container-3xl);"><strong>3xl</strong>48rem · 768px · cabeçalhos centrados</div>
+        <div class="container-bar" style="max-width: var(--container-4xl);"><strong>4xl</strong>56rem · 896px · CTA / artigos</div>
+        <div class="container-bar" style="max-width: var(--container-5xl);"><strong>5xl</strong>64rem · 1024px · secções marketing (padrão)</div>
+        <div class="container-bar" style="max-width: var(--container-6xl);"><strong>6xl</strong>72rem · 1152px · header / grids amplos</div>
+        <div class="container-bar" style="max-width: var(--container-7xl);"><strong>7xl</strong>80rem · 1280px · dashboards / dados</div>
+      </div>
+      <h3>Shell de secção (exemplo)</h3>
+      <div class="shell-section">
+        <div class="shell-section-h">Section · py-20 md:py-28 · fundo herdado</div>
+        <div class="shell-section-b">
+          <div class="shell-inner">.container.mx-auto.max-w-5xl.px-4.md:px-6.lg:px-8 — conteúdo alinhado</div>
+        </div>
+      </div>
+      <h3>Área de logo (placeholder)</h3>
+      <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;">
+        <div class="logo-slot header">Logo header<br />32×40 md:40×48</div>
+        <div class="logo-slot footer">Logo footer<br />40×8 md:48×12</div>
+      </div>
+    </section>
+
+    <section id="layouts">
+      <h2>Layouts</h2>
+      <h3>Grid 50 / 50 (md+)</h3>
+      <div class="layout-demo split-2">
+        <div class="layout-cell"><strong>Col A</strong>Conteúdo principal, formulário, texto.</div>
+        <div class="layout-cell"><strong>Col B</strong>Imagem, ilustração, aside.</div>
+      </div>
+      <h3>Grid assimétrico (FAQ / marketing)</h3>
+      <div class="layout-demo asymmetric">
+        <div class="layout-cell"><strong>0.9fr</strong>Intro, card fixo, CTA lateral.</div>
+        <div class="layout-cell"><strong>1.1fr</strong>Lista longa, accordion, tabela.</div>
+      </div>
+      <h3>Divisor & estado vazio</h3>
+      <div class="divider-demo" aria-hidden="true"></div>
+      <div class="empty-state-demo">
+        <svg class="ds-icon size-6" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        Nenhum registo encontrado.<br />
+        <span style="font-size: 0.75rem; opacity: 0.85;">Ícone 24px + mensagem + ação opcional</span>
+      </div>
+    </section>
+
+    <section id="icones">
+      <h2>Ícones SVG</h2>
+      <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); max-width: 42rem; margin: -0.5rem 0 0.75rem;">
+        Biblioteca recomendada: <strong>Lucide</strong> (ou Heroicons outline). Manter o mesmo vocabulário em todo o produto.
+      </p>
+      <h3>Contrato do SVG</h3>
+      <ul style="margin: 0 0 1rem; padding-left: 1.25rem; font-size: 0.8rem; color: hsl(var(--muted-foreground)); line-height: 1.7;">
+        <li><code style="color: hsl(var(--foreground));">fill="none"</code> · <code style="color: hsl(var(--foreground));">stroke="currentColor"</code> — cor vem do CSS (<code>text-primary</code>, <code>text-muted</code>, etc.)</li>
+        <li><code style="color: hsl(var(--foreground));">stroke-width="2"</code> · <code>stroke-linecap="round"</code> · <code>stroke-linejoin="round"</code></li>
+        <li><code style="color: hsl(var(--foreground));">viewBox="0 0 24 24"</code> — redimensionar só com <code>width</code>/<code>height</code> ou classes de tamanho</li>
+        <li>Decorativos: <code>aria-hidden="true"</code>. Com significado: título em <code>&lt;title&gt;</code> ou <code>aria-label</code> no botão pai</li>
+      </ul>
+      <div class="icon-doc">&lt;svg class="ds-icon size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;...&lt;/svg&gt;</div>
+      <h3>Tamanhos (tokens)</h3>
+      <div class="icon-inline-row">
+        <span class="icon-inline-label">size-3<br />12px</span>
+        <div class="icon-inline-samples">
+          <svg class="ds-icon size-3" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+          <svg class="ds-icon size-3" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+      </div>
+      <div class="icon-inline-row">
+        <span class="icon-inline-label">size-3-5<br />14px</span>
+        <div class="icon-inline-samples">
+          <svg class="ds-icon size-3-5" viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        </div>
+      </div>
+      <div class="icon-inline-row">
+        <span class="icon-inline-label">size-4<br />16px</span>
+        <div class="icon-inline-samples">
+          <svg class="ds-icon size-4" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.81.36 1.61.7 2.39a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.78.34 1.58.57 2.39.7A2 2 0 0 1 22 16.92z"/></svg>
+          <svg class="ds-icon size-4" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+      </div>
+      <div class="icon-inline-row">
+        <span class="icon-inline-label">size-5<br />20px</span>
+        <div class="icon-inline-samples">
+          <svg class="ds-icon size-5" viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+        </div>
+      </div>
+      <div class="icon-inline-row">
+        <span class="icon-inline-label">size-6<br />24px</span>
+        <div class="icon-inline-samples">
+          <svg class="ds-icon size-6" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="14" x="2" y="3" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </div>
+      </div>
+      <h3>Catálogo (clique para copiar nome)</h3>
+      <p style="font-size: 0.75rem; color: hsl(var(--muted-foreground)); margin-bottom: 0.75rem;">Nomes alinhados a Lucide — use o mesmo no teu pacote <code>lucide-react</code> / <code>lucide-vue</code>.</p>
+      <div class="icon-grid" id="icon-catalog">
+        <button type="button" class="icon-cell" data-name="layout-dashboard" title="Copiar nome">
+          <span class="svg-wrap"><svg class="ds-icon size-5" viewBox="0 0 24 24" aria-hidden="true"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg></span>
+          <code>layout-dashboard</code>
+        </button>
+        <button type="button" class="icon-cell" data-name="users">
+          <span class="svg-wrap"><svg class="ds-icon size-5" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+          <code>users</code>
+        </button>
+        <button type="button" class="icon-cell" data-name="settings">
+          <span class="svg-wrap"><svg class="ds-icon size-5" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></span>
+          <code>settings</code>
+        </button>
+        <button type="button" class="icon-cell" data-name="mail">
+          <span class="svg-wrap"><svg class="ds-icon size-5" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
+          <code>mail</code>
+        </button>
+        <button type="button" class="icon-cell" data-name="bell">
+          <span class="svg-wrap"><svg class="ds-icon size-5" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.268 21a2 2 0 0 0 3.464 0M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M12 2v1"/></svg></span>
+          <code>bell</code>
+        </button>
+        <button type="button" class="icon-cell" data-name="file-text">
+          <span class="svg-wrap"><svg class="ds-icon size-5" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4M10 9H8M16 13H8M16 17H8"/></svg></span>
+          <code>file-text</code>
+        </button>
+        <button type="button" class="icon-cell" data-name="folder">
+          <span class="svg-wrap"><svg class="ds-icon size-5" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9l-.43-.6A2 2 0 0 0 7.07 4H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg></span>
+          <code>folder</code>
+        </button>
+        <button type="button" class="icon-cell" data-name="calendar">
+          <span class="svg-wrap"><svg class="ds-icon size-5" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 2v4M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg></span>
+          <code>calendar</code>
+        </button>
+        <button type="button" class="icon-cell" data-name="credit-card">
+          <span class="svg-wrap"><svg class="ds-icon size-5" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg></span>
+          <code>credit-card</code>
+        </button>
+        <button type="button" class="icon-cell" data-name="package">
+          <span class="svg-wrap"><svg class="ds-icon size-5" viewBox="0 0 24 24" aria-hidden="true"><path d="m7.5 4.27 9 5.15M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5M12 22V12"/></svg></span>
+          <code>package</code>
+        </button>
+        <button type="button" class="icon-cell" data-name="truck">
+          <span class="svg-wrap"><svg class="ds-icon size-5" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2M15 18H9M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14M2 8h4M6 18a2 2 0 1 1 4 0M16 18a2 2 0 1 1 4 0"/></svg></span>
+          <code>truck</code>
+        </button>
+        <button type="button" class="icon-cell" data-name="chart-column">
+          <span class="svg-wrap"><svg class="ds-icon size-5" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3v16a2 2 0 0 0 2 2h16M18 17V9M13 17V5M8 17v-3"/></svg></span>
+          <code>chart-column</code>
+        </button>
+        <button type="button" class="icon-cell" data-name="shield-check">
+          <span class="svg-wrap"><svg class="ds-icon size-5" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span>
+          <code>shield-check</code>
+        </button>
+        <button type="button" class="icon-cell" data-name="circle-check">
+          <span class="svg-wrap"><svg class="ds-icon size-5" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span>
+          <code>circle-check</code>
+        </button>
+        <button type="button" class="icon-cell" data-name="circle-alert">
+          <span class="svg-wrap"><svg class="ds-icon size-5" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></span>
+          <code>circle-alert</code>
+        </button>
+        <button type="button" class="icon-cell" data-name="sparkles">
+          <span class="svg-wrap"><svg class="ds-icon size-5" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4M22 5h-4M4 17v2M5 18H3"/></svg></span>
+          <code>sparkles</code>
+        </button>
+        <button type="button" class="icon-cell" data-name="menu">
+          <span class="svg-wrap"><svg class="ds-icon size-5" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16M4 6h16M4 18h16"/></svg></span>
+          <code>menu</code>
+        </button>
+        <button type="button" class="icon-cell" data-name="x">
+          <span class="svg-wrap"><svg class="ds-icon size-5" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></span>
+          <code>x</code>
+        </button>
+        <button type="button" class="icon-cell" data-name="chevron-right">
+          <span class="svg-wrap"><svg class="ds-icon size-5" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span>
+          <code>chevron-right</code>
+        </button>
+        <button type="button" class="icon-cell" data-name="external-link">
+          <span class="svg-wrap"><svg class="ds-icon size-5" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg></span>
+          <code>external-link</code>
+        </button>
+        <button type="button" class="icon-cell" data-name="download">
+          <span class="svg-wrap"><svg class="ds-icon size-5" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5"/></svg></span>
+          <code>download</code>
+        </button>
+        <button type="button" class="icon-cell" data-name="upload">
+          <span class="svg-wrap"><svg class="ds-icon size-5" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 8l5-5 5 5M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/></svg></span>
+          <code>upload</code>
+        </button>
+        <button type="button" class="icon-cell" data-name="plus">
+          <span class="svg-wrap"><svg class="ds-icon size-5" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5v14"/></svg></span>
+          <code>plus</code>
+        </button>
+        <button type="button" class="icon-cell" data-name="pencil">
+          <span class="svg-wrap"><svg class="ds-icon size-5" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg></span>
+          <code>pencil</code>
+        </button>
+        <button type="button" class="icon-cell" data-name="trash-2">
+          <span class="svg-wrap"><svg class="ds-icon size-5" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 11v6M14 11v6M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></span>
+          <code>trash-2</code>
+        </button>
+        <button type="button" class="icon-cell" data-name="filter">
+          <span class="svg-wrap"><svg class="ds-icon size-5" viewBox="0 0 24 24" aria-hidden="true"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg></span>
+          <code>filter</code>
+        </button>
+        <button type="button" class="icon-cell" data-name="circle-help">
+          <span class="svg-wrap"><svg class="ds-icon size-5" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></svg></span>
+          <code>circle-help</code>
+        </button>
+        <button type="button" class="icon-cell" data-name="log-out">
+          <span class="svg-wrap"><svg class="ds-icon size-5" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg></span>
+          <code>log-out</code>
+        </button>
+      </div>
+      <p id="icon-copy-toast" style="font-size: 0.75rem; color: hsl(var(--primary)); min-height: 1.25rem; margin-top: 0.75rem;" aria-live="polite"></p>
+    </section>
+
+    <section id="formularios">
+      <h2>Formulários</h2>
+      <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); max-width: 40rem; margin: -0.5rem 0 1rem;">Painel <code>.demo-elevated</code> · altura de input ~36px (<code>h-9</code>), texto <code>text-sm</code>, campos com fundo escuro.</p>
+      <div class="demo-elevated">
+        <div class="ds-field">
+          <label class="ds-label" for="demo-name">Nome completo <span class="req">*</span></label>
+          <input class="ds-input" id="demo-name" type="text" placeholder="Ex.: Maria Silva" autocomplete="name" />
+          <p class="ds-hint">Como aparece em documentos oficiais.</p>
+        </div>
+        <div class="ds-field">
+          <label class="ds-label" for="demo-email">Email</label>
+          <input class="ds-input is-error" id="demo-email" type="email" value="invalido@" aria-invalid="true" aria-describedby="err-email" />
+          <p class="ds-error" id="err-email"><svg class="ds-icon size-3" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg> Formato de email inválido.</p>
+        </div>
+        <div class="ds-field">
+          <label class="ds-label" for="demo-area">Notas</label>
+          <textarea class="ds-textarea" id="demo-area" placeholder="Observações opcionais…"></textarea>
+        </div>
+        <div class="ds-field">
+          <label class="ds-label" for="demo-select">Perfil</label>
+          <select class="ds-select" id="demo-select">
+            <option>Administrador</option>
+            <option>Operador</option>
+            <option>Só leitura</option>
+          </select>
+        </div>
+        <div class="ds-field">
+          <label class="ds-check-row">
+            <input type="checkbox" checked />
+            <span>Li e aceito os termos de tratamento de dados.</span>
+          </label>
+        </div>
+        <div class="ds-field">
+          <div class="ds-switch-row">
+            <button type="button" class="ds-switch" id="demo-switch" role="switch" aria-checked="true" aria-label="Notificações por email"></button>
+            <label for="demo-switch">Notificações por email</label>
+          </div>
+        </div>
+        <div class="ds-field">
+          <label class="ds-label">Campo desativado</label>
+          <input class="ds-input" disabled value="Sem permissão de edição" />
+        </div>
+      </div>
+    </section>
+
+    <section id="feedback">
+      <h2>Feedback</h2>
+      <h3>Alertas inline</h3>
+      <div class="ds-alert info">
+        <svg class="ds-icon size-4" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        <div><strong style="display:block;margin-bottom:0.2rem;">Informação</strong> O relatório será gerado em segundo plano. Podes fechar esta página.</div>
+      </div>
+      <div class="ds-alert success">
+        <svg class="ds-icon size-4" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 12 2 2 4-4"/></svg>
+        <div><strong style="display:block;margin-bottom:0.2rem;">Sucesso</strong> Registo guardado com segurança.</div>
+      </div>
+      <div class="ds-alert warning">
+        <svg class="ds-icon size-4" viewBox="0 0 24 24" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4M12 17h.01"/></svg>
+        <div><strong style="display:block;margin-bottom:0.2rem;">Atenção</strong> Limite do plano a 80% — considera atualizar.</div>
+      </div>
+      <div class="ds-alert destructive">
+        <svg class="ds-icon size-4" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg>
+        <div><strong style="display:block;margin-bottom:0.2rem;">Erro</strong> Não foi possível ligar ao servidor. Tenta novamente.</div>
+      </div>
+      <h3>Skeleton & progresso</h3>
+      <div style="max-width: 16rem; margin-bottom: 1rem;">
+        <div class="ds-skeleton sk-line sk-medium"></div>
+        <div class="ds-skeleton sk-line"></div>
+        <div class="ds-skeleton sk-line sk-short"></div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+        <div class="ds-skeleton sk-avatar"></div>
+        <div style="flex: 1; min-width: 8rem;">
+          <div class="ds-skeleton sk-line sk-medium"></div>
+          <div class="ds-skeleton sk-line sk-short"></div>
+        </div>
+      </div>
+      <p style="font-size: 0.75rem; color: hsl(var(--muted-foreground)); margin: 0.75rem 0 0.35rem;">Barra de progresso</p>
+      <div class="ds-progress" role="progressbar" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"><div class="ds-progress-bar"></div></div>
+      <h3 style="margin-top: 1.5rem;">Toast</h3>
+      <button type="button" class="btn-primary" id="btn-toast-demo">Disparar toast (3s)</button>
+    </section>
+
+    <section id="dados">
+      <h2>Dados: tabela & paginação</h2>
+      <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); max-width: 40rem; margin: -0.5rem 0 1rem;">Tabela e paginação no mesmo painel escuro que os formulários.</p>
+      <div class="demo-elevated">
+        <div class="ds-table-wrap">
+          <table class="ds-table">
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>Estado</th>
+                <th>Atualizado</th>
+                <th class="cell-actions">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Acme Lda.</td>
+                <td><span class="badge" style="font-size: 0.65rem;">Ativo</span></td>
+                <td style="color: hsl(var(--muted-foreground));">Hoje, 14:32</td>
+                <td class="cell-actions"><button type="button" class="ds-page-btn" style="min-width: auto; padding: 0.25rem 0.5rem;">Editar</button></td>
+              </tr>
+              <tr>
+                <td>Beta Serviços</td>
+                <td><span style="font-size: 0.7rem; color: hsl(var(--muted-foreground));">Pendente</span></td>
+                <td style="color: hsl(var(--muted-foreground));">Ontem</td>
+                <td class="cell-actions"><button type="button" class="ds-page-btn" style="min-width: auto; padding: 0.25rem 0.5rem;">Editar</button></td>
+              </tr>
+              <tr>
+                <td>Gama Ind.</td>
+                <td><span class="badge" style="font-size: 0.65rem;">Ativo</span></td>
+                <td style="color: hsl(var(--muted-foreground));">12 mar.</td>
+                <td class="cell-actions"><button type="button" class="ds-page-btn" style="min-width: auto; padding: 0.25rem 0.5rem;">Editar</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <nav class="ds-pagination" aria-label="Paginação">
+          <button type="button" class="ds-page-btn" disabled aria-disabled="true">Anterior</button>
+          <button type="button" class="ds-page-btn" aria-current="page">1</button>
+          <button type="button" class="ds-page-btn">2</button>
+          <button type="button" class="ds-page-btn">3</button>
+          <span style="padding: 0 0.25rem; color: hsl(var(--muted-foreground)); font-size: 0.75rem; opacity: 0.7;">…</span>
+          <button type="button" class="ds-page-btn">12</button>
+          <button type="button" class="ds-page-btn">Seguinte</button>
+        </nav>
+        <p style="font-size: 0.75rem; color: hsl(var(--muted-foreground)); margin-top: 0.75rem;">Em mobile: scroll horizontal na tabela ou cartões empilhados (breakpoint <code>md</code>).</p>
+      </div>
+    </section>
+
+    <section id="nav-ui">
+      <h2>Navegação: tabs, stepper, dropdown</h2>
+      <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); max-width: 40rem; margin: -0.5rem 0 1rem;">Tabs, stepper e menu suspenso com o mesmo tratamento escuro.</p>
+      <div class="demo-elevated">
+        <h3 style="margin-top: 0; border: none; font-size: 0.75rem; color: hsl(var(--muted-foreground)); text-transform: uppercase; letter-spacing: 0.08em;">Tabs</h3>
+        <div class="ds-tabs-list" role="tablist" aria-label="Exemplo de separadores">
+          <button type="button" class="ds-tab" role="tab" aria-selected="true" aria-controls="tab-panel-1" id="tab-1">Geral</button>
+          <button type="button" class="ds-tab" role="tab" aria-selected="false" aria-controls="tab-panel-2" id="tab-2">Integrações</button>
+          <button type="button" class="ds-tab" role="tab" aria-selected="false" aria-controls="tab-panel-3" id="tab-3">Auditoria</button>
+        </div>
+        <div class="ds-tab-panel active" role="tabpanel" id="tab-panel-1" aria-labelledby="tab-1">Conteúdo do separador <strong>Geral</strong>: definições base do projeto.</div>
+        <div class="ds-tab-panel" role="tabpanel" id="tab-panel-2" aria-labelledby="tab-2" hidden>Webhooks e API keys (exemplo).</div>
+        <div class="ds-tab-panel" role="tabpanel" id="tab-panel-3" aria-labelledby="tab-3" hidden>Registo de alterações (exemplo).</div>
+
+        <h3 style="border: none; font-size: 0.75rem; margin-top: 1.5rem; color: hsl(var(--muted-foreground)); text-transform: uppercase; letter-spacing: 0.08em;">Stepper (wizard)</h3>
+        <div class="ds-stepper" aria-label="Progresso">
+          <div class="ds-step done"><span class="ds-step-num">1</span> Dados</div>
+          <span class="ds-step-sep">→</span>
+          <div class="ds-step current"><span class="ds-step-num">2</span> Revisão</div>
+          <span class="ds-step-sep">→</span>
+          <div class="ds-step"><span class="ds-step-num">3</span> Confirmar</div>
+        </div>
+
+        <h3 style="border: none; font-size: 0.75rem; margin-top: 1rem; color: hsl(var(--muted-foreground)); text-transform: uppercase; letter-spacing: 0.08em;">Dropdown</h3>
+        <div class="ds-dropdown-demo" id="dd-demo">
+          <button type="button" class="ds-dd-trigger" id="dd-trigger" aria-expanded="false" aria-haspopup="true">Opções ▾</button>
+          <div class="ds-dd-panel" role="menu" aria-labelledby="dd-trigger">
+            <button type="button" class="ds-dd-item" role="menuitem">Duplicar</button>
+            <button type="button" class="ds-dd-item" role="menuitem">Exportar CSV</button>
+            <button type="button" class="ds-dd-item ds-dd-item--danger" role="menuitem">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="overlays">
+      <h2>Modais & tooltip</h2>
+      <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); max-width: 40rem; margin: -0.5rem 0 1rem;">Modal: foco preso, fechar com Esc, <code>aria-modal</code>. Tooltip nativo: <code>title</code> para casos simples; componente rico para ajuda longa.</p>
+      <button type="button" class="btn-primary" id="btn-open-modal">Abrir modal de exemplo</button>
+      <span style="margin-left: 1rem; font-size: 0.875rem;">Tooltip CSS: <span class="ds-tooltip-host" data-tip="Texto curto de ajuda">passa o rato aqui</span></span>
+
+      <div class="ds-modal-backdrop" id="ds-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
+        <div class="ds-modal">
+          <h4 id="modal-title">Confirmar ação</h4>
+          <p>Esta operação não pode ser anulada. Queres continuar?</p>
+          <div class="ds-modal-actions">
+            <button type="button" class="btn-primary" style="background: hsl(var(--muted)); color: hsl(var(--foreground)); border: 1px solid hsl(var(--border));" id="btn-close-modal">Cancelar</button>
+            <button type="button" class="btn-primary" style="background: hsl(var(--destructive)); color: hsl(var(--primary-foreground));">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="midia">
+      <h2>Mídia: avatares & proporção</h2>
+      <h3>Avatares</h3>
+      <div class="ds-avatar-row">
+        <div style="text-align: center;">
+          <div class="ds-avatar sm">AB</div>
+          <div style="font-size: 0.65rem; color: hsl(var(--muted-foreground)); margin-top: 0.35rem;">sm 32px</div>
+        </div>
+        <div style="text-align: center;">
+          <div class="ds-avatar md">CD</div>
+          <div style="font-size: 0.65rem; color: hsl(var(--muted-foreground)); margin-top: 0.35rem;">md 40px</div>
+        </div>
+        <div style="text-align: center;">
+          <div class="ds-avatar lg">EF</div>
+          <div style="font-size: 0.65rem; color: hsl(var(--muted-foreground)); margin-top: 0.35rem;">lg 56px</div>
+        </div>
+      </div>
+      <p style="font-size: 0.75rem; color: hsl(var(--muted-foreground)); margin: 1rem 0 0.5rem;">Imagens: usar <code>object-fit: cover</code> dentro do círculo; fallback iniciais com cor de marca.</p>
+      <h3>Aspect ratio 16:9</h3>
+      <div class="ds-aspect">
+        <div class="ds-aspect-inner">16 : 9 · vídeo ou screenshot</div>
+      </div>
+    </section>
+
+    <section id="chat-agente">
+      <h2>Chat agente IA (layout tipo Ellie)</h2>
+      <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); max-width: 44rem; margin: -0.5rem 0 1rem;">
+        Mesma estrutura do <code>saved_resource.html</code> (fundo <code>#040404</code>, raio 24px, mic + textarea + envio). <strong>Acentos só em vermelho</strong> (bordas, botão mic, foco do input) para manter a paleta preto + vermelho em todo o DS.
+      </p>
+      <div class="bf-chat-wrap">
+        <div class="bf-chat-shell">
+          <div class="bf-chat-header">
+            <span class="bf-chat-logo">Atomic Flow</span>
+          </div>
+          <div class="bf-chat-hero">
+            <p>Como posso <span class="bf-em">te ajudar</span>?</p>
+          </div>
+          <div class="bf-chat-form-area">
+            <form class="bf-chat-form" action="#" onsubmit="return false;">
+              <button type="button" class="bf-mic-btn" aria-label="Mensagem por voz">
+                <svg class="ds-icon size-4" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+              </button>
+              <label class="visually-hidden" for="bf-input">Mensagem</label>
+              <textarea id="bf-input" class="bf-chat-input" rows="1" placeholder="Envie uma mensagem…" maxlength="500"></textarea>
+              <button type="submit" class="bf-send-btn" disabled aria-label="Enviar">
+                <svg class="ds-icon size-4" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
+              </button>
+            </form>
+          </div>
+          <div class="bf-chat-foot">
+            <p style="margin: 0 0 0.25rem;">O agente de IA pode cometer erros. Verifica informações críticas.</p>
+            <p style="margin: 0;">©2026 · Padrão de UI para incorporação</p>
+          </div>
+        </div>
+      </div>
+      <p style="font-size: 0.75rem; color: hsl(var(--muted-foreground)); margin-top: 1rem;"><strong>Tokens:</strong> <code>--chat-bg</code>, <code>--chat-border-subtle</code>, <code>--chat-placeholder</code> · transições 200–300ms como no widget.</p>
+    </section>
+
+    <section id="assinatura-af">
+      <h2>Assinatura Atomic Flow</h2>
+      <p style="font-size: 0.875rem; color: hsl(var(--muted-foreground)); max-width: 46rem; margin: -0.5rem 0 1.5rem;">
+        Padrões com prefixo <code>af-</code> pensados para <strong>destacar</strong> landing e produto: grelha tipo bento, métricas com gradiente da marca, bloco terminal (stack técnico), timeline vertical, citação com halo vermelho, barra glassmorphism, pills de stack e comparativo de planos. Copia HTML + CSS do DS ou extrai tokens.
+      </p>
+
+      <h3>Bento + KPIs</h3>
+      <div class="demo-elevated">
+        <div class="af-bento">
+          <div class="af-bento-cell af-bento-cell--hero">
+            <div class="af-bento-kicker">Agentes &amp; fluxos</div>
+            <p class="af-bento-title">Da ideia ao agente em produção, sem templates genéricos.</p>
+            <p class="af-bento-meta">Combine automação com dados reais da operação — logística, vendas ou backoffice.</p>
+          </div>
+          <div class="af-bento-cell">
+            <div class="af-bento-kicker">Integrações</div>
+            <p class="af-bento-title" style="font-size: 1.1rem;">API · CRM · WhatsApp</p>
+            <p class="af-bento-meta">Conectores sob medida, não só “Zapier básico”.</p>
+          </div>
+          <div class="af-bento-cell">
+            <div class="af-bento-kicker">Entrega</div>
+            <p class="af-bento-title" style="font-size: 1.1rem;">Roadmap claro</p>
+            <p class="af-bento-meta">MVP em semanas, métricas acordadas antes do código.</p>
+          </div>
+        </div>
+        <div class="af-stats">
+          <div class="af-stat">
+            <div class="af-stat-val">30</div>
+            <div class="af-stat-label">dias · primeiro ciclo</div>
+            <div class="af-stat-note">Meta de valor visível</div>
+          </div>
+          <div class="af-stat">
+            <div class="af-stat-val">24<span style="font-size: 1.1rem;">/7</span></div>
+            <div class="af-stat-label">agente ativo</div>
+            <div class="af-stat-note">Respostas e triagem</div>
+          </div>
+          <div class="af-stat">
+            <div class="af-stat-val">∞</div>
+            <div class="af-stat-label">fluxos</div>
+            <div class="af-stat-note">Escaláveis por design</div>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin-top: 2rem;">Terminal (stack técnico)</h3>
+      <div class="demo-elevated">
+        <div class="af-terminal" role="region" aria-label="Exemplo de terminal">
+          <div class="af-terminal-bar">
+            <span class="af-terminal-dot" aria-hidden="true"></span>
+            <span class="af-terminal-dot" aria-hidden="true"></span>
+            <span class="af-terminal-dot" aria-hidden="true"></span>
+            <span class="af-terminal-title">atomicflow — zsh</span>
+          </div>
+          <div class="af-terminal-body">
+            <div><span class="af-prompt">❯</span> n8n workflow deploy <span class="af-muted">--env production</span></div>
+            <div><span class="af-prompt">✓</span> pipeline <span class="af-muted">PostgreSQL · TypeScript · Spring</span></div>
+            <div><span class="af-prompt">❯</span> ollama pull <span class="af-muted">llama3.2</span> <span class="af-muted"># protótipo local</span></div>
+          </div>
+        </div>
+        <p style="font-size: 0.75rem; color: hsl(var(--muted-foreground)); margin: 0.75rem 0 0;">Transmite <strong>credibilidade técnica</strong> em páginas de serviço ou documentação.</p>
+      </div>
+
+      <h3 style="margin-top: 2rem;">Timeline vertical</h3>
+      <div class="demo-elevated">
+        <div class="af-timeline">
+          <div class="af-tl-item">
+            <div class="af-tl-date">Semana 1</div>
+            <div class="af-tl-title">Diagnóstico &amp; dados</div>
+            <p class="af-tl-desc">Mapeamento de processos e pontos onde a IA substitui ou acelera trabalho manual.</p>
+          </div>
+          <div class="af-tl-item">
+            <div class="af-tl-date">Semana 2–3</div>
+            <div class="af-tl-title">Protótipo do agente</div>
+            <p class="af-tl-desc">Fluxo mínimo em staging, integrações essenciais e testes com o teu time.</p>
+          </div>
+          <div class="af-tl-item">
+            <div class="af-tl-date">Go-live</div>
+            <div class="af-tl-title">Produção &amp; métricas</div>
+            <p class="af-tl-desc">Monitorização, ajustes e roadmap de expansão — diferente de “entregámos e desaparecemos”.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin-top: 2rem;">Citação · glass strip · stack pills</h3>
+      <div class="demo-elevated" style="display: flex; flex-direction: column; gap: 1.25rem;">
+        <blockquote class="af-quote">
+          “A Atomic Flow não vende slides de IA — vende fluxos que a equipa usa no dia seguinte.”
+          <cite>— Cliente fictício · caso interno do DS</cite>
+        </blockquote>
+        <div class="af-glass-strip">
+          <p><strong>Novo:</strong> auditoria express de automação — vagas limitadas este mês.</p>
+          <button type="button" class="btn-primary" style="height: 2rem; padding: 0 1rem; font-size: 0.75rem;">Reservar</button>
+        </div>
+        <div>
+          <p style="font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: hsl(var(--muted-foreground)); margin: 0 0 0.5rem;">Stack que comunicas ao mercado</p>
+          <div class="af-stack">
+            <span class="af-stack-pill">TypeScript</span>
+            <span class="af-stack-pill">Spring Boot</span>
+            <span class="af-stack-pill">PostgreSQL</span>
+            <span class="af-stack-pill">n8n</span>
+            <span class="af-stack-pill">Ollama</span>
+            <span class="af-stack-pill">OpenAI API</span>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin-top: 2rem;">Planos (cartão em destaque)</h3>
+      <div class="demo-elevated">
+        <div class="af-tiers">
+          <div class="af-tier">
+            <div class="af-tier-name">Starter</div>
+            <div class="af-tier-price">R$ 12k <small>projeto</small></div>
+            <ul>
+              <li>1 fluxo crítico automatizado</li>
+              <li>Workshop de adoção</li>
+              <li>30 dias de suporte</li>
+            </ul>
+            <button type="button" class="btn-primary" style="background: hsl(var(--muted)); color: hsl(var(--foreground)); border: 1px solid hsl(var(--border));">Falar connosco</button>
+          </div>
+          <div class="af-tier af-tier--featured">
+            <span class="af-tier-badge">Mais pedido</span>
+            <div class="af-tier-name">Growth</div>
+            <div class="af-tier-price">R$ 28k <small>trimestre</small></div>
+            <ul>
+              <li>Agente + integrações CRM/WhatsApp</li>
+              <li>Dashboards de uso</li>
+              <li>Iterações quinzenais</li>
+            </ul>
+            <button type="button" class="btn-primary">Pedir proposta</button>
+          </div>
+          <div class="af-tier">
+            <div class="af-tier-name">Enterprise</div>
+            <div class="af-tier-price">Sob <small>consulta</small></div>
+            <ul>
+              <li>SLA &amp; governança</li>
+              <li>Multi-equipa / multi-região</li>
+              <li>Compliance dedicado</li>
+            </ul>
+            <button type="button" class="btn-primary" style="background: hsl(var(--muted)); color: hsl(var(--foreground)); border: 1px solid hsl(var(--border));">Agendar call</button>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin-top: 2rem;">Progresso circular (KPI visual)</h3>
+      <div class="demo-elevated">
+        <div class="af-ring-wrap">
+          <div class="af-ring" id="af-ring-demo" role="img" aria-label="78 por cento de cumprimento de SLA">
+            <svg viewBox="0 0 100 100" aria-hidden="true">
+              <circle class="af-ring-bg" cx="50" cy="50" r="40" />
+              <circle class="af-ring-fg" cx="50" cy="50" r="40" />
+            </svg>
+            <div class="af-ring-text">78<small>SLA</small></div>
+          </div>
+          <div style="flex: 1; min-width: 12rem;">
+            <p style="margin: 0 0 0.35rem; font-weight: 600;">Cumprimento de SLA do agente</p>
+            <p style="margin: 0; font-size: 0.8125rem; color: hsl(var(--muted-foreground)); line-height: 1.5;">Útil em <strong>áreas de cliente</strong> ou relatórios: o anel usa <code>--af-p</code> (0–100) e a cor vem de <code>--primary</code>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="componentes">
+      <h2>Mais componentes (marketing)</h2>
+
+      <h3>Botões</h3>
+      <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-bottom: 2rem;">
+        <button type="button" class="btn-primary">Pedir proposta</button>
+        <button type="button" class="btn-pill">Falar com a Atomic Flow</button>
+      </div>
+
+      <h3>CTA band (gradiente + grid)</h3>
+      <div class="cta-band">
+        <p style="margin: 0; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.3em; opacity: 0.9;">Pronto para transformar?</p>
+        <h3 style="font-size: 1.5rem; margin: 0.5rem 0 0; color: hsl(var(--primary-foreground));">Título da secção final</h3>
+        <div class="actions">
+          <button type="button" style="height: 3rem; padding: 0 2rem; border-radius: 9999px; background: hsl(var(--muted)); color: hsl(var(--foreground)); font-weight: 600; border: 1px solid rgba(255,255,255,0.2); cursor: pointer;">Primário no tema</button>
+          <button type="button" class="btn-outline-light">Secundário outline</button>
+        </div>
+      </div>
+
+      <h3 style="margin-top: 2rem;">Superfície elevada (tema escuro)</h3>
+      <p style="font-size: 0.8125rem; color: hsl(var(--muted-foreground)); max-width: 42rem; margin: -0.75rem 0 1rem;">
+        O DS usa <code>.demo-elevated</code> para blocos sobre o canvas: marketing, <strong>formulários</strong>, <strong>tabela</strong> e <strong>navegação</strong> — sempre painel escuro, coerente com preto + vermelho.
+      </p>
+      <div class="demo-elevated">
+        <span class="pill-tag">FAQ Atomic Flow</span>
+        <p style="margin: 1rem 0 0.5rem; font-size: 1.5rem; font-weight: 700;">Título de secção</p>
+        <p style="margin: 0 0 1rem; font-size: 1rem; color: hsl(var(--muted-foreground));">Subtítulo em tom secundário.</p>
+        <div style="display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));">
+          <div class="card-light">
+            <div class="icon-tile">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m18 16 4-4-4-4M6 8l-4 4 4 4M14.5 4l-5 16"/></svg>
+            </div>
+            <div style="font-weight: 600; font-size: 1rem; margin-bottom: 0.35rem;">Card feature</div>
+            <div style="font-size: 0.875rem; color: hsl(var(--muted-foreground));">Hover: borda vermelha + sombra.</div>
+          </div>
+          <div class="portfolio-frame">
+            <div class="portfolio-inner">
+              <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; margin-bottom: 0.75rem;">
+                <span style="font-weight: 700; font-size: 1.25rem;">Case título</span>
+                <span class="badge">SaaS · Badge</span>
+              </div>
+              <p style="font-size: 0.9375rem; color: hsl(var(--muted-foreground)); margin: 0;">Corpo do case (~15px).</p>
+            </div>
+          </div>
+        </div>
+        <p style="margin: 1.5rem 0 0.75rem; font-size: 0.875rem; font-weight: 600; color: hsl(var(--muted-foreground));">Chips de nicho</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+          <a href="#" class="city-chip" onclick="return false;">Logística</a>
+          <a href="#" class="city-chip" onclick="return false;">E-commerce</a>
+        </div>
+      </div>
+
+      <h3 style="margin-top: 2rem;">Superfície escura</h3>
+      <div class="demo-dark">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="#">Home</a>
+          <span>›</span>
+          <a href="#">Serviços</a>
+          <span>›</span>
+          <span class="current">IA &amp; automação</span>
+        </nav>
+        <span style="display: inline-flex; border-radius: 9999px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); backdrop-filter: blur(12px); padding: 0.35rem 1rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.7);">Escala operacional</span>
+        <p style="margin: 1rem 0 0; font-size: 1.125rem; color: rgba(255,255,255,0.6);">Subtítulo white/60</p>
+        <div style="display: grid; gap: 0.75rem; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); margin-top: 1.25rem;">
+          <div class="card-dark">
+            <div style="position: absolute; top: 1rem; right: 1rem; font-size: 0.6875rem; font-weight: 600; color: rgba(255,255,255,0.2);">01</div>
+            <div class="icon-tile" style="margin-top: 0;">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+            </div>
+            <div style="font-weight: 600;">Card escuro</div>
+            <div style="font-size: 0.875rem; color: rgba(255,255,255,0.6);">Processo / tipos</div>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin-top: 2rem;">Accordion (FAQ)</h3>
+      <p style="font-size: 0.8125rem; color: hsl(var(--muted-foreground)); max-width: 40rem; margin: -0.5rem 0 1rem;">Tema escuro: mesmo tratamento que <code>.demo-elevated</code> (painel <code>muted</code>, bordas e texto alinhados à página).</p>
+      <div class="accordion">
+        <div class="accordion-item">
+          <button type="button" class="accordion-trigger" aria-expanded="true" data-acc="1">
+            <span style="display: flex; align-items: flex-start; gap: 1rem;">
+              <span style="width: 2rem; height: 2rem; border-radius: 0.75rem; background: rgba(220,38,38,0.12); display: flex; align-items: center; justify-content: center; color: #dc2626; flex-shrink: 0;">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></svg>
+              </span>
+              Pergunta de exemplo?
+            </span>
+            <svg class="chev" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="transition: transform 0.2s; transform: rotate(180deg);"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="accordion-panel open" data-panel="1">Resposta em cor secundária (<code>muted-foreground</code>), alinhada ao ícone.</div>
+        </div>
+        <div class="accordion-item">
+          <button type="button" class="accordion-trigger" aria-expanded="false" data-acc="2">
+            <span style="display: flex; align-items: flex-start; gap: 1rem;">
+              <span style="width: 2rem; height: 2rem; border-radius: 0.75rem; background: rgba(220,38,38,0.12); display: flex; align-items: center; justify-content: center; color: #dc2626;">?</span>
+              Outra pergunta (fechada)
+            </span>
+            <svg class="chev" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="transition: transform 0.2s;"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="accordion-panel" data-panel="2">Conteúdo oculto até expandir.</div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="ds-footer">
+      <strong style="color: hsl(var(--foreground));">Atomic Flow</strong> · <code style="color: hsl(var(--primary));">design-system-huios.html</code> — design system interno; paleta <strong>preto + vermelho</strong>. Primária <code style="color: hsl(var(--primary));">hsl(0 84% 55%)</code> · chat <code>#040404</code>. Domínio sugerido: <code>atomicflow.com.br</code>.
+    </footer>
+  </main>
+
+  <div class="ds-toast-wrap" id="ds-toast-root" aria-live="polite"></div>
+
+  <script>
+    document.querySelectorAll(".accordion-trigger").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const id = btn.getAttribute("data-acc");
+        const panel = document.querySelector('[data-panel="' + id + '"]');
+        const open = btn.getAttribute("aria-expanded") === "true";
+        btn.setAttribute("aria-expanded", open ? "false" : "true");
+        panel.classList.toggle("open", !open);
+        const chev = btn.querySelector(".chev");
+        if (chev) chev.style.transform = open ? "rotate(0deg)" : "rotate(180deg)";
+      });
+    });
+
+    document.querySelectorAll("#icon-catalog .icon-cell").forEach((cell) => {
+      cell.addEventListener("click", () => {
+        const name = cell.getAttribute("data-name");
+        if (!name) return;
+        const toast = document.getElementById("icon-copy-toast");
+        const write = () => {
+          toast.textContent = "Copiado: " + name + " — import { " + toPascal(name) + " } from 'lucide-react'";
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(name).then(write).catch(() => { write(); });
+        } else {
+          write();
+        }
+      });
+    });
+
+    function toPascal(kebab) {
+      return kebab.split("-").map((s) => s.charAt(0).toUpperCase() + s.slice(1)).join("");
+    }
+
+    /* Tabs */
+    const tabs = document.querySelectorAll(".ds-tab");
+    const tabPanels = document.querySelectorAll(".ds-tab-panel");
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const id = tab.getAttribute("aria-controls");
+        tabs.forEach((t) => t.setAttribute("aria-selected", t === tab ? "true" : "false"));
+        tabPanels.forEach((p) => {
+          const on = p.id === id;
+          p.classList.toggle("active", on);
+          p.toggleAttribute("hidden", !on);
+        });
+      });
+    });
+
+    /* Switch */
+    const sw = document.getElementById("demo-switch");
+    if (sw) {
+      sw.addEventListener("click", () => {
+        const on = sw.getAttribute("aria-checked") === "true";
+        sw.setAttribute("aria-checked", on ? "false" : "true");
+      });
+    }
+
+    /* Dropdown */
+    const dd = document.getElementById("dd-demo");
+    const ddTrig = document.getElementById("dd-trigger");
+    if (dd && ddTrig) {
+      ddTrig.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const open = !dd.classList.contains("open");
+        dd.classList.toggle("open", open);
+        ddTrig.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+      document.addEventListener("click", (e) => {
+        if (!dd.contains(e.target)) {
+          dd.classList.remove("open");
+          ddTrig.setAttribute("aria-expanded", "false");
+        }
+      });
+    }
+
+    /* Modal */
+    const modal = document.getElementById("ds-modal");
+    const openM = document.getElementById("btn-open-modal");
+    const closeM = document.getElementById("btn-close-modal");
+    function setModal(open) {
+      if (!modal) return;
+      modal.classList.toggle("open", open);
+      modal.setAttribute("aria-hidden", open ? "false" : "true");
+      document.body.style.overflow = open ? "hidden" : "";
+    }
+    if (openM) openM.addEventListener("click", () => setModal(true));
+    if (closeM) closeM.addEventListener("click", () => setModal(false));
+    if (modal) {
+      modal.addEventListener("click", (e) => { if (e.target === modal) setModal(false); });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && modal.classList.contains("open")) setModal(false);
+      });
+    }
+
+    /* Toast */
+    const toastBtn = document.getElementById("btn-toast-demo");
+    const toastRoot = document.getElementById("ds-toast-root");
+    if (toastBtn && toastRoot) {
+      toastBtn.addEventListener("click", () => {
+        const el = document.createElement("div");
+        el.className = "ds-toast";
+        el.textContent = "Alterações guardadas.";
+        toastRoot.appendChild(el);
+        requestAnimationFrame(() => el.classList.add("show"));
+        setTimeout(() => {
+          el.classList.remove("show");
+          setTimeout(() => el.remove(), 300);
+        }, 3000);
+      });
+    }
+
+    const bfInput = document.getElementById("bf-input");
+    const bfForm = bfInput && bfInput.closest("form");
+    const bfSend = bfForm && bfForm.querySelector(".bf-send-btn");
+    if (bfInput && bfSend) {
+      function syncBfSend() {
+        const on = bfInput.value.trim().length > 0;
+        bfSend.disabled = !on;
+      }
+      bfInput.addEventListener("input", syncBfSend);
+      syncBfSend();
+    }
+
+    const afRing = document.getElementById("af-ring-demo");
+    if (afRing && "IntersectionObserver" in window) {
+      const fillRing = () => afRing.style.setProperty("--af-p", "78");
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (!e.isIntersecting) return;
+            requestAnimationFrame(() => requestAnimationFrame(fillRing));
+            io.disconnect();
+          });
+        },
+        { threshold: 0.12 }
+      );
+      io.observe(afRing);
+    } else if (afRing) {
+      afRing.style.setProperty("--af-p", "78");
+    }
+  </script>
+</body>
+</html>
