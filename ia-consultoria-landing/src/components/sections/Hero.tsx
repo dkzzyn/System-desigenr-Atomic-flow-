@@ -1,7 +1,10 @@
 import { HERO_VIDEO_SRC, LINK_CONTACT } from "../../constants/links";
-import { heroPills } from "../../data/sectors";
+import { useSiteContent } from "../../hooks/useSiteContent";
+import { SiteModeSwitch } from "../layout/SiteModeSwitch";
 
 export function Hero() {
+  const { hero } = useSiteContent();
+
   return (
     <section id="inicio" className="hero">
       <video
@@ -18,30 +21,31 @@ export function Hero() {
       <div className="hero-video-overlay" aria-hidden="true" />
       <div className="hero-bottom-fade" aria-hidden="true" />
       <div className="container hero-inner">
+        <SiteModeSwitch variant="hero" />
+
         <h1 className="hero-title">
-          Fazemos <em className="hero-em">inteligência artificial</em> trabalhar por você
+          {hero.titleBefore}
+          <em className="hero-em">{hero.titleEmphasis}</em>
+          {hero.titleAfter}
         </h1>
-        <p className="hero-lead">
-          Transformamos empresas tradicionais em organizações <strong>AI-first</strong>: do diagnóstico e
-          letramento à implementação de agentes, automações e integrações sob medida.
-        </p>
+        <p className="hero-lead">{hero.lead}</p>
         <div className="hero-actions">
           <a className="hero-btn-primary" href="#metodo">
-            Entender como funciona <span className="arrow">→</span>
+            {hero.primaryCta} <span className="arrow">→</span>
           </a>
           <a className="hero-btn-secondary" href={LINK_CONTACT}>
-            Agendar conversa
+            {hero.secondaryCta}
           </a>
         </div>
         <p className="hero-trust-line" aria-hidden="true">
-          Estratégia <span>·</span> Implementação <span>·</span> Resultados mensuráveis
+          {hero.trustLine[0]} <span>·</span> {hero.trustLine[1]} <span>·</span> {hero.trustLine[2]}
         </p>
         <p className="micro">
-          Agende uma <strong>conversa rápida</strong> para alinhar expectativas e prioridades.
+          Agende um <strong>{hero.microStrong}</strong> para alinhar expectativas e prioridades.
         </p>
-        <p className="hero-pills-label">Onde costumamos atuar</p>
-        <div className="hero-pills" aria-label="Setores">
-          {heroPills.map((s) => (
+        <p className="hero-pills-label">{hero.pillsLabel}</p>
+        <div className="hero-pills" aria-label="Áreas de atuação">
+          {hero.heroPills.map((s) => (
             <span key={s} className="hero-pill">
               {s}
             </span>

@@ -1,40 +1,44 @@
 import { type ComponentType } from "react";
 import { LINK_CONTACT } from "../../constants/links";
-import { differentials, type DifferentialIconKey } from "../../data/differentials";
+import { type DifferentialItem } from "../../data/siteContent";
+import { useSiteContent } from "../../hooks/useSiteContent";
 import { useInView } from "../../hooks/useInView";
+import { useSiteMode } from "../../context/SiteModeContext";
 import { IconShieldCheck, IconTrendUp, IconUsers } from "../icons";
 
-const DIFF_ICONS: Record<DifferentialIconKey, ComponentType<{ className?: string }>> = {
+const DIFF_ICONS: Record<DifferentialItem["icon"], ComponentType<{ className?: string }>> = {
   shield: IconShieldCheck,
   trend: IconTrendUp,
   users: IconUsers,
 };
 
 export function Differentials() {
+  const { differentials } = useSiteContent();
+  const { mode } = useSiteMode();
+  const isMarketing = mode === "marketing";
   const [headerRef, headerVisible] = useInView<HTMLDivElement>();
   const [gridRef, gridVisible] = useInView<HTMLDivElement>({ threshold: 0.15 });
   const [ctaRef, ctaVisible] = useInView<HTMLDivElement>();
 
   return (
-    <section className="section container differentials-section">
+    <section className={`section container differentials-section${isMarketing ? " differentials-section--mkt mkt-glow-section" : ""}`}>
       <div
         ref={headerRef}
         className={`differentials-section__header reveal-stagger${headerVisible ? " is-visible" : ""}`}
       >
-        <p className="kicker reveal reveal--up">Diferenciais</p>
+        <p className="kicker reveal reveal--up">{differentials.kicker}</p>
         <h2 className="h2 reveal reveal--up">
-          Por que <em>escolher</em> a Atomic Flow?
+          {differentials.titleBefore}
+          <em>{differentials.titleEmphasis}</em>
+          {differentials.titleAfter}
         </h2>
-        <p className="lead reveal reveal--up">
-          Não somos apenas uma equipe técnica vendendo buzzwords. Somos consultores que ligam processo, pessoas e
-          tecnologia.
-        </p>
+        <p className="lead reveal reveal--up">{differentials.lead}</p>
       </div>
       <div
         ref={gridRef}
         className={`differentials-section__grid reveal-stagger${gridVisible ? " is-visible" : ""}`}
       >
-        {differentials.map((d) => {
+        {differentials.items.map((d) => {
           const Icon = DIFF_ICONS[d.icon];
           return (
             <div key={d.title} className="diff reveal reveal--up">
@@ -53,11 +57,11 @@ export function Differentials() {
       >
         <p className="reveal reveal--up">
           <a className="link-cta" href={LINK_CONTACT}>
-            Entender como funciona <span className="arrow">→</span>
+            {differentials.cta} <span className="arrow">→</span>
           </a>
         </p>
         <p className="micro reveal reveal--up">
-          Agende uma <strong>conversa rápida</strong> para alinhar expectativas.
+          Agende um <strong>{differentials.microStrong}</strong> para alinhar expectativas.
         </p>
       </div>
     </section>

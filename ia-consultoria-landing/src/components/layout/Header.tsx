@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { LINK_CONTACT, SOCIAL_INSTAGRAM, SOCIAL_LINKEDIN } from "../../constants/links";
-import { IconAtom } from "../icons/IconAtom";
+import { useSiteContent } from "../../hooks/useSiteContent";
 import { IconExternal, IconInstagram, IconLinkedIn } from "../icons";
+import { NavBrandToggle } from "./NavBrandToggle";
 
 const NAV_LINKS = [
   { href: "#metodo", label: "Método" },
@@ -11,6 +12,7 @@ const NAV_LINKS = [
 ] as const;
 
 export function Header() {
+  const { footer } = useSiteContent();
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -35,17 +37,7 @@ export function Header() {
     <div className="nav-shell">
       <header className="nav">
         <div className="nav-inner">
-          <a
-            className="nav-logo-box"
-            href="#inicio"
-            onClick={closeMenu}
-            aria-label="Atomic Flow — início"
-          >
-            <span className="nav-logo-icon">
-              <IconAtom size={22} />
-            </span>
-            <span className="nav-logo-text">Atomic Flow</span>
-          </a>
+          <NavBrandToggle />
 
           <nav className="nav-links nav-links--center nav-links--desktop" aria-label="Principal">
             {NAV_LINKS.map((link) => (
@@ -81,7 +73,7 @@ export function Header() {
               <IconExternal className="nav-cta-outline-icon" />
             </a>
             <a className="nav-cta nav-cta--header-mobile-bar" href={LINK_CONTACT}>
-              Falar com consultor
+              {footer.ctaLabel}
             </a>
             <button
               type="button"

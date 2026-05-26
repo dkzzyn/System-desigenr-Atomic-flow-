@@ -1,7 +1,9 @@
 import { LINK_CONTACT } from "../../constants/links";
+import { useSiteContent } from "../../hooks/useSiteContent";
 import { useInView } from "../../hooks/useInView";
 
 export function ProblemSection() {
+  const { problem } = useSiteContent();
   const [ref, isVisible] = useInView<HTMLElement>();
 
   return (
@@ -10,22 +12,20 @@ export function ProblemSection() {
       id="problema"
       className={`section container problem-section${isVisible ? " is-visible" : ""}`}
     >
-      <p className="kicker reveal reveal--up">Para equipes sem IA, o problema é esse</p>
+      <p className="kicker reveal reveal--up">{problem.kicker}</p>
       <div className="problem-split">
         <div className="problem-split__copy reveal reveal--from-left">
           <h2 className="h2">
-            Sua <em>equipe</em> está no limite?
+            Sua <em>{problem.titleEmphasis}</em>
+            {problem.titleRest}
           </h2>
-          <p className="lead lead--problem">
-            O time está sobrecarregado porque o negócio não foi estruturado com mentalidade AI-first. O tempo não
-            aumenta — mas a produtividade pode multiplicar com processos e agentes bem desenhados.
-          </p>
+          <p className="lead lead--problem">{problem.lead}</p>
         </div>
         <figure className="problem-split__figure reveal reveal--from-right">
           <img
             className="problem-split__img"
             src="/aiFirst.png"
-            alt="Pressão pelo tempo e prazos — equipes no limite antes de uma operação AI-first"
+            alt={problem.imageAlt}
             width={700}
             height={700}
             loading="lazy"
@@ -35,11 +35,11 @@ export function ProblemSection() {
       </div>
       <p className="problem-section-cta reveal reveal--up">
         <a className="link-cta" href={LINK_CONTACT}>
-          Entender como funciona <span className="arrow">→</span>
+          {problem.cta} <span className="arrow">→</span>
         </a>
       </p>
       <p className="micro reveal reveal--up">
-        Agende uma <strong>conversa rápida</strong> para alinhar expectativas.
+        Agende um <strong>{problem.microStrong}</strong> para alinhar expectativas.
       </p>
     </section>
   );

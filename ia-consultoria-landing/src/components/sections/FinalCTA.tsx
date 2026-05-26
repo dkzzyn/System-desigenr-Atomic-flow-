@@ -1,25 +1,29 @@
 import { CONTACT_EMAIL, CONTACT_MAILTO } from "../../constants/links";
+import { useSiteContent } from "../../hooks/useSiteContent";
 import { useInView } from "../../hooks/useInView";
+import { useSiteMode } from "../../context/SiteModeContext";
 
 export function FinalCTA() {
+  const { finalCta } = useSiteContent();
+  const { mode } = useSiteMode();
   const [ref, isVisible] = useInView<HTMLElement>({ threshold: 0.25 });
 
   return (
     <section
       ref={ref}
       id="contato"
-      className={`cta-band reveal-stagger${isVisible ? " is-visible" : ""}`}
+      className={`cta-band reveal-stagger${mode === "marketing" ? " mkt-glow-section" : ""}${isVisible ? " is-visible" : ""}`}
     >
       <div className="container">
         <h2 className="h2 reveal reveal--scale">
-          Faça a <em>IA</em> trabalhar por você
+          {finalCta.titleBefore}
+          <em>{finalCta.titleEmphasis}</em>
+          {finalCta.titleAfter}
         </h2>
-        <p className="lead reveal reveal--up">
-          Empresas que adotam IA com método costumam acelerar resultados de forma desproporcional.
-        </p>
+        <p className="lead reveal reveal--up">{finalCta.lead}</p>
         <p className="reveal reveal--up" style={{ marginBottom: 0 }}>
           <a className="link-cta" href={CONTACT_MAILTO}>
-            Agendar conversa <span className="arrow">→</span>
+            {finalCta.cta} <span className="arrow">→</span>
           </a>
         </p>
         <p

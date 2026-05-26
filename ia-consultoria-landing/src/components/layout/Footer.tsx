@@ -1,19 +1,22 @@
 import { LINK_CONTACT } from "../../constants/links";
+import { useSiteContent } from "../../hooks/useSiteContent";
 
 export function Footer() {
+  const { footer } = useSiteContent();
+
   return (
     <footer className="footer">
       <div className="container">
         <div className="footer-grid">
           <div>
             <h4>Navegação</h4>
-            <a href={LINK_CONTACT}>Falar com consultor</a>
+            <a href={LINK_CONTACT}>{footer.ctaLabel}</a>
             <a href="#metodo">Método</a>
             <a href="#faq">FAQ</a>
           </div>
           <div>
             <h4>Empresa</h4>
-            <p>Atomic Flow — consultoria em IA</p>
+            <p>{footer.tagline}</p>
             <p>Brasil</p>
           </div>
           <div>

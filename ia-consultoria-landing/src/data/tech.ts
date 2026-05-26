@@ -6,7 +6,18 @@ export type TechIconKey =
   | "postgres"
   | "vertex"
   | "huggingface"
-  | "ollama";
+  | "ollama"
+  | "meta"
+  | "google-ads"
+  | "linkedin"
+  | "hubspot"
+  | "klaviyo"
+  | "mailchimp"
+  | "ga4"
+  | "hotjar"
+  | "semrush"
+  | "canva"
+  | "zapier";
 
 export type Tech = {
   name: string;

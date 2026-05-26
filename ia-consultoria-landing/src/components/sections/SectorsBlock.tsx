@@ -1,6 +1,8 @@
 import { type ComponentType } from "react";
-import { sectors, type SectorIconKey } from "../../data/sectors";
+import { type SectorItem } from "../../data/siteContent";
+import { useSiteContent } from "../../hooks/useSiteContent";
 import { useInView } from "../../hooks/useInView";
+import { useSiteMode } from "../../context/SiteModeContext";
 import {
   IconBarChart,
   IconChat,
@@ -10,7 +12,7 @@ import {
   IconTruck,
 } from "../icons";
 
-const SECTOR_ICONS: Record<SectorIconKey, ComponentType<{ className?: string }>> = {
+const SECTOR_ICONS: Record<SectorItem["icon"], ComponentType<{ className?: string }>> = {
   gear: IconGear,
   chat: IconChat,
   truck: IconTruck,
@@ -20,31 +22,34 @@ const SECTOR_ICONS: Record<SectorIconKey, ComponentType<{ className?: string }>>
 };
 
 export function SectorsBlock() {
+  const { sectors } = useSiteContent();
+  const { mode } = useSiteMode();
+  const isMarketing = mode === "marketing";
   const [headerRef, headerVisible] = useInView<HTMLDivElement>();
   const [listRef, listVisible] = useInView<HTMLDivElement>({ threshold: 0.15 });
 
   return (
-    <section id="setores" className="section container">
+    <section id="setores" className={`section container sectors-block${isMarketing ? " sectors-block--mkt mkt-glow-section" : ""}`}>
       <div
         ref={headerRef}
         className={`sectors-block__header reveal-stagger${headerVisible ? " is-visible" : ""}`}
       >
-        <p className="kicker reveal reveal--up">O que a IA faz por você</p>
+        <p className="kicker reveal reveal--up">{sectors.kicker}</p>
         <h2 className="h2 reveal reveal--up">
-          É <em>muito mais</em> que automação
+          {sectors.titleBefore}
+          <em>{sectors.titleEmphasis}</em>
+          {sectors.titleAfter}
         </h2>
-        <p className="lead reveal reveal--up">
-          Inteligência estratégica para cada área do negócio — sempre com foco em impacto mensurável.
-        </p>
+        <p className="lead reveal reveal--up">{sectors.lead}</p>
       </div>
 
       <div
         ref={listRef}
-        className={`sectors-list reveal-stagger${listVisible ? " is-visible" : ""}`}
+        className={`sectors-list${isMarketing ? " sectors-list--mkt-cards" : ""} reveal-stagger${listVisible ? " is-visible" : ""}`}
         role="list"
-        aria-label="Setores que atendemos"
+        aria-label="Áreas de atuação"
       >
-        {sectors.map((x) => {
+        {sectors.items.map((x) => {
           const Icon = SECTOR_ICONS[x.icon];
           return (
             <article key={x.title} className="sector-row reveal reveal--up" role="listitem">

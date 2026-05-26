@@ -55,22 +55,49 @@
     padding: 0 0.85rem;
   }
 
-  .nav-logo-box {
-    padding: 0.45rem;
-    gap: 0;
+  .nav-brand-toggle {
+    padding: 0.42rem 0.75rem 0.42rem 0.5rem;
+    gap: 0.5rem;
   }
 
-  .nav-logo-text {
-    display: none;
+  .nav-brand-toggle .nav-logo-text {
+    font-size: 0.8125rem;
   }
 
-  .nav-logo-icon {
-    display: flex;
+  .nav-brand-toggle .nav-logo-icon svg {
+    width: 20px;
+    height: 20px;
   }
 
-  .nav-logo-icon svg {
-    width: 24px;
-    height: 24px;
+  .site-mode-switch--hero {
+    width: 100%;
+    max-width: 16.5rem;
+    margin-bottom: 1rem;
+    padding: 0.25rem;
+    gap: 0.25rem;
+    border-radius: 12px;
+  }
+
+  .site-mode-switch--hero .site-mode-switch__tab {
+    flex: 1;
+    min-width: 0;
+    padding: 0.5rem 0.35rem 0.45rem;
+    gap: 0.22rem;
+  }
+
+  .site-mode-switch--hero .site-mode-switch__icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .site-mode-switch--hero .site-mode-switch__brand {
+    font-size: 0.6875rem;
+    line-height: 1.15;
+  }
+
+  .site-mode-switch--hero .site-mode-switch__label {
+    font-size: 0.5625rem;
+    letter-spacing: 0.1em;
   }
 
   .nav-links--desktop {
@@ -91,6 +118,10 @@
   }
 
   .nav-cta--header-mobile-bar {
+    display: none;
+  }
+
+  .nav-cta-outline--mobile {
     display: none;
   }
 
@@ -145,7 +176,7 @@
   }
 
   .hero-btn-secondary {
-    padding: 0.82rem 1.15rem;
+    display: none;
   }
 
   .hero-trust-line {
@@ -318,6 +349,31 @@
     display: none;
   }
 
+  .site-mode-switch--hero {
+    max-width: 14.5rem;
+    padding: 0.2rem;
+    gap: 0.2rem;
+  }
+
+  .site-mode-switch--hero .site-mode-switch__tab {
+    padding: 0.4rem 0.25rem 0.38rem;
+    gap: 0.18rem;
+  }
+
+  .site-mode-switch--hero .site-mode-switch__icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .site-mode-switch--hero .site-mode-switch__brand {
+    font-size: 0.625rem;
+  }
+
+  .site-mode-switch--hero .site-mode-switch__label {
+    font-size: 0.5rem;
+    letter-spacing: 0.08em;
+  }
+
   .hero-title {
     font-size: clamp(1.65rem, 8vw, 1.95rem);
   }
@@ -336,20 +392,6 @@
     align-items: center;
   }
 
-  .nav-logo-box {
-    padding: 0.45rem;
-    gap: 0;
-  }
-
-  .nav-logo-text {
-    display: none;
-  }
-
-  .nav-logo-icon svg {
-    width: 24px;
-    height: 24px;
-  }
-
   .nav-links--desktop {
     display: none !important;
   }
@@ -363,9 +405,7 @@
   }
 
   .nav-cta--header-mobile-bar {
-    display: inline-flex;
-    font-size: 0.8125rem;
-    padding: 0.45rem 0.85rem;
+    display: none;
   }
 
   .nav-burger--af {

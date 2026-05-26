@@ -1,4 +1,5 @@
-:root {
+:root,
+[data-site-mode="consultoria"] {
   --background: 240 15% 3.5%;
   --canvas-hex: #050509;
   --foreground: 0 0% 100%;
@@ -10,6 +11,23 @@
   --fusion-from: #fecaca;
   --fusion-mid: #f87171;
   --fusion-to: #dc2626;
+  --accent: #dc2626;
+  --accent-soft: #f87171;
+  --accent-muted: #fecaca;
+  --accent-deep: #b91c1c;
+  --accent-rgb: 220 38 38;
+  --accent-soft-rgb: 248 113 113;
+  --accent-muted-rgb: 254 202 202;
+  --accent-deep-rgb: 127 29 29;
+  --accent-ink-rgb: 69 10 10;
+  --hero-video-filter: hue-rotate(108deg) saturate(1.02) contrast(1.03);
+  --hero-video-opacity: 0.72;
+  --hero-overlay-accent-top: 0.09;
+  --hero-overlay-accent-edge: 0.05;
+  --hero-overlay-accent-mid: 0.09;
+  --hero-overlay-accent-soft: 0.08;
+  --mode-brand-consultoria: #dc2626;
+  --mode-brand-marketing: #60a5fa;
   --ease-out: cubic-bezier(0.33, 1, 0.68, 1);
   --font-sans: "Poppins", system-ui, sans-serif;
   --font-display: "Poppins", var(--font-sans);
@@ -26,6 +44,28 @@
   --radius-xl: 1.25rem;
   --radius-pill: 9999px;
   --hero-gold: #f7b500;
+}
+
+[data-site-mode="marketing"] {
+  --primary: 217 91% 60%;
+  --fusion-from: #bfdbfe;
+  --fusion-mid: #60a5fa;
+  --fusion-to: #2563eb;
+  --accent: #2563eb;
+  --accent-soft: #60a5fa;
+  --accent-muted: #bfdbfe;
+  --accent-deep: #1d4ed8;
+  --accent-rgb: 37 99 235;
+  --accent-soft-rgb: 96 165 250;
+  --accent-muted-rgb: 191 219 254;
+  --accent-deep-rgb: 29 78 216;
+  --accent-ink-rgb: 15 23 42;
+  --hero-video-filter: saturate(0.95) brightness(0.76) contrast(1.06);
+  --hero-video-opacity: 0.82;
+  --hero-overlay-accent-top: 0.1;
+  --hero-overlay-accent-edge: 0.06;
+  --hero-overlay-accent-mid: 0.08;
+  --hero-overlay-accent-soft: 0.07;
 }
 
 *,
@@ -161,7 +201,7 @@ main > :not(.hero) .container,
   font-weight: 600;
   color: hsl(var(--foreground));
   text-decoration: none;
-  border-bottom: 1px solid rgba(220, 38, 38, 0.55);
+  border-bottom: 1px solid rgb(var(--accent-rgb) / 0.55);
   padding-bottom: 0.12rem;
   transition: color 0.2s var(--ease-out), border-color 0.2s var(--ease-out);
 }
