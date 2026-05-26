@@ -37,8 +37,12 @@ export function SiteModeProvider({ children }: { children: React.ReactNode }) {
   }, [mode]);
 
   const setMode = useCallback((next: SiteMode) => {
-    setModeState(next);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    setModeState((current) => {
+      if (current === next) return current;
+      applyModeToDocument(next);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return next;
+    });
   }, []);
 
   const value = useMemo(() => ({ mode, setMode }), [mode, setMode]);

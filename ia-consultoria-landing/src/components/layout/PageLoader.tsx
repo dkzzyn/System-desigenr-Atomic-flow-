@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { IconAtom } from "../icons/IconAtom";
+import { useSiteMode } from "../../context/SiteModeContext";
+import { LoaderAtomBurst } from "./LoaderAtomBurst";
 
-const MIN_SPLASH_MS = 2000;
-const EXIT_MS = 400;
+const MIN_SPLASH_MS = 1000;
+const EXPLOSION_MS = 930;
 
 function delay(ms: number): Promise<void> {
   return new Promise((resolve) => {
@@ -28,9 +29,11 @@ export function waitForSplashComplete(): Promise<void> {
 }
 
 export function PageLoader() {
+  const { mode } = useSiteMode();
   const [phase, setPhase] = useState<"loading" | "exiting" | "done">("loading");
 
   useEffect(() => {
+    setPhase("loading");
     let exitTimer: number | undefined;
     let cancelled = false;
 
@@ -42,7 +45,7 @@ export function PageLoader() {
         setPhase("exiting");
         exitTimer = window.setTimeout(() => {
           if (!cancelled) setPhase("done");
-        }, EXIT_MS);
+        }, EXPLOSION_MS);
       });
     });
 
@@ -50,7 +53,7 @@ export function PageLoader() {
       cancelled = true;
       if (exitTimer !== undefined) window.clearTimeout(exitTimer);
     };
-  }, []);
+  }, [mode]);
 
   useEffect(() => {
     document.body.classList.toggle("is-page-loading", phase !== "done");
@@ -67,16 +70,18 @@ export function PageLoader() {
       aria-label="A carregar o site"
     >
       <div className="page-loader__inner">
-        <IconAtom className="page-loader__atom" size={72} />
+        <LoaderAtomBurst exploding={phase === "exiting"} />
       </div>
     </div>
   );
 }
 
 export function usePageReady() {
+  const { mode } = useSiteMode();
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
+    setReady(false);
     let exitTimer: number | undefined;
     let cancelled = false;
 
@@ -87,7 +92,7 @@ export function usePageReady() {
         if (cancelled) return;
         exitTimer = window.setTimeout(() => {
           if (!cancelled) setReady(true);
-        }, EXIT_MS);
+        }, EXPLOSION_MS);
       });
     });
 
@@ -95,7 +100,7 @@ export function usePageReady() {
       cancelled = true;
       if (exitTimer !== undefined) window.clearTimeout(exitTimer);
     };
-  }, []);
+  }, [mode]);
 
   return ready;
 }
