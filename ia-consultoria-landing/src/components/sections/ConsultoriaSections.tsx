@@ -1,4 +1,3 @@
-import { AnimatedMarqueeTape } from "./AnimatedMarqueeTape";
 import { Differentials } from "./Differentials";
 import { FAQ } from "./FAQ";
 import { FinalCTA } from "./FinalCTA";
@@ -15,9 +14,6 @@ export function ConsultoriaSections() {
       <Hero />
       <ProblemSection />
       <ServicesGrid />
-      <div className="ia-marquee-band">
-        <AnimatedMarqueeTape />
-      </div>
       <SectorsBlock />
       <TechStrip />
       <Differentials />

@@ -1342,154 +1342,6 @@ main {
   border: 0;
 }
 
-/* Fita de frase — marquee horizontal contínuo */
-.phrase-tape {
-  position: relative;
-  z-index: 1;
-  width: 100vw;
-  max-width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-}
-
-.phrase-tape__ribbon {
-  position: relative;
-  overflow: hidden;
-  padding: clamp(0.55rem, 1.1vw, 0.75rem) 0;
-  border-block: 1px solid rgb(var(--accent-soft-rgb) / 0.55);
-  background: linear-gradient(
-    180deg,
-    #3f0a0a 0%,
-    #7f1d1d 28%,
-    #991b1b 50%,
-    #7f1d1d 72%,
-    #3f0a0a 100%
-  );
-  box-shadow:
-    inset 0 1px 0 rgb(var(--accent-muted-rgb) / 0.28),
-    inset 0 -1px 0 rgb(var(--accent-muted-rgb) / 0.28);
-}
-
-.phrase-tape__ribbon::before,
-.phrase-tape__ribbon::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 1px;
-  pointer-events: none;
-  z-index: 2;
-}
-
-.phrase-tape__ribbon::before {
-  top: 0;
-  background: linear-gradient(
-    90deg,
-    rgb(var(--accent-deep-rgb) / 0.2) 0%,
-    rgb(var(--accent-muted-rgb) / 0.95) 20%,
-    rgb(var(--accent-soft-rgb) / 1) 50%,
-    rgb(var(--accent-muted-rgb) / 0.95) 80%,
-    rgb(var(--accent-deep-rgb) / 0.2) 100%
-  );
-  box-shadow: 0 0 14px 2px rgb(var(--accent-soft-rgb) / 0.65);
-}
-
-.phrase-tape__ribbon::after {
-  bottom: 0;
-  background: linear-gradient(
-    90deg,
-    rgb(var(--accent-deep-rgb) / 0.2) 0%,
-    rgb(var(--accent-muted-rgb) / 0.95) 20%,
-    rgb(var(--accent-soft-rgb) / 1) 50%,
-    rgb(var(--accent-muted-rgb) / 0.95) 80%,
-    rgb(var(--accent-deep-rgb) / 0.2) 100%
-  );
-  box-shadow: 0 0 14px 2px rgb(var(--accent-soft-rgb) / 0.65);
-}
-
-.phrase-tape__viewport {
-  overflow: hidden;
-}
-
-.phrase-tape__track {
-  display: flex;
-  width: max-content;
-  align-items: center;
-  will-change: transform;
-  animation: phrase-tape-marquee 42s linear infinite;
-}
-
-.phrase-tape__item {
-  display: inline-flex;
-  align-items: center;
-  gap: clamp(1rem, 2.2vw, 1.6rem);
-  padding-inline: clamp(1rem, 2.2vw, 1.6rem);
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.phrase-tape__text {
-  font-family: var(--font-display);
-  font-size: clamp(0.75rem, 1.35vw, 0.95rem);
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  line-height: 1.15;
-  color: #f5f5f5;
-}
-
-.phrase-tape__text em {
-  font-style: italic;
-  font-synthesis: none;
-  text-transform: none;
-  letter-spacing: -0.01em;
-  color: var(--accent-soft);
-}
-
-.phrase-tape__sep {
-  font-size: 0.55rem;
-  color: var(--accent-muted);
-  flex-shrink: 0;
-}
-
-@keyframes phrase-tape-marquee {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .phrase-tape {
-    width: 100%;
-    max-width: 100%;
-    margin-left: 0;
-    margin-right: 0;
-  }
-
-  .phrase-tape__track {
-    animation: none;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
-    gap: 0.35rem;
-  }
-
-  .phrase-tape__item {
-    padding-inline: 0.5rem;
-  }
-
-  .phrase-tape__text {
-    color: var(--accent-muted);
-  }
-
-  .phrase-tape__text em {
-    color: var(--accent-soft);
-  }
-}
-
 .solution-lead .container {
   margin-top: clamp(2.5rem, 5vw, 3.5rem);
   position: relative;
@@ -2637,6 +2489,51 @@ body.is-page-loading {
     grid-row: auto;
     margin-left: auto;
     margin-right: auto;
+  }
+}
+
+/* CTA — átomo decorativo (metade visível na borda) */
+.cta-band__inner {
+  position: relative;
+  z-index: 2;
+}
+
+.cta-band__atom {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  height: 118%;
+  aspect-ratio: 1;
+  transform: translate(50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 1;
+}
+
+.cta-band__atom--left {
+  right: auto;
+  left: 0;
+  transform: translate(-50%, -50%);
+}
+
+.cta-band__atom-svg {
+  height: 100% !important;
+  width: auto !important;
+  max-height: none;
+  filter: drop-shadow(0 0 28px rgb(var(--accent-rgb) / 0.22));
+}
+
+@media (max-width: 720px) {
+  .cta-band__atom {
+    height: 108%;
+    transform: translate(52%, -50%);
+  }
+
+  .cta-band__atom--left {
+    transform: translate(-52%, -50%);
   }
 }
 

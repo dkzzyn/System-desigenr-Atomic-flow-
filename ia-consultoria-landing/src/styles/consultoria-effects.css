@@ -2,9 +2,10 @@
 
 html[data-site-mode="consultoria"] {
   --ia-grid-size-visible: 44px;
+  --ia-grid-line: rgb(var(--accent-rgb) / 0.035);
   --ia-grid-bg-visible:
-    linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+    linear-gradient(var(--ia-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--ia-grid-line) 1px, transparent 1px);
 }
 
 html[data-site-mode="consultoria"] .main--consultoria {
@@ -36,18 +37,21 @@ html[data-site-mode="consultoria"] .ia-section-grid--visible {
   background-position: center top;
 }
 
-/* CTA — grid integrado ao degradé vermelho */
+/* CTA — fundo consultoria (#050509 + grid vermelho + glow à direita) */
 html[data-site-mode="consultoria"] #contato.cta-band.ia-section-grid--visible {
-  background-color: transparent;
+  background-color: #050509;
   background-image:
-    linear-gradient(rgba(0, 0, 0, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.06) 1px, transparent 1px),
-    linear-gradient(125deg, #7f1d1d, var(--accent-deep) 28%, var(--accent) 55%, #e11d48);
+    var(--ia-grid-bg-visible),
+    radial-gradient(ellipse 58% 85% at 100% 50%, rgb(var(--accent-rgb) / 0.14), transparent 62%),
+    radial-gradient(ellipse 42% 55% at 0% 100%, rgb(var(--accent-deep-rgb) / 0.08), transparent 58%);
   background-size:
     var(--ia-grid-size-visible) var(--ia-grid-size-visible),
-    var(--ia-grid-size-visible) var(--ia-grid-size-visible),
+    100% 100%,
     100% 100%;
   background-position: center top;
+  color: hsl(var(--foreground));
+  border-block: 1px solid rgb(var(--accent-rgb) / 0.2);
+  box-shadow: inset 0 1px 0 rgb(var(--accent-soft-rgb) / 0.08);
 }
 
 html[data-site-mode="consultoria"] .ia-glow-section {
@@ -310,22 +314,6 @@ html[data-site-mode="consultoria"] .services-section--ia .service-card:hover .se
   color: #fff;
 }
 
-/* Fita animada */
-html[data-site-mode="consultoria"] .ia-marquee-band {
-  position: relative;
-  z-index: 1;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background: #050509;
-  border-block: none;
-  box-shadow: none;
-}
-
-html[data-site-mode="consultoria"] .ia-marquee-band .phrase-tape__ribbon {
-  filter: drop-shadow(0 0 12px rgb(var(--accent-rgb) / 0.28));
-}
-
 /* Setores — cards */
 html[data-site-mode="consultoria"] .sectors-list--ia-cards {
   border-top: none;
@@ -531,12 +519,17 @@ html[data-site-mode="consultoria"] .faq-section--ia .faq-item:hover {
 
 /* CTA final — "Faça a IA trabalhar por você" */
 html[data-site-mode="consultoria"] .cta-band.ia-glow-section {
-  border-block-color: rgb(var(--accent-rgb) / 0.28);
+  border-block-color: rgb(var(--accent-rgb) / 0.2);
   animation: mkt-border-breathe 4.5s ease-in-out infinite;
 }
 
-html[data-site-mode="consultoria"] .cta-band.ia-glow-section::before {
-  opacity: 0.06;
+html[data-site-mode="consultoria"] .cta-band.ia-glow-section::before,
+html[data-site-mode="consultoria"] .cta-band.ia-glow-section::after {
+  display: none;
+}
+
+html[data-site-mode="consultoria"] .cta-band .h2 {
+  color: hsl(var(--foreground));
 }
 
 html[data-site-mode="consultoria"] .cta-band .h2 em {
@@ -544,6 +537,58 @@ html[data-site-mode="consultoria"] .cta-band .h2 em {
   -webkit-text-fill-color: currentColor;
   background: none;
   filter: none;
+}
+
+html[data-site-mode="consultoria"] .cta-band .lead {
+  color: hsl(var(--muted-foreground));
+}
+
+html[data-site-mode="consultoria"] .cta-band .lead strong {
+  color: hsl(var(--foreground));
+}
+
+html[data-site-mode="consultoria"] .cta-band .micro {
+  color: hsl(var(--muted-foreground));
+}
+
+html[data-site-mode="consultoria"] .cta-band .micro strong {
+  color: var(--accent-muted);
+}
+
+html[data-site-mode="consultoria"] .cta-band .cta-band__btn {
+  background: linear-gradient(135deg, var(--accent-soft) 0%, var(--accent) 45%, var(--accent-deep) 100%);
+  color: #ffffff;
+  border: 1px solid rgb(var(--accent-soft-rgb) / 0.4);
+  box-shadow:
+    0 4px 24px rgb(var(--accent-rgb) / 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  text-decoration: none;
+  padding-bottom: 0.55rem;
+  transition:
+    transform 0.22s var(--ease-out),
+    box-shadow 0.22s var(--ease-out),
+    filter 0.2s var(--ease-out);
+}
+
+html[data-site-mode="consultoria"] .cta-band .cta-band__btn:hover {
+  background: linear-gradient(135deg, var(--accent-soft) 0%, var(--accent) 45%, var(--accent-deep) 100%);
+  color: #ffffff;
+  border-color: rgb(var(--accent-muted-rgb) / 0.55);
+  filter: brightness(1.08);
+  box-shadow:
+    0 8px 32px rgb(var(--accent-rgb) / 0.48),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  transform: translateY(-2px);
+}
+
+html[data-site-mode="consultoria"] .cta-band .cta-band__btn .arrow {
+  color: #ffffff;
+  filter: none;
+}
+
+html[data-site-mode="consultoria"] .cta-band .cta-band__btn:hover .arrow {
+  color: #ffffff;
+  transform: translateX(4px);
 }
 
 /* Navbar */

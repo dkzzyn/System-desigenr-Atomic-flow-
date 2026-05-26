@@ -1,9 +1,16 @@
+import { useId } from "react";
+
 type IconAtomProps = {
   className?: string;
   size?: number;
+  gradient?: boolean;
 };
 
-export function IconAtom({ className, size = 24 }: IconAtomProps) {
+export function IconAtom({ className, size = 24, gradient = false }: IconAtomProps) {
+  const rawId = useId();
+  const gradId = `atom-grad-${rawId.replace(/:/g, "")}`;
+  const paint = gradient ? `url(#${gradId})` : "currentColor";
+
   return (
     <svg
       width={size}
@@ -14,13 +21,21 @@ export function IconAtom({ className, size = 24 }: IconAtomProps) {
       aria-hidden
       className={className}
     >
-      <circle cx="16" cy="16" r="2.75" fill="currentColor" />
+      {gradient ? (
+        <defs>
+          <linearGradient id={gradId} x1="18%" y1="8%" x2="82%" y2="92%">
+            <stop offset="0%" stopColor="var(--accent-soft)" />
+            <stop offset="100%" stopColor="var(--accent-deep)" />
+          </linearGradient>
+        </defs>
+      ) : null}
+      <circle cx="16" cy="16" r="2.75" fill={paint} />
       <ellipse
         cx="16"
         cy="16"
         rx="11.5"
         ry="4.25"
-        stroke="currentColor"
+        stroke={paint}
         strokeWidth="2"
         strokeLinecap="round"
       />
@@ -29,7 +44,7 @@ export function IconAtom({ className, size = 24 }: IconAtomProps) {
         cy="16"
         rx="11.5"
         ry="4.25"
-        stroke="currentColor"
+        stroke={paint}
         strokeWidth="2"
         strokeLinecap="round"
         transform="rotate(60 16 16)"
@@ -39,7 +54,7 @@ export function IconAtom({ className, size = 24 }: IconAtomProps) {
         cy="16"
         rx="11.5"
         ry="4.25"
-        stroke="currentColor"
+        stroke={paint}
         strokeWidth="2"
         strokeLinecap="round"
         transform="rotate(120 16 16)"
