@@ -1,0 +1,7 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "installCommand": "npm install --prefix ia-consultoria-landing",
+  "buildCommand": "npm run build --prefix ia-consultoria-landing",
+  "outputDirectory": "ia-consultoria-landing/dist",
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}
