@@ -1,53 +1,59 @@
-import { useState } from "react";
+import { useMemo } from "react";
 import { useSiteContent } from "../../hooks/useSiteContent";
 
-const TAPE_COPIES = 8;
+const PHRASE_REPEAT = 6;
 
-function TapeTrack({ direction }: { direction: "left" | "right" }) {
-  const { marquee } = useSiteContent();
-
+function PhraseItem({
+  before,
+  emphasis,
+  after,
+}: {
+  before: string;
+  emphasis: string;
+  after: string;
+}) {
   return (
-    <div className="cross-tape__viewport">
-      <div className={`cross-tape__track cross-tape__track--${direction}`} aria-hidden="true">
-        {Array.from({ length: TAPE_COPIES * 2 }, (_, index) => (
-          <span key={index} className="cross-tape__item">
-            <span className="cross-tape__text">
-              {marquee.phraseBefore}
-              <em>{marquee.phraseEmphasis}</em>
-              {marquee.phraseAfter}
-            </span>
-            <span className="cross-tape__sep" aria-hidden>
-              ✦
-            </span>
-          </span>
-        ))}
-      </div>
-    </div>
+    <span className="phrase-tape__item">
+      <span className="phrase-tape__text">
+        {before}
+        <em>{emphasis}</em>
+        {after}
+      </span>
+      <span className="phrase-tape__sep" aria-hidden>
+        ✦
+      </span>
+    </span>
   );
 }
 
 export function AnimatedMarqueeTape() {
   const { marquee } = useSiteContent();
-  const [isPaused, setIsPaused] = useState(false);
 
-  const pauseProps = {
-    onMouseEnter: () => setIsPaused(true),
-    onMouseLeave: () => setIsPaused(false),
-    onFocusCapture: () => setIsPaused(true),
-    onBlurCapture: () => setIsPaused(false),
-  };
+  const trackItems = useMemo(
+    () => [
+      ...Array.from({ length: PHRASE_REPEAT }, (_, index) => index),
+      ...Array.from({ length: PHRASE_REPEAT }, (_, index) => index + PHRASE_REPEAT),
+    ],
+    [],
+  );
 
   return (
-    <div className={`cross-tape${isPaused ? " cross-tape--paused" : ""}`}>
-      <div className="cross-tape__ribbon cross-tape__ribbon--left" {...pauseProps}>
-        <TapeTrack direction="left" />
-      </div>
-
-      <div className="cross-tape__ribbon cross-tape__ribbon--right" {...pauseProps}>
-        <TapeTrack direction="right" />
-      </div>
-
+    <div className="phrase-tape">
       <h2 className="sr-only">{marquee.srOnly}</h2>
+      <div className="phrase-tape__ribbon" aria-hidden="true">
+        <div className="phrase-tape__viewport">
+          <div className="phrase-tape__track">
+            {trackItems.map((index) => (
+              <PhraseItem
+                key={index}
+                before={marquee.phraseBefore}
+                emphasis={marquee.phraseEmphasis}
+                after={marquee.phraseAfter}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

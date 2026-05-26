@@ -313,21 +313,17 @@ html[data-site-mode="consultoria"] .services-section--ia .service-card:hover .se
 /* Fita animada */
 html[data-site-mode="consultoria"] .ia-marquee-band {
   position: relative;
-  padding-block: 0.25rem;
-  background: linear-gradient(
-    180deg,
-    #050509 0%,
-    rgb(var(--accent-rgb) / 0.08) 50%,
-    #050509 100%
-  );
-  border-block: 1px solid rgb(var(--accent-rgb) / 0.2);
-  box-shadow:
-    inset 0 1px 0 rgb(var(--accent-soft-rgb) / 0.1),
-    0 0 40px rgb(var(--accent-rgb) / 0.12);
+  z-index: 1;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #050509;
+  border-block: none;
+  box-shadow: none;
 }
 
-html[data-site-mode="consultoria"] .ia-marquee-band .cross-tape__ribbon {
-  filter: drop-shadow(0 0 12px rgb(var(--accent-rgb) / 0.35));
+html[data-site-mode="consultoria"] .ia-marquee-band .phrase-tape__ribbon {
+  filter: drop-shadow(0 0 12px rgb(var(--accent-rgb) / 0.28));
 }
 
 /* Setores — cards */
