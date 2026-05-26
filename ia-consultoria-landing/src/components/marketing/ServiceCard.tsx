@@ -16,23 +16,25 @@ export function ServiceCard({
   href,
 }: ServiceCardProps) {
   return (
-    <article className="group flex h-full flex-col rounded-xl border border-[#EF4444]/20 bg-[#111117] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[#EF4444]/50 hover:shadow-[0_20px_50px_-28px_rgba(239,68,68,0.35)] sm:p-6">
-      <header className="mb-5 flex items-center gap-2.5">
-        <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#EF4444]/25 bg-[#EF4444]/10 transition-colors group-hover:border-[#EF4444]/45 group-hover:bg-[#EF4444]/15">
-          <IconAtom size={20} className="shrink-0 text-[#EF4444]" />
+    <article className="group flex h-full flex-col rounded-lg border border-white/[0.06] bg-[#111117] p-4 transition-all duration-300 hover:border-[#EF4444]/20 sm:p-[1.15rem]">
+      <header className="mb-3 flex items-center gap-2">
+        <span className="flex h-8 w-8 items-center justify-center rounded-md bg-[#EF4444]/10 transition-colors group-hover:bg-[#EF4444]/14">
+          <IconAtom size={18} className="shrink-0 text-[#EF4444]" />
         </span>
-        <span className="text-xs font-semibold tracking-wide text-[#EF4444]/90">{company}</span>
+        <span className="text-[0.6875rem] font-semibold uppercase tracking-wide text-[#EF4444]/85">
+          {company}
+        </span>
       </header>
 
-      <h3 className="mb-3 text-base font-semibold tracking-tight text-white sm:text-lg">{title}</h3>
+      <h3 className="mb-2 text-base font-semibold tracking-tight text-white">{title}</h3>
 
-      <p className="mb-5 flex-1 text-sm leading-relaxed text-zinc-400">{description}</p>
+      <p className="mb-3 flex-1 text-sm leading-relaxed text-zinc-400">{description}</p>
 
-      <div className="mb-6 flex flex-wrap gap-2">
+      <div className="mb-3 flex flex-wrap gap-1.5">
         {tags.map((tag) => (
           <span
             key={tag}
-            className="rounded-full border border-[#EF4444]/25 bg-[#EF4444]/10 px-2.5 py-1 text-[0.625rem] font-bold uppercase tracking-wider text-red-300"
+            className="rounded-full bg-[#EF4444]/8 px-2 py-0.5 text-[0.625rem] font-semibold uppercase tracking-wider text-red-300/90"
           >
             {tag}
           </span>

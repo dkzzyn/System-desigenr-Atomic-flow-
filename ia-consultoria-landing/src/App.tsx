@@ -2,6 +2,7 @@ import "./App.css";
 import { Header } from "./components/layout/Header";
 import { Footer } from "./components/layout/Footer";
 import { PageLoader, usePageReady } from "./components/layout/PageLoader";
+import { AnimatedMarqueeTape } from "./components/sections/AnimatedMarqueeTape";
 import {
   Differentials,
   FAQ,
@@ -11,7 +12,6 @@ import {
   ProblemSection,
   SectorsBlock,
   ServicesGrid,
-  SolutionLead,
   TechStrip,
 } from "./components/sections";
 
@@ -27,7 +27,7 @@ export default function App() {
           <Hero />
           <ProblemSection />
           <ServicesGrid />
-          <SolutionLead />
+          <AnimatedMarqueeTape />
           <SectorsBlock />
           <TechStrip />
           <Differentials />

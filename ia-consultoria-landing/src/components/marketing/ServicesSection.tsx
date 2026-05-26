@@ -8,7 +8,7 @@ export function ServicesSection() {
 
   return (
     <section id="servicos" className="bg-[#050509] py-[clamp(3rem,9vw,7.5rem)]">
-      <div className="mx-auto w-full max-w-[72rem] px-[clamp(1rem,4.5vw,1.5rem)]">
+      <div className="container">
         <div
           ref={headerRef}
           className="mb-8 flex flex-col items-center text-center md:mb-12"

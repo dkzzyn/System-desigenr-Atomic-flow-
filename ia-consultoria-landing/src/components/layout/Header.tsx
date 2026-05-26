@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { LINK_CONTACT, SOCIAL_INSTAGRAM, SOCIAL_LINKEDIN } from "../../constants/links";
+import { IconAtom } from "../icons/IconAtom";
 import { IconExternal, IconInstagram, IconLinkedIn } from "../icons";
 
 const NAV_LINKS = [
@@ -34,8 +35,16 @@ export function Header() {
     <div className="nav-shell">
       <header className="nav">
         <div className="nav-inner">
-          <a className="nav-brand" href="#inicio" onClick={closeMenu}>
-            Atomic Flow
+          <a
+            className="nav-logo-box"
+            href="#inicio"
+            onClick={closeMenu}
+            aria-label="Atomic Flow — início"
+          >
+            <span className="nav-logo-icon">
+              <IconAtom size={22} />
+            </span>
+            <span className="nav-logo-text">Atomic Flow</span>
           </a>
 
           <nav className="nav-links nav-links--center nav-links--desktop" aria-label="Principal">
@@ -111,26 +120,6 @@ export function Header() {
           <a className="nav-mobile-link nav-mobile-link--muted" href="#contato" onClick={closeMenu}>
             Contato
           </a>
-          <div className="nav-social-row nav-social-row--mobile">
-            <a
-              className="nav-social-btn"
-              href={SOCIAL_LINKEDIN}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-            >
-              <IconLinkedIn />
-            </a>
-            <a
-              className="nav-social-btn"
-              href={SOCIAL_INSTAGRAM}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-            >
-              <IconInstagram />
-            </a>
-          </div>
           <a className="nav-cta-outline nav-cta-outline--mobile" href={LINK_CONTACT} onClick={closeMenu}>
             Agendar conversa
             <IconExternal className="nav-cta-outline-icon" />
