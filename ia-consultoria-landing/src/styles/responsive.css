@@ -56,12 +56,21 @@
   }
 
   .nav-logo-box {
-    padding: 0.4rem 0.75rem 0.4rem 0.5rem;
-    gap: 0.5rem;
+    padding: 0.45rem;
+    gap: 0;
   }
 
   .nav-logo-text {
-    font-size: 0.875rem;
+    display: none;
+  }
+
+  .nav-logo-icon {
+    display: flex;
+  }
+
+  .nav-logo-icon svg {
+    width: 24px;
+    height: 24px;
   }
 
   .nav-links--desktop {
@@ -69,7 +78,7 @@
   }
 
   .nav-social-row--desktop {
-    display: none;
+    display: none !important;
   }
 
   .nav-cta-outline--header-desktop {
@@ -327,12 +336,26 @@
     align-items: center;
   }
 
+  .nav-logo-box {
+    padding: 0.45rem;
+    gap: 0;
+  }
+
+  .nav-logo-text {
+    display: none;
+  }
+
+  .nav-logo-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
   .nav-links--desktop {
     display: none !important;
   }
 
   .nav-social-row--desktop {
-    display: none;
+    display: none !important;
   }
 
   .nav-cta-outline--header-desktop {
