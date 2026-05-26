@@ -7,11 +7,11 @@ export function ServicesSection() {
   const [gridRef, gridVisible] = useInView<HTMLDivElement>({ threshold: 0.15 });
 
   return (
-    <section id="servicos" className="bg-[#050509] py-[clamp(4.5rem,11vw,7.5rem)]">
-      <div className="mx-auto w-full max-w-[72rem] px-6">
+    <section id="servicos" className="bg-[#050509] py-[clamp(3rem,9vw,7.5rem)]">
+      <div className="mx-auto w-full max-w-[72rem] px-[clamp(1rem,4.5vw,1.5rem)]">
         <div
           ref={headerRef}
-          className="mb-12 flex flex-col items-center text-center"
+          className="mb-8 flex flex-col items-center text-center md:mb-12"
         >
           <p
             className={`mb-5 w-full text-center text-[0.6875rem] font-bold uppercase tracking-[0.22em] text-zinc-500 transition-all duration-700 ${

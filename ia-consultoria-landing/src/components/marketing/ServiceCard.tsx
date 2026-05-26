@@ -63,7 +63,7 @@ export function ServiceCard({
   href,
 }: ServiceCardProps) {
   return (
-    <article className="group flex h-full flex-col rounded-xl border border-[#EF4444]/20 bg-[#111117] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#EF4444]/50 hover:shadow-[0_20px_50px_-28px_rgba(239,68,68,0.35)]">
+    <article className="group flex h-full flex-col rounded-xl border border-[#EF4444]/20 bg-[#111117] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[#EF4444]/50 hover:shadow-[0_20px_50px_-28px_rgba(239,68,68,0.35)] sm:p-6">
       <header className="mb-5 flex items-center gap-2.5">
         <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#EF4444]/25 bg-[#EF4444]/10 transition-colors group-hover:border-[#EF4444]/45 group-hover:bg-[#EF4444]/15">
           <AtomicFlowIcon />
@@ -71,7 +71,7 @@ export function ServiceCard({
         <span className="text-xs font-semibold tracking-wide text-[#EF4444]/90">{company}</span>
       </header>
 
-      <h3 className="mb-3 text-lg font-semibold tracking-tight text-white">{title}</h3>
+      <h3 className="mb-3 text-base font-semibold tracking-tight text-white sm:text-lg">{title}</h3>
 
       <p className="mb-5 flex-1 text-sm leading-relaxed text-zinc-400">{description}</p>
 
