@@ -24,7 +24,9 @@ export function TechStrip() {
 
   return (
     <section
-      className={`tech-strip-section section section--tight${isMarketing ? " tech-strip-section--mkt mkt-glow-section" : ""}`}
+      className={`tech-strip-section section section--tight${
+        isMarketing ? " tech-strip-section--mkt mkt-glow-section" : " tech-strip-section--ia ia-glow-section"
+      }`}
     >
       <div className="container">
         <div

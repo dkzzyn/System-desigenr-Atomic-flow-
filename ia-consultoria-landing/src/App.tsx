@@ -1,6 +1,7 @@
 import "./App.css";
 import "./styles/responsive.css";
 import "./styles/marketing-effects.css";
+import "./styles/consultoria-effects.css";
 import { Header } from "./components/layout/Header";
 import { Footer } from "./components/layout/Footer";
 import { PageLoader, usePageReady } from "./components/layout/PageLoader";

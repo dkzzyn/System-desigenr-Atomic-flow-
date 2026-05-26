@@ -21,7 +21,11 @@ export function Differentials() {
   const [ctaRef, ctaVisible] = useInView<HTMLDivElement>();
 
   return (
-    <section className={`section container differentials-section${isMarketing ? " differentials-section--mkt mkt-glow-section" : ""}`}>
+    <section
+      className={`section container differentials-section${
+        isMarketing ? " differentials-section--mkt mkt-glow-section" : " differentials-section--ia ia-glow-section"
+      }`}
+    >
       <div
         ref={headerRef}
         className={`differentials-section__header reveal-stagger${headerVisible ? " is-visible" : ""}`}

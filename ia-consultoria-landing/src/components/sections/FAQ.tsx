@@ -7,7 +7,7 @@ export function FAQ() {
   const [listRef, listVisible] = useInView<HTMLDivElement>({ threshold: 0.15 });
 
   return (
-    <section id="faq" className="section container">
+    <section id="faq" className="section container faq-section--ia ia-glow-section">
       <div ref={headerRef} className={`reveal-stagger${headerVisible ? " is-visible" : ""}`}>
         <p className="kicker reveal reveal--up">{faq.kicker}</p>
         <h2 className="h2 reveal reveal--up">{faq.title}</h2>

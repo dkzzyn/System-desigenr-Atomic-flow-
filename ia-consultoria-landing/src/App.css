@@ -820,6 +820,17 @@ main {
   );
 }
 
+[data-site-mode="consultoria"] .hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgb(var(--accent-soft-rgb) / 0.2), transparent 62%),
+    radial-gradient(ellipse 45% 35% at 12% 22%, rgb(var(--accent-rgb) / 0.14), transparent 55%);
+}
+
 [data-site-mode="marketing"] .hero-video-overlay {
   z-index: 2;
 }
@@ -836,6 +847,10 @@ main {
   }
 
   [data-site-mode="marketing"] .hero::after {
+    display: none;
+  }
+
+  [data-site-mode="consultoria"] .hero::after {
     display: none;
   }
 

@@ -29,7 +29,12 @@ export function SectorsBlock() {
   const [listRef, listVisible] = useInView<HTMLDivElement>({ threshold: 0.15 });
 
   return (
-    <section id="setores" className={`section container sectors-block${isMarketing ? " sectors-block--mkt mkt-glow-section" : ""}`}>
+    <section
+      id="setores"
+      className={`section container sectors-block${
+        isMarketing ? " sectors-block--mkt mkt-glow-section" : " sectors-block--ia ia-glow-section"
+      }`}
+    >
       <div
         ref={headerRef}
         className={`sectors-block__header reveal-stagger${headerVisible ? " is-visible" : ""}`}
@@ -45,7 +50,9 @@ export function SectorsBlock() {
 
       <div
         ref={listRef}
-        className={`sectors-list${isMarketing ? " sectors-list--mkt-cards" : ""} reveal-stagger${listVisible ? " is-visible" : ""}`}
+        className={`sectors-list${
+          isMarketing ? " sectors-list--mkt-cards" : " sectors-list--ia-cards"
+        } reveal-stagger${listVisible ? " is-visible" : ""}`}
         role="list"
         aria-label="Áreas de atuação"
       >

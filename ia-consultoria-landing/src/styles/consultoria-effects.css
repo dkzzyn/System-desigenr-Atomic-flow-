@@ -1,0 +1,579 @@
+/* ========== Consultoria (IA) — brilho, glow e grid (visível) ========== */
+
+html[data-site-mode="consultoria"] {
+  --ia-grid-size-visible: 44px;
+  --ia-grid-bg-visible:
+    linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+}
+
+html[data-site-mode="consultoria"] .main--consultoria {
+  position: relative;
+  isolation: isolate;
+}
+
+html[data-site-mode="consultoria"] .main--consultoria::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 60% 45% at 6% 10%, rgb(var(--accent-soft-rgb) / 0.14), transparent 58%),
+    radial-gradient(ellipse 50% 40% at 94% 35%, rgb(var(--accent-rgb) / 0.12), transparent 55%),
+    radial-gradient(ellipse 55% 35% at 50% 100%, rgb(var(--accent-deep-rgb) / 0.1), transparent 62%);
+}
+
+html[data-site-mode="consultoria"] .main--consultoria > * {
+  position: relative;
+  z-index: 1;
+}
+
+html[data-site-mode="consultoria"] .ia-section-grid--visible {
+  background-color: #050509;
+  background-image: var(--ia-grid-bg-visible);
+  background-size: var(--ia-grid-size-visible) var(--ia-grid-size-visible);
+  background-position: center top;
+}
+
+/* CTA — grid integrado ao degradé vermelho */
+html[data-site-mode="consultoria"] #contato.cta-band.ia-section-grid--visible {
+  background-color: transparent;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.06) 1px, transparent 1px),
+    linear-gradient(125deg, #7f1d1d, var(--accent-deep) 28%, var(--accent) 55%, #e11d48);
+  background-size:
+    var(--ia-grid-size-visible) var(--ia-grid-size-visible),
+    var(--ia-grid-size-visible) var(--ia-grid-size-visible),
+    100% 100%;
+  background-position: center top;
+}
+
+html[data-site-mode="consultoria"] .ia-glow-section {
+  position: relative;
+  overflow: hidden;
+}
+
+html[data-site-mode="consultoria"] .ia-glow-section > .container {
+  position: relative;
+  z-index: 2;
+}
+
+html[data-site-mode="consultoria"] .ia-glow-section::before {
+  content: "";
+  position: absolute;
+  top: -7rem;
+  right: -5rem;
+  width: min(26rem, 60vw);
+  height: min(26rem, 60vw);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle, rgb(var(--accent-soft-rgb) / 0.22) 0%, transparent 68%);
+  filter: blur(12px);
+  animation: mkt-orb-drift 11s ease-in-out infinite;
+}
+
+html[data-site-mode="consultoria"] .ia-glow-section::after {
+  content: "";
+  position: absolute;
+  bottom: -6rem;
+  left: -4rem;
+  width: min(22rem, 52vw);
+  height: min(22rem, 52vw);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle, rgb(var(--accent-rgb) / 0.16) 0%, transparent 70%);
+  filter: blur(14px);
+  animation: mkt-orb-drift 9s ease-in-out infinite reverse;
+}
+
+html[data-site-mode="consultoria"] .ia-glow-section .h2 {
+  position: relative;
+}
+
+html[data-site-mode="consultoria"] .ia-glow-section .h2::after {
+  content: "";
+  display: block;
+  width: 3.5rem;
+  height: 3px;
+  margin-top: 0.75rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent-soft), var(--accent-muted));
+  box-shadow: 0 0 22px rgb(var(--accent-soft-rgb) / 0.75);
+}
+
+html[data-site-mode="consultoria"] .problem-section--ia .h2::after,
+html[data-site-mode="consultoria"] .method-pillars-section--ia .h2::after,
+html[data-site-mode="consultoria"] .sectors-block--ia .h2::after,
+html[data-site-mode="consultoria"] .tech-strip-section--ia .h2::after,
+html[data-site-mode="consultoria"] .differentials-section--ia .h2::after,
+html[data-site-mode="consultoria"] .faq-section--ia .h2::after {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Texto */
+html[data-site-mode="consultoria"] .hero-title .hero-em {
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.5),
+    0 0 32px rgb(var(--accent-rgb) / 0.55);
+}
+
+html[data-site-mode="consultoria"] .h2 em {
+  color: var(--accent-soft);
+  -webkit-text-fill-color: currentColor;
+}
+
+html[data-site-mode="consultoria"] .kicker {
+  color: var(--accent-soft);
+  letter-spacing: 0.2em;
+}
+
+html[data-site-mode="consultoria"] .text-gradient {
+  color: var(--accent-soft);
+  -webkit-text-fill-color: currentColor;
+  background: none;
+  animation: none;
+  filter: none;
+}
+
+/* CTAs chip */
+html[data-site-mode="consultoria"] .link-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.55rem 1.15rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgb(var(--accent-soft-rgb) / 0.55);
+  background: linear-gradient(145deg, rgb(var(--accent-rgb) / 0.22), rgb(var(--accent-rgb) / 0.1));
+  box-shadow:
+    0 0 28px rgb(var(--accent-rgb) / 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  color: #fff;
+  text-decoration: none;
+  border-bottom: none;
+  padding-bottom: 0.55rem;
+  transition:
+    box-shadow 0.25s var(--ease-out),
+    border-color 0.25s var(--ease-out),
+    transform 0.25s var(--ease-out),
+    background 0.25s var(--ease-out);
+}
+
+html[data-site-mode="consultoria"] .link-cta:hover {
+  transform: translateY(-2px);
+  border-color: rgb(var(--accent-muted-rgb) / 0.65);
+  background: linear-gradient(145deg, rgb(var(--accent-rgb) / 0.3), rgb(var(--accent-rgb) / 0.16));
+  box-shadow:
+    0 0 42px rgb(var(--accent-soft-rgb) / 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  color: #fff;
+}
+
+html[data-site-mode="consultoria"] .link-cta .arrow {
+  filter: drop-shadow(0 0 8px rgb(var(--accent-soft-rgb) / 0.55));
+}
+
+/* Hero */
+html[data-site-mode="consultoria"] .hero-btn-primary {
+  box-shadow:
+    0 4px 32px rgb(var(--accent-rgb) / 0.6),
+    0 0 0 1px rgb(var(--accent-soft-rgb) / 0.45) inset,
+    0 0 48px rgb(var(--accent-rgb) / 0.25);
+}
+
+html[data-site-mode="consultoria"] .hero-btn-primary:hover {
+  box-shadow:
+    0 8px 44px rgb(var(--accent-rgb) / 0.7),
+    0 0 0 1px rgb(var(--accent-muted-rgb) / 0.55) inset,
+    0 0 64px rgb(var(--accent-soft-rgb) / 0.38);
+}
+
+html[data-site-mode="consultoria"] .hero-pill {
+  border-color: rgb(var(--accent-soft-rgb) / 0.5);
+  background: rgb(var(--accent-rgb) / 0.14);
+  box-shadow:
+    0 0 20px rgb(var(--accent-rgb) / 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+html[data-site-mode="consultoria"] .hero-pill:hover {
+  border-color: rgb(var(--accent-muted-rgb) / 0.65);
+  box-shadow:
+    0 0 28px rgb(var(--accent-soft-rgb) / 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+html[data-site-mode="consultoria"] .site-mode-switch--hero .site-mode-switch__tab.is-active {
+  animation: mkt-glow-pulse 3s ease-in-out infinite;
+}
+
+/* Problema — fundo sólido, sem degradé no topo */
+html[data-site-mode="consultoria"] #problema.problem-section--ia {
+  background-color: #050509;
+  background-image: none;
+  border-block: 1px solid rgb(var(--accent-rgb) / 0.12);
+  box-shadow: none;
+}
+
+html[data-site-mode="consultoria"] #problema.problem-section--ia.ia-glow-section::before,
+html[data-site-mode="consultoria"] #problema.problem-section--ia.ia-glow-section::after {
+  display: none;
+}
+
+html[data-site-mode="consultoria"] .problem-split__figure::before {
+  content: "";
+  position: absolute;
+  inset: 5% 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(var(--accent-rgb) / 0.28), transparent 68%);
+  filter: blur(32px);
+  pointer-events: none;
+  z-index: 0;
+  animation: mkt-float-glow 7s ease-in-out infinite;
+}
+
+html[data-site-mode="consultoria"] .problem-split__figure {
+  position: relative;
+}
+
+html[data-site-mode="consultoria"] .problem-split__img {
+  position: relative;
+  z-index: 1;
+}
+
+/* Serviços — bento + cards brilhantes */
+html[data-site-mode="consultoria"] .services-section--ia {
+  position: relative;
+  background-color: #050509;
+  background-image:
+    radial-gradient(ellipse 70% 40% at 50% 0%, rgb(var(--accent-rgb) / 0.1), transparent 60%),
+    linear-gradient(180deg, #050509 0%, #07070e 50%, #050509 100%);
+  border-block: 1px solid rgb(var(--accent-rgb) / 0.15);
+}
+
+html[data-site-mode="consultoria"] .services-section--ia .service-card {
+  position: relative;
+  overflow: hidden;
+  border-color: rgb(var(--accent-rgb) / 0.28);
+  background: linear-gradient(145deg, #0e0e16, #12121c);
+  box-shadow:
+    0 0 0 1px rgb(var(--accent-rgb) / 0.08),
+    0 10px 32px rgb(var(--accent-rgb) / 0.12);
+  transition:
+    border-color 0.25s var(--ease-out),
+    box-shadow 0.25s var(--ease-out),
+    transform 0.25s var(--ease-out);
+}
+
+html[data-site-mode="consultoria"] .services-section--ia .service-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-soft), transparent);
+  opacity: 0.9;
+  z-index: 1;
+}
+
+html[data-site-mode="consultoria"] .services-section--ia .service-card:hover {
+  border-color: rgb(var(--accent-soft-rgb) / 0.6);
+  box-shadow:
+    0 24px 52px -16px rgb(var(--accent-rgb) / 0.55),
+    0 0 44px rgb(var(--accent-soft-rgb) / 0.2);
+  transform: translateY(-4px);
+}
+
+html[data-site-mode="consultoria"] .services-section--ia .service-card__icon-wrap {
+  box-shadow:
+    0 0 22px rgb(var(--accent-rgb) / 0.4),
+    inset 0 0 14px rgb(var(--accent-rgb) / 0.14);
+  animation: mkt-glow-pulse 3.8s ease-in-out infinite;
+}
+
+html[data-site-mode="consultoria"] .services-section--ia .service-card__tag {
+  border: 1px solid rgb(var(--accent-soft-rgb) / 0.4);
+  box-shadow: 0 0 14px rgb(var(--accent-rgb) / 0.16);
+}
+
+html[data-site-mode="consultoria"] .services-section--ia .service-card__link {
+  color: var(--accent-muted);
+}
+
+html[data-site-mode="consultoria"] .services-section--ia .service-card:hover .service-card__link {
+  color: #fff;
+}
+
+/* Fita animada */
+html[data-site-mode="consultoria"] .ia-marquee-band {
+  position: relative;
+  padding-block: 0.25rem;
+  background: linear-gradient(
+    180deg,
+    #050509 0%,
+    rgb(var(--accent-rgb) / 0.08) 50%,
+    #050509 100%
+  );
+  border-block: 1px solid rgb(var(--accent-rgb) / 0.2);
+  box-shadow:
+    inset 0 1px 0 rgb(var(--accent-soft-rgb) / 0.1),
+    0 0 40px rgb(var(--accent-rgb) / 0.12);
+}
+
+html[data-site-mode="consultoria"] .ia-marquee-band .cross-tape__ribbon {
+  filter: drop-shadow(0 0 12px rgb(var(--accent-rgb) / 0.35));
+}
+
+/* Setores — cards */
+html[data-site-mode="consultoria"] .sectors-list--ia-cards {
+  border-top: none;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  gap: 1rem;
+}
+
+html[data-site-mode="consultoria"] .sectors-list--ia-cards .sector-row {
+  position: relative;
+  overflow: hidden;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 1.35rem 1.25rem;
+  border: 1px solid rgb(var(--accent-rgb) / 0.2);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(160deg, hsl(var(--surface-elevated)), #0a0a10);
+  box-shadow:
+    0 0 0 1px rgb(var(--accent-rgb) / 0.06),
+    0 8px 28px rgb(var(--accent-rgb) / 0.1);
+  transition:
+    border-color 0.25s var(--ease-out),
+    transform 0.25s var(--ease-out),
+    box-shadow 0.25s var(--ease-out);
+}
+
+html[data-site-mode="consultoria"] .sectors-list--ia-cards .sector-row::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--accent-soft), var(--accent));
+  box-shadow: 0 0 18px rgb(var(--accent-soft-rgb) / 0.65);
+  opacity: 0.95;
+  border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+}
+
+html[data-site-mode="consultoria"] .sectors-list--ia-cards .sector-row__icon {
+  animation: mkt-glow-pulse 4.2s ease-in-out infinite;
+  box-shadow:
+    0 0 22px rgb(var(--accent-rgb) / 0.35),
+    inset 0 0 12px rgb(var(--accent-soft-rgb) / 0.15);
+}
+
+html[data-site-mode="consultoria"] .sectors-list--ia-cards .sector-row:hover {
+  border-color: rgb(var(--accent-soft-rgb) / 0.55);
+  box-shadow:
+    0 20px 44px -16px rgb(var(--accent-rgb) / 0.45),
+    0 0 36px rgb(var(--accent-soft-rgb) / 0.18);
+  transform: translateY(-3px);
+}
+
+/* Tech strip */
+html[data-site-mode="consultoria"] .tech-strip-section--ia {
+  border-block: 1px solid rgb(var(--accent-rgb) / 0.18);
+  background: linear-gradient(
+    180deg,
+    hsl(var(--background)) 0%,
+    #07070e 20%,
+    #07070e 80%,
+    hsl(var(--background)) 100%
+  );
+  box-shadow: inset 0 1px 0 rgb(var(--accent-soft-rgb) / 0.08);
+}
+
+html[data-site-mode="consultoria"] .tech-strip-section--ia .tech-carousel__icon {
+  padding: 0.5rem;
+  border-radius: 0.7rem;
+  border: 1px solid rgb(var(--accent-rgb) / 0.22);
+  background: rgb(var(--accent-rgb) / 0.1);
+  box-shadow: 0 0 20px rgb(var(--accent-rgb) / 0.15);
+  transition:
+    border-color 0.25s var(--ease-out),
+    box-shadow 0.25s var(--ease-out),
+    background 0.25s var(--ease-out);
+}
+
+html[data-site-mode="consultoria"] .tech-strip-section--ia .tech-carousel__item:hover .tech-carousel__icon {
+  border-color: rgb(var(--accent-soft-rgb) / 0.55);
+  background: rgb(var(--accent-rgb) / 0.16);
+  box-shadow: 0 0 28px rgb(var(--accent-soft-rgb) / 0.35);
+}
+
+html[data-site-mode="consultoria"] .tech-strip-section--ia .tech-carousel__item:hover .tech-carousel__img {
+  opacity: 1;
+  filter: grayscale(100%) brightness(0) invert(0.88);
+}
+
+/* Diferenciais */
+html[data-site-mode="consultoria"] .differentials-section--ia .diff {
+  position: relative;
+  overflow: hidden;
+  border-left: 3px solid var(--accent-soft);
+  background: linear-gradient(145deg, hsl(var(--surface-elevated)), #0c0c12);
+  box-shadow:
+    -6px 0 28px rgb(var(--accent-rgb) / 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition:
+    box-shadow 0.25s var(--ease-out),
+    transform 0.25s var(--ease-out);
+}
+
+html[data-site-mode="consultoria"] .differentials-section--ia .diff__icon {
+  box-shadow:
+    0 0 28px rgb(var(--accent-rgb) / 0.45),
+    inset 0 0 14px rgb(var(--accent-soft-rgb) / 0.14);
+  border-radius: 50%;
+  animation: mkt-glow-pulse 4s ease-in-out infinite;
+}
+
+html[data-site-mode="consultoria"] .differentials-section--ia .diff:hover {
+  box-shadow:
+    -10px 0 40px rgb(var(--accent-soft-rgb) / 0.35),
+    0 14px 36px rgb(var(--accent-rgb) / 0.15);
+  transform: translateY(-3px);
+}
+
+@media (min-width: 960px) {
+  html[data-site-mode="consultoria"] .differentials-section--ia .diff {
+    border-left: none;
+    border-top: 3px solid var(--accent-soft);
+    box-shadow:
+      0 -6px 24px rgb(var(--accent-rgb) / 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+}
+
+/* Método / pilares timeline */
+html[data-site-mode="consultoria"] #metodo.method-pillars-section--ia.ia-section-grid--visible {
+  max-width: none;
+  width: 100%;
+  padding-inline: var(--page-gutter);
+  border-block: 1px solid rgb(var(--accent-rgb) / 0.2);
+  box-shadow: inset 0 1px 0 rgb(var(--accent-soft-rgb) / 0.1);
+}
+
+html[data-site-mode="consultoria"] .method-pillars-section--ia .method-pillar {
+  border-color: rgb(var(--accent-rgb) / 0.22);
+  background: linear-gradient(160deg, hsl(var(--surface-elevated)), #0a0a10);
+  box-shadow:
+    0 0 0 1px rgb(var(--accent-rgb) / 0.08),
+    0 8px 28px rgb(var(--accent-rgb) / 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition:
+    border-color 0.25s var(--ease-out),
+    box-shadow 0.25s var(--ease-out),
+    transform 0.25s var(--ease-out);
+}
+
+html[data-site-mode="consultoria"] .method-pillars-section--ia .method-pillar__step {
+  border-color: rgb(var(--accent-soft-rgb) / 0.65);
+  box-shadow:
+    0 0 26px rgb(var(--accent-rgb) / 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  animation: mkt-glow-pulse 3.5s ease-in-out infinite;
+}
+
+@media (min-width: 960px) {
+  html[data-site-mode="consultoria"] .method-pillars-section--ia .method-pillars-section__grid::before {
+    height: 3px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgb(var(--accent-soft-rgb) / 0.4) 12%,
+      rgb(var(--accent-muted-rgb) / 0.95) 50%,
+      rgb(var(--accent-soft-rgb) / 0.4) 88%,
+      transparent
+    );
+    box-shadow: 0 0 24px rgb(var(--accent-soft-rgb) / 0.65);
+    animation: mkt-line-glow 2.8s ease-in-out infinite;
+  }
+}
+
+html[data-site-mode="consultoria"] .method-pillars-section--ia .method-pillar:hover {
+  border-color: rgb(var(--accent-soft-rgb) / 0.5);
+  box-shadow:
+    0 16px 40px rgb(var(--accent-rgb) / 0.22),
+    0 0 0 1px rgb(var(--accent-rgb) / 0.15);
+  transform: translateY(-3px);
+}
+
+/* FAQ */
+html[data-site-mode="consultoria"] .faq-section--ia {
+  background: radial-gradient(ellipse 60% 50% at 50% 100%, rgb(var(--accent-rgb) / 0.08), transparent 65%);
+  border-block: 1px solid rgb(var(--accent-rgb) / 0.12);
+}
+
+html[data-site-mode="consultoria"] .faq-section--ia .faq-item {
+  border-color: rgb(var(--accent-rgb) / 0.18);
+  background: linear-gradient(145deg, hsl(var(--surface-elevated)), #0a0a10);
+  box-shadow: 0 0 20px rgb(var(--accent-rgb) / 0.06);
+  transition:
+    border-color 0.2s var(--ease-out),
+    box-shadow 0.2s var(--ease-out);
+}
+
+html[data-site-mode="consultoria"] .faq-section--ia .faq-item:hover {
+  border-color: rgb(var(--accent-soft-rgb) / 0.4);
+  box-shadow: 0 0 28px rgb(var(--accent-rgb) / 0.15);
+}
+
+/* CTA final — "Faça a IA trabalhar por você" */
+html[data-site-mode="consultoria"] .cta-band.ia-glow-section {
+  border-block-color: rgb(var(--accent-rgb) / 0.28);
+  animation: mkt-border-breathe 4.5s ease-in-out infinite;
+}
+
+html[data-site-mode="consultoria"] .cta-band.ia-glow-section::before {
+  opacity: 0.06;
+}
+
+html[data-site-mode="consultoria"] .cta-band .h2 em {
+  color: var(--accent-soft);
+  -webkit-text-fill-color: currentColor;
+  background: none;
+  filter: none;
+}
+
+/* Navbar */
+html[data-site-mode="consultoria"] .nav-brand-toggle--consultoria {
+  box-shadow:
+    0 0 0 1px rgb(var(--accent-rgb) / 0.2),
+    0 0 28px rgb(var(--accent-rgb) / 0.22);
+}
+
+html[data-site-mode="consultoria"] .nav-brand-toggle--consultoria:hover {
+  box-shadow:
+    0 0 0 1px rgb(var(--accent-soft-rgb) / 0.4),
+    0 0 36px rgb(var(--accent-soft-rgb) / 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-site-mode="consultoria"] .ia-glow-section::before,
+  html[data-site-mode="consultoria"] .ia-glow-section::after,
+  html[data-site-mode="consultoria"] .problem-split__figure::before,
+  html[data-site-mode="consultoria"] .method-pillars-section--ia .method-pillar__step,
+  html[data-site-mode="consultoria"] .method-pillars-section--ia .method-pillars-section__grid::before,
+  html[data-site-mode="consultoria"] .services-section--ia .service-card__icon-wrap,
+  html[data-site-mode="consultoria"] .sectors-list--ia-cards .sector-row__icon,
+  html[data-site-mode="consultoria"] .differentials-section--ia .diff__icon,
+  html[data-site-mode="consultoria"] .cta-band.ia-glow-section,
+  html[data-site-mode="consultoria"] .site-mode-switch--hero .site-mode-switch__tab.is-active {
+    animation: none;
+  }
+}

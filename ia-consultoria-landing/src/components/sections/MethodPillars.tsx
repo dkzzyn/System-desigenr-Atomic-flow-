@@ -14,7 +14,11 @@ export function MethodPillars() {
   return (
     <section
       id="metodo"
-      className={`section container method-pillars-section${isMarketing ? " method-pillars-section--mkt-timeline mkt-glow-section mkt-section-grid" : ""}`}
+      className={`section container method-pillars-section method-pillars-section--mkt-timeline${
+        isMarketing
+          ? " mkt-glow-section mkt-section-grid"
+          : " method-pillars-section--ia ia-glow-section ia-section-grid--visible"
+      }`}
     >
       <div
         ref={headerRef}
@@ -35,23 +39,11 @@ export function MethodPillars() {
       >
         {method.pillars.map((p) => (
           <article key={p.step} className="method-pillar reveal reveal--up">
-            {isMarketing ? (
-              <>
-                <h4 className="method-pillar__title">{p.title}</h4>
-                <span className="method-pillar__step" aria-label={`Pilar ${p.step}`}>
-                  {String(p.step).padStart(2, "0")}
-                </span>
-                <p className="method-pillar__text">{p.text}</p>
-              </>
-            ) : (
-              <>
-                <span className="method-pillar__step" aria-label={`Pilar ${p.step}`}>
-                  {String(p.step).padStart(2, "0")}
-                </span>
-                <h4 className="method-pillar__title">{p.title}</h4>
-                <p className="method-pillar__text">{p.text}</p>
-              </>
-            )}
+            <h4 className="method-pillar__title">{p.title}</h4>
+            <span className="method-pillar__step" aria-label={`Pilar ${p.step}`}>
+              {String(p.step).padStart(2, "0")}
+            </span>
+            <p className="method-pillar__text">{p.text}</p>
           </article>
         ))}
       </div>

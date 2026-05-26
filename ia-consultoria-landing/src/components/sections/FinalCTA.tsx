@@ -12,7 +12,9 @@ export function FinalCTA() {
     <section
       ref={ref}
       id="contato"
-      className={`cta-band reveal-stagger${mode === "marketing" ? " mkt-glow-section" : ""}${isVisible ? " is-visible" : ""}`}
+      className={`cta-band reveal-stagger${
+        mode === "marketing" ? " mkt-glow-section" : " ia-glow-section ia-section-grid--visible"
+      }${isVisible ? " is-visible" : ""}`}
     >
       <div className="container">
         <h2 className="h2 reveal reveal--scale">

@@ -13,7 +13,9 @@ export function ServicesSection() {
   return (
     <section
       id="servicos"
-      className={`services-section${isMarketing ? " services-section--mkt" : " bg-[#050509]"} py-[clamp(3rem,9vw,7.5rem)]`}
+      className={`services-section py-[clamp(3rem,9vw,7.5rem)]${
+        isMarketing ? " services-section--mkt" : " services-section--ia ia-glow-section"
+      }`}
     >
       <div className="container">
         <div
@@ -46,18 +48,14 @@ export function ServicesSection() {
 
         <div
           ref={gridRef}
-          className={
-            isMarketing
-              ? "services-mkt-bento"
-              : "grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-6"
-          }
+          className={`services-mkt-bento transition-all duration-700 ${
+            gridVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+          }`}
         >
           {services.items.map((service, index) => (
             <div
               key={service.title}
-              className={`${isMarketing ? "services-mkt-bento__item" : ""} transition-all duration-700 ${
-                gridVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
-              }`}
+              className="services-mkt-bento__item transition-all duration-700"
               style={{ transitionDelay: gridVisible ? `${index * 80}ms` : "0ms" }}
             >
               <ServiceCard

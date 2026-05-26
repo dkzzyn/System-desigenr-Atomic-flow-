@@ -15,7 +15,9 @@ export function ConsultoriaSections() {
       <Hero />
       <ProblemSection />
       <ServicesGrid />
-      <AnimatedMarqueeTape />
+      <div className="ia-marquee-band">
+        <AnimatedMarqueeTape />
+      </div>
       <SectorsBlock />
       <TechStrip />
       <Differentials />
