@@ -1,0 +1,155 @@
+:root {
+  --background: 240 15% 3.5%;
+  --canvas-hex: #050509;
+  --foreground: 0 0% 100%;
+  --primary: 0 84% 55%;
+  --muted: 0 0% 11%;
+  --muted-foreground: 0 0% 58%;
+  --border: 0 0% 18%;
+  --surface-elevated: 0 0% 6%;
+  --fusion-from: #fecaca;
+  --fusion-mid: #f87171;
+  --fusion-to: #dc2626;
+  --ease-out: cubic-bezier(0.33, 1, 0.68, 1);
+  --font-sans: "Poppins", system-ui, sans-serif;
+  --font-display: "Poppins", var(--font-sans);
+  --font-hero: "Poppins", var(--font-sans);
+  --container: 72rem;
+  --nav-h: 4rem;
+  /* Espaço acima do header “flutuante” (alinhar com App.css .nav-shell) */
+  --nav-float-gap: clamp(0.55rem, 1.4vw, 0.85rem);
+  --nav-stack-h: calc(var(--nav-h) + var(--nav-float-gap));
+  --section-y: clamp(4.5rem, 11vw, 7.5rem);
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+  --radius-pill: 9999px;
+  --hero-gold: #f7b500;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: var(--canvas-hex);
+  color: #fff;
+  line-height: 1.6;
+  font-size: 1rem;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.text-gradient {
+  background-image: linear-gradient(
+    105deg,
+    var(--fusion-from) 0%,
+    var(--fusion-mid) 50%,
+    var(--fusion-to) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.section {
+  padding: var(--section-y) 0;
+  scroll-margin-top: calc(var(--nav-stack-h) + 0.75rem);
+}
+
+.section--tight {
+  padding: clamp(3rem, 8vw, 5rem) 0;
+}
+
+.kicker {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: hsl(var(--muted-foreground));
+  margin: 0 0 1.25rem;
+}
+
+.h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3.8vw, 2.65rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  margin: 0 0 1.25rem;
+  max-width: 20ch;
+}
+
+.h2 em {
+  font-style: italic;
+  font-weight: 600;
+  font-synthesis: none;
+  color: var(--fusion-mid);
+}
+
+.lead {
+  color: hsl(var(--muted-foreground));
+  font-size: clamp(1.02rem, 1.2vw, 1.125rem);
+  line-height: 1.72;
+  max-width: 38rem;
+  margin: 0 0 1.5rem;
+}
+
+.link-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: hsl(var(--foreground));
+  text-decoration: none;
+  border-bottom: 1px solid rgba(220, 38, 38, 0.55);
+  padding-bottom: 0.12rem;
+  transition: color 0.2s var(--ease-out), border-color 0.2s var(--ease-out);
+}
+
+.link-cta:hover {
+  color: var(--fusion-mid);
+  border-bottom-color: var(--fusion-mid);
+}
+
+.link-cta span.arrow {
+  color: hsl(var(--primary));
+  transition: transform 0.28s var(--ease-out);
+}
+
+.link-cta:hover span.arrow {
+  transform: translateX(5px);
+}
+
+.micro {
+  font-size: 0.875rem;
+  color: hsl(var(--muted-foreground));
+  margin: 1rem 0 0;
+  max-width: 28rem;
+  line-height: 1.55;
+}
+
+.micro strong {
+  color: hsl(var(--foreground));
+  font-weight: 600;
+}

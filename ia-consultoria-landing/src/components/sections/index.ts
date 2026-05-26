@@ -1,0 +1,10 @@
+export { Hero } from "./Hero";
+export { ProblemSection } from "./ProblemSection";
+export { SolutionLead } from "./SolutionLead";
+export { ServicesGrid } from "./ServicesGrid";
+export { SectorsBlock } from "./SectorsBlock";
+export { TechStrip } from "./TechStrip";
+export { Differentials } from "./Differentials";
+export { MethodPillars } from "./MethodPillars";
+export { FAQ } from "./FAQ";
+export { FinalCTA } from "./FinalCTA";
