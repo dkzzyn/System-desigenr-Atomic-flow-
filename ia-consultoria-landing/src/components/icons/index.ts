@@ -1,3 +1,4 @@
+export { IconAtom } from "./IconAtom";
 export { IconLinkedIn } from "./IconLinkedIn";
 export { IconInstagram } from "./IconInstagram";
 export { IconExternal } from "./IconExternal";

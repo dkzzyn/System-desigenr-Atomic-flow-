@@ -1,3 +1,5 @@
+import { IconAtom } from "../icons/IconAtom";
+
 type ServiceCardProps = {
   company?: string;
   title: string;
@@ -5,55 +7,6 @@ type ServiceCardProps = {
   tags: string[];
   href: string;
 };
-
-function AtomicFlowIcon() {
-  return (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden
-      className="shrink-0 text-[#EF4444]"
-    >
-      <circle cx="12" cy="12" r="2" fill="currentColor" />
-      <ellipse
-        cx="12"
-        cy="12"
-        rx="9"
-        ry="3.5"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      />
-      <ellipse
-        cx="12"
-        cy="12"
-        rx="9"
-        ry="3.5"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        transform="rotate(60 12 12)"
-      />
-      <ellipse
-        cx="12"
-        cy="12"
-        rx="9"
-        ry="3.5"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        transform="rotate(120 12 12)"
-      />
-      <path
-        d="M15 5l2-3M17 5l-2 3M17 5h-3"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
 
 export function ServiceCard({
   company = "atomicflow.ai",
@@ -66,7 +19,7 @@ export function ServiceCard({
     <article className="group flex h-full flex-col rounded-xl border border-[#EF4444]/20 bg-[#111117] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[#EF4444]/50 hover:shadow-[0_20px_50px_-28px_rgba(239,68,68,0.35)] sm:p-6">
       <header className="mb-5 flex items-center gap-2.5">
         <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-[#EF4444]/25 bg-[#EF4444]/10 transition-colors group-hover:border-[#EF4444]/45 group-hover:bg-[#EF4444]/15">
-          <AtomicFlowIcon />
+          <IconAtom size={20} className="shrink-0 text-[#EF4444]" />
         </span>
         <span className="text-xs font-semibold tracking-wide text-[#EF4444]/90">{company}</span>
       </header>
