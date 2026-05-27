@@ -437,3 +437,17 @@
     display: none;
   }
 }
+
+/* Performance — animações ambientais mais leves em mobile */
+@media (max-width: 768px), (hover: none) and (pointer: coarse) {
+  [data-site-mode="consultoria"] .ia-glow-section::before,
+  [data-site-mode="consultoria"] .ia-glow-section::after,
+  [data-site-mode="marketing"] .mkt-glow-section::before,
+  [data-site-mode="marketing"] .mkt-glow-section::after {
+    animation: none;
+  }
+
+  .tech-carousel__track {
+    animation-duration: 48s;
+  }
+}
