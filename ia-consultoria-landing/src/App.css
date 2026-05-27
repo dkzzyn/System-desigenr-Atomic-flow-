@@ -146,8 +146,21 @@ main {
   display: none;
 }
 
+.nav-cta--header-bar {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
 @media (min-width: 1024px) {
   .nav-cta-outline--header-desktop {
+    display: none;
+  }
+
+  .nav-cta--header-bar {
     display: inline-flex;
   }
 

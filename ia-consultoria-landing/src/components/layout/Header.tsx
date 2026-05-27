@@ -69,10 +69,7 @@ export function Header() {
                 <IconInstagram />
               </a>
             </div>
-            <ScheduleConversationButton className="nav-cta-outline nav-cta-outline--header-desktop">
-              {footer.ctaLabel}
-            </ScheduleConversationButton>
-            <ScheduleConversationButton className="nav-cta nav-cta--header-mobile-bar">
+            <ScheduleConversationButton className="nav-cta nav-cta--header-bar">
               {footer.ctaLabel}
             </ScheduleConversationButton>
             <button
@@ -113,7 +110,7 @@ export function Header() {
             Contato
           </a>
           <ScheduleConversationButton
-            className="nav-cta-outline nav-cta-outline--mobile"
+            className="nav-cta nav-cta--header-drawer"
             onClick={closeMenu}
           >
             {footer.ctaLabel}
