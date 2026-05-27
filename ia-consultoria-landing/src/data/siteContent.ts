@@ -240,7 +240,7 @@ export const siteContentByMode: Record<SiteMode, SiteContent> = {
     },
     footer: {
       tagline: "Atomic Flow — consultoria em IA",
-      ctaLabel: "Falar com consultor",
+      ctaLabel: "Falar com o time",
     },
   },
 

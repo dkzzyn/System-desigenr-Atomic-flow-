@@ -1,5 +1,6 @@
-import { HERO_VIDEO_SRC, LINK_CONTACT } from "../../constants/links";
+import { HERO_VIDEO_SRC } from "../../constants/links";
 import { useSiteContent } from "../../hooks/useSiteContent";
+import { ScheduleConversationButton } from "../lead/ScheduleConversationButton";
 import { SiteModeSwitch } from "../layout/SiteModeSwitch";
 
 export function Hero() {
@@ -33,9 +34,9 @@ export function Hero() {
           <a className="hero-btn-primary" href="#metodo">
             {hero.primaryCta} <span className="arrow">→</span>
           </a>
-          <a className="hero-btn-secondary" href={LINK_CONTACT}>
+          <ScheduleConversationButton className="hero-btn-secondary">
             {hero.secondaryCta}
-          </a>
+          </ScheduleConversationButton>
         </div>
         <p className="hero-trust-line" aria-hidden="true">
           {hero.trustLine[0]} <span>·</span> {hero.trustLine[1]} <span>·</span> {hero.trustLine[2]}

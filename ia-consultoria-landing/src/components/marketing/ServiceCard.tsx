@@ -1,4 +1,5 @@
 import { IconAtom } from "../icons/IconAtom";
+import { OpenLeadFormLink } from "../lead/OpenLeadFormLink";
 
 type ServiceCardProps = {
   company?: string;
@@ -15,6 +16,8 @@ export function ServiceCard({
   tags,
   href,
 }: ServiceCardProps) {
+  const isLeadLink = href === "#contato";
+
   return (
     <article className="service-card group flex h-full flex-col rounded-lg border border-white/[0.06] bg-[#111117] p-4 sm:p-[1.15rem]">
       <header className="mb-3 flex items-center gap-2">
@@ -38,9 +41,15 @@ export function ServiceCard({
         ))}
       </div>
 
-      <a href={href} className="service-card__link mt-auto inline-flex items-center gap-1.5 text-sm font-semibold text-white">
-        Saiba mais <span className="service-card__arrow transition-transform group-hover:translate-x-1">→</span>
-      </a>
+      {isLeadLink ? (
+        <OpenLeadFormLink className="service-card__link mt-auto inline-flex items-center gap-1.5 text-sm font-semibold text-white">
+          Saiba mais <span className="service-card__arrow transition-transform group-hover:translate-x-1">→</span>
+        </OpenLeadFormLink>
+      ) : (
+        <a href={href} className="service-card__link mt-auto inline-flex items-center gap-1.5 text-sm font-semibold text-white">
+          Saiba mais <span className="service-card__arrow transition-transform group-hover:translate-x-1">→</span>
+        </a>
+      )}
     </article>
   );
 }

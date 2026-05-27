@@ -5,4 +5,3 @@ export const SOCIAL_LINKEDIN = "https://www.linkedin.com";
 export const SOCIAL_INSTAGRAM = "https://www.instagram.com";
 
 export const CONTACT_EMAIL = "contato@atomicflow.com.br";
-export const CONTACT_MAILTO = `mailto:${CONTACT_EMAIL}`;

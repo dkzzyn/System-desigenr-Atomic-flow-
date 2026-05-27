@@ -1,6 +1,6 @@
-import { LINK_CONTACT } from "../../constants/links";
 import { useSiteContent } from "../../hooks/useSiteContent";
 import { useInView } from "../../hooks/useInView";
+import { ScheduleConversationButton } from "../lead/ScheduleConversationButton";
 
 export function ProblemSection() {
   const { problem } = useSiteContent();
@@ -35,9 +35,9 @@ export function ProblemSection() {
           </figure>
         </div>
         <p className="problem-section-cta reveal reveal--up">
-          <a className="link-cta" href={LINK_CONTACT}>
-            {problem.cta} <span className="arrow">→</span>
-          </a>
+          <ScheduleConversationButton className="link-cta" showArrow>
+            {problem.cta}
+          </ScheduleConversationButton>
         </p>
         <p className="micro reveal reveal--up">
           Agende um <strong>{problem.microStrong}</strong> para alinhar expectativas.

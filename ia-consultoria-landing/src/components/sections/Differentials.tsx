@@ -1,9 +1,9 @@
 import { type ComponentType } from "react";
-import { LINK_CONTACT } from "../../constants/links";
 import { type DifferentialItem } from "../../data/siteContent";
 import { useSiteContent } from "../../hooks/useSiteContent";
 import { useInView } from "../../hooks/useInView";
 import { useSiteMode } from "../../context/SiteModeContext";
+import { ScheduleConversationButton } from "../lead/ScheduleConversationButton";
 import { IconShieldCheck, IconTrendUp, IconUsers } from "../icons";
 
 const DIFF_ICONS: Record<DifferentialItem["icon"], ComponentType<{ className?: string }>> = {
@@ -60,9 +60,9 @@ export function Differentials() {
         className={`differentials-section__cta reveal-stagger${ctaVisible ? " is-visible" : ""}`}
       >
         <p className="reveal reveal--up">
-          <a className="link-cta" href={LINK_CONTACT}>
-            {differentials.cta} <span className="arrow">→</span>
-          </a>
+          <ScheduleConversationButton className="link-cta" showArrow>
+            {differentials.cta}
+          </ScheduleConversationButton>
         </p>
         <p className="micro reveal reveal--up">
           Agende um <strong>{differentials.microStrong}</strong> para alinhar expectativas.

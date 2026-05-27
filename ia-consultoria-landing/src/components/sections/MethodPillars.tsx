@@ -1,7 +1,7 @@
-import { LINK_CONTACT } from "../../constants/links";
 import { useSiteContent } from "../../hooks/useSiteContent";
 import { useInView } from "../../hooks/useInView";
 import { useSiteMode } from "../../context/SiteModeContext";
+import { ScheduleConversationButton } from "../lead/ScheduleConversationButton";
 
 export function MethodPillars() {
   const { method } = useSiteContent();
@@ -53,9 +53,9 @@ export function MethodPillars() {
         className={`method-pillars-section__cta reveal-stagger${ctaVisible ? " is-visible" : ""}`}
       >
         <p className="reveal reveal--up">
-          <a className="link-cta" href={LINK_CONTACT}>
-            {method.cta} <span className="arrow">→</span>
-          </a>
+          <ScheduleConversationButton className="link-cta" showArrow>
+            {method.cta}
+          </ScheduleConversationButton>
         </p>
         <p className="micro reveal reveal--up">
           Agende um <strong>{method.microStrong}</strong> para alinhar expectativas.

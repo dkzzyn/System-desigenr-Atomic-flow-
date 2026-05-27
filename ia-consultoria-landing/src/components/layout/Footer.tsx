@@ -1,5 +1,5 @@
-import { LINK_CONTACT } from "../../constants/links";
 import { useSiteContent } from "../../hooks/useSiteContent";
+import { ScheduleConversationButton } from "../lead/ScheduleConversationButton";
 
 export function Footer() {
   const { footer } = useSiteContent();
@@ -10,7 +10,7 @@ export function Footer() {
         <div className="footer-grid">
           <div>
             <h4>Navegação</h4>
-            <a href={LINK_CONTACT}>{footer.ctaLabel}</a>
+            <ScheduleConversationButton className="footer-link">{footer.ctaLabel}</ScheduleConversationButton>
             <a href="#metodo">Método</a>
             <a href="#faq">FAQ</a>
           </div>

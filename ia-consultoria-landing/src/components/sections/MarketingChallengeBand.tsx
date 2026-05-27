@@ -1,6 +1,6 @@
-import { LINK_CONTACT } from "../../constants/links";
 import { useSiteContent } from "../../hooks/useSiteContent";
 import { useInView } from "../../hooks/useInView";
+import { ScheduleConversationButton } from "../lead/ScheduleConversationButton";
 
 export function MarketingChallengeBand() {
   const { problem, hero } = useSiteContent();
@@ -33,9 +33,9 @@ export function MarketingChallengeBand() {
         </ul>
 
         <p className="mkt-challenge__cta reveal reveal--up">
-          <a className="link-cta" href={LINK_CONTACT}>
-            {problem.cta} <span className="arrow">→</span>
-          </a>
+          <ScheduleConversationButton className="link-cta" showArrow>
+            {problem.cta}
+          </ScheduleConversationButton>
         </p>
       </div>
     </section>

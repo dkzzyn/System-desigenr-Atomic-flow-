@@ -1,7 +1,8 @@
-import { CONTACT_EMAIL, CONTACT_MAILTO } from "../../constants/links";
+import { CONTACT_EMAIL } from "../../constants/links";
 import { useSiteContent } from "../../hooks/useSiteContent";
 import { useInView } from "../../hooks/useInView";
 import { useSiteMode } from "../../context/SiteModeContext";
+import { ScheduleConversationButton } from "../lead/ScheduleConversationButton";
 import { IconAtom } from "../icons/IconAtom";
 
 export function FinalCTA() {
@@ -33,12 +34,12 @@ export function FinalCTA() {
         </h2>
         <p className="lead reveal reveal--up">{finalCta.lead}</p>
         <p className="reveal reveal--up" style={{ marginBottom: 0 }}>
-          <a
+          <ScheduleConversationButton
             className={`link-cta${isConsultoria ? " cta-band__btn" : ""}`}
-            href={CONTACT_MAILTO}
+            showArrow
           >
-            {finalCta.cta} <span className="arrow">→</span>
-          </a>
+            {finalCta.cta}
+          </ScheduleConversationButton>
         </p>
         <p className="micro cta-band__micro reveal reveal--up">
           Ou escreva para <strong>{CONTACT_EMAIL}</strong> com o contexto do seu projeto.

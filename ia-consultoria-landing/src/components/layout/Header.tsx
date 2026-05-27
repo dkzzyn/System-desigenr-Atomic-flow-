@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { LINK_CONTACT, SOCIAL_INSTAGRAM, SOCIAL_LINKEDIN } from "../../constants/links";
+import { SOCIAL_INSTAGRAM, SOCIAL_LINKEDIN } from "../../constants/links";
 import { useSiteContent } from "../../hooks/useSiteContent";
-import { IconExternal, IconInstagram, IconLinkedIn } from "../icons";
+import { ScheduleConversationButton } from "../lead/ScheduleConversationButton";
+import { IconInstagram, IconLinkedIn } from "../icons";
 import { NavBrandToggle } from "./NavBrandToggle";
 
 const NAV_LINKS = [
@@ -68,13 +69,12 @@ export function Header() {
                 <IconInstagram />
               </a>
             </div>
-            <a className="nav-cta-outline nav-cta-outline--header-desktop" href={LINK_CONTACT}>
-              Agendar conversa
-              <IconExternal className="nav-cta-outline-icon" />
-            </a>
-            <a className="nav-cta nav-cta--header-mobile-bar" href={LINK_CONTACT}>
+            <ScheduleConversationButton className="nav-cta-outline nav-cta-outline--header-desktop">
               {footer.ctaLabel}
-            </a>
+            </ScheduleConversationButton>
+            <ScheduleConversationButton className="nav-cta nav-cta--header-mobile-bar">
+              {footer.ctaLabel}
+            </ScheduleConversationButton>
             <button
               type="button"
               className="nav-burger--af"
@@ -112,10 +112,12 @@ export function Header() {
           <a className="nav-mobile-link nav-mobile-link--muted" href="#contato" onClick={closeMenu}>
             Contato
           </a>
-          <a className="nav-cta-outline nav-cta-outline--mobile" href={LINK_CONTACT} onClick={closeMenu}>
-            Agendar conversa
-            <IconExternal className="nav-cta-outline-icon" />
-          </a>
+          <ScheduleConversationButton
+            className="nav-cta-outline nav-cta-outline--mobile"
+            onClick={closeMenu}
+          >
+            {footer.ctaLabel}
+          </ScheduleConversationButton>
         </div>
       </nav>
     </div>
