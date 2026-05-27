@@ -4,6 +4,7 @@ import {
   SITE_MODE_STORAGE_KEY,
   type SiteMode,
 } from "../constants/siteMode";
+import { SITE_NAME, SITE_URL } from "../constants/site";
 import { siteContentByMode } from "../data/siteContent";
 
 type SiteModeContextValue = {
@@ -19,13 +20,25 @@ function readStoredMode(): SiteMode {
   return isSiteMode(stored) ? stored : "consultoria";
 }
 
+function setMetaContent(selector: string, content: string) {
+  const element = document.querySelector(selector);
+  if (element) element.setAttribute("content", content);
+}
+
 function applyModeToDocument(mode: SiteMode) {
   document.documentElement.dataset.siteMode = mode;
   const { title, description } = siteContentByMode[mode].meta;
   document.title = title;
 
-  const meta = document.querySelector('meta[name="description"]');
-  if (meta) meta.setAttribute("content", description);
+  setMetaContent('meta[name="description"]', description);
+  setMetaContent('meta[property="og:title"]', title);
+  setMetaContent('meta[property="og:description"]', description);
+  setMetaContent('meta[name="twitter:title"]', title);
+  setMetaContent('meta[property="og:url"]', `${SITE_URL}/`);
+  setMetaContent('meta[property="og:site_name"]', SITE_NAME);
+
+  const canonical = document.querySelector('link[rel="canonical"]');
+  if (canonical) canonical.setAttribute("href", `${SITE_URL}/`);
 }
 
 export function SiteModeProvider({ children }: { children: React.ReactNode }) {
