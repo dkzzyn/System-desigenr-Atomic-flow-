@@ -8,7 +8,6 @@ export function LoaderAtomBurst({ exploding }: LoaderAtomBurstProps) {
       className={`page-loader__burst${exploding ? " is-exploding" : ""}`}
       aria-hidden
     >
-      <div className="page-loader__charge-glow" />
       <div className="page-loader__luminance page-loader__luminance--outer" />
       <div className="page-loader__luminance" />
       <div className="page-loader__flash" />

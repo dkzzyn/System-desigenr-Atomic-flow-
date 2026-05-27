@@ -40,10 +40,7 @@ export function FinalCTA() {
             {finalCta.cta} <span className="arrow">→</span>
           </a>
         </p>
-        <p
-          className="micro reveal reveal--up"
-          style={{ marginTop: "1.25rem", marginLeft: "auto", marginRight: "auto" }}
-        >
+        <p className="micro cta-band__micro reveal reveal--up">
           Ou escreva para <strong>{CONTACT_EMAIL}</strong> com o contexto do seu projeto.
         </p>
       </div>
